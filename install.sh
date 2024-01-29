@@ -2,7 +2,7 @@
 
 # Define variables
 REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
-APP_DIR="$HOME/Control-Lab-IO-Remote"
+APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -72,8 +72,8 @@ sudo systemctl enable $SERVICE_NAME.service
 # Start the service
 sudo systemctl start $SERVICE_NAME.service
 
-# Create check_control_lab.sh script
-cat << 'EOF' > $HOME/check_control_lab.sh
+# Create check_control_lab.sh script in APP_DIR
+cat << 'EOF' > $APP_DIR/check_control_lab.sh
 #!/bin/bash
 
 # Fetch the IP address
@@ -84,10 +84,10 @@ echo "Control Lab IO Remote is now running. Type $IP_ADDRESS:5001 on a browser t
 EOF
 
 # Make the script executable
-chmod +x $HOME/check_control_lab.sh
+chmod +x $APP_DIR/check_control_lab.sh
 
-# Create exit_control_lab.sh script
-cat << 'EOF' > $HOME/exit_control_lab.sh
+# Create exit_control_lab.sh script in APP_DIR
+cat << 'EOF' > $APP_DIR/exit_control_lab.sh
 #!/bin/bash
 
 # Stop the controllabio-remote service
@@ -97,10 +97,10 @@ echo "Control Lab IO Remote has been stopped."
 EOF
 
 # Make the script executable
-chmod +x $HOME/exit_control_lab.sh
+chmod +x $APP_DIR/exit_control_lab.sh
 
-# Create start_control_lab.sh script
-cat << 'EOF' > $HOME/start_control_lab.sh
+# Create start_control_lab.sh script in APP_DIR
+cat << 'EOF' > $APP_DIR/start_control_lab.sh
 #!/bin/bash
 
 # Check if controllabio-remote service is active
@@ -114,17 +114,20 @@ fi
 EOF
 
 # Make the script executable
-chmod +x $HOME/start_control_lab.sh
+chmod +x $APP_DIR/start_control_lab.sh
 
 # Add aliases to .bashrc for easy access
 {
-    echo "alias checkcontrollab='$HOME/check_control_lab.sh'"
-    echo "alias exitcontrollab='$HOME/exit_control_lab.sh'"
-    echo "alias startcontrollab='$HOME/start_control_lab.sh'"
+    echo "alias checkcontrollab='$APP_DIR/check_control_lab.sh'"
+    echo "alias exitcontrollab='$APP_DIR/exit_control_lab.sh'"
+    echo "alias startcontrollab='$APP_DIR/start_control_lab.sh'"
 } >> $HOME/.bashrc
 
 # Reload .bashrc to apply the changes
 source $HOME/.bashrc
+
+# Carriage return before the final message
+echo
 
 # Final message with border and color
 {
