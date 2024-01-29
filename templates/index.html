@@ -46,12 +46,12 @@
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
                 class="btn-floating btn-large black">
-                <i class="material-icons" id="connection-icon">power_settings_new</i> <!-- Default icon -->
+                <i class="material-icons" id="connection-icon"><link rel="stylesheet" href=""></i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
             <div class="flex-grow">
                 <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black">
-                    <i class="material-icons" id="sending-icon">send</i> <!-- Default icon -->
+                    <i class="material-icons" id="sending-icon">play_arrow</i> <!-- Default icon -->
                 </button>
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
@@ -119,7 +119,7 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn">On</button>
+                                class="btn-floating btn-large on-off-btn">Off</button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
@@ -132,7 +132,7 @@
                                 <i class="material-icons">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
-                                <span class="material-symbols-outlined">counter_1</span>
+                                <span class="material-symbols-outlined">counter_4</span>
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
