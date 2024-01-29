@@ -11,4 +11,5 @@ NOTE: pi = username, and raspberrypi = hostname
 5. Clone Control Lab IO Remote: "git clone https://github.com/diegobaca/Control-Lab-IO-Remote.git"
 6. Navigate to Control Lab IO Remote folder: "cd /home/pi/Control-Lab-IO-Remote", replace pi with your own username if you changed it during OS customization.
 7. Make script executable "chmod +x install.sh"
-8. Run Script "sudo ./install.sh" (takes a while - look for message: Installation completed. The service is now running.)
+8. Run Script "sudo ./install.sh" (takes a while - look for message: Control Lab IO Remote is now running. Type [ip address]:5001 on a browser to control your LEGO Interface B.)
+9. Open a web browser with a device on the same network and type the Raspberry Pi's IP followed by :5001 to connect. 
