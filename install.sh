@@ -37,24 +37,6 @@ pip3 install -r requirements.txt
 # Deactivate the virtual environment
 deactivate
 
-# Make sure utility scripts are executable
-chmod +x $APP_DIR/check_control_lab.sh
-chmod +x $APP_DIR/exit_control_lab.sh
-chmod +x $APP_DIR/start_control_lab.sh
-
-# Define full application directory path
-FULL_APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
-
-# Add aliases to .bashrc for easy access
-echo "" >> $HOME/.bashrc
-echo "# Added by Control Lab IO Remote" >> $HOME/.bashrc
-echo "alias checkcontrollab='$FULL_APP_DIR/check_control_lab.sh'" >> $HOME/.bashrc
-echo "alias exitcontrollab='$FULL_APP_DIR/exit_control_lab.sh'" >> $HOME/.bashrc
-echo "alias startcontrollab='$FULL_APP_DIR/start_control_lab.sh'" >> $HOME/.bashrc
-
-# Reload .bashrc to apply the changes
-source $HOME/.bashrc
-
 # Create the systemd service file
 cat << EOF | sudo tee $SERVICE_FILE
 [Unit]
@@ -72,6 +54,22 @@ User=$CURRENT_USER
 [Install]
 WantedBy=multi-user.target
 EOF
+
+# Make sure utility scripts are executable
+chmod +x $APP_DIR/check_control_lab.sh
+chmod +x $APP_DIR/exit_control_lab.sh
+chmod +x $APP_DIR/start_control_lab.sh
+
+# Define full application directory path
+FULL_APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+
+# Add aliases to .bashrc for easy access
+echo "alias checkcontrollab='$FULL_APP_DIR/check_control_lab.sh'" >> ~/.bashrc
+echo "alias exitcontrollab='$FULL_APP_DIR/exit_control_lab.sh'" >> ~/.bashrc
+echo "alias startcontrollab='$FULL_APP_DIR/start_control_lab.sh'" >> ~/.bashrc
+
+# Reload .bashrc to apply the changes
+source $HOME/.bashrc
 
 # Carriage return before the final message
 echo
