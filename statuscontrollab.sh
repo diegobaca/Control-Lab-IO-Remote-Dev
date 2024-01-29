@@ -12,7 +12,7 @@ if [ "$service_status" == "active" ]; then
     echo
     echo "********************************************************************************"
     echo "Control Lab IO Remote is now running."
-    echo "Type $IP_ADDRESS:5001 on a browser to control your LEGO Interface B." TEST TEST
+    echo "Type $IP_ADDRESS:5001 on a browser to control your LEGO Interface B."
     echo "********************************************************************************"
     echo
     printf "\033[0m" # Reset text color back to default
