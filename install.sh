@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define variables
-APP_DIR="$(pwd)"
+APP_DIR="$PWD"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -64,6 +64,18 @@ export checkcontrollab="$APP_DIR/check_control_lab.sh"
 export exitcontrollab="$APP_DIR/exit_control_lab.sh"
 export startcontrollab="$APP_DIR/start_control_lab.sh"
 
+# Reset text color back to default
+echo -e "\033[0m"
+
+# Reload the systemd daemon to recognize the new service
+sudo systemctl daemon-reload
+
+# Enable the service
+sudo systemctl enable $SERVICE_NAME.service
+
+# Start the service
+sudo systemctl start $SERVICE_NAME.service
+
 # Carriage return before the final message
 echo
 
@@ -77,15 +89,3 @@ echo -e "\033[1;32m  - 'exitcontrollab' to stop the service.\033[0m"
 echo -e "\033[1;32m  - 'startcontrollab' to start the service.\033[0m"
 echo "********************************************************************************"
 } 
-
-# Reset text color back to default
-echo -e "\033[0m"
-
-# Reload the systemd daemon to recognize the new service
-sudo systemctl daemon-reload
-
-# Enable the service
-sudo systemctl enable $SERVICE_NAME.service
-
-# Start the service
-sudo systemctl start $SERVICE_NAME.service
