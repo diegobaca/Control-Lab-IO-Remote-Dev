@@ -63,49 +63,10 @@ User=$CURRENT_USER
 WantedBy=multi-user.target
 EOF
 
-# Create check_control_lab.sh script in APP_DIR
-cat << 'EOF' > "$APP_DIR/check_control_lab.sh"
-#!/bin/bash
-
-# Fetch the IP address
-IP_ADDRESS=$(hostname -I | awk '{print $1}')
-
-# Print the message with the IP address
-echo "Control Lab IO Remote is now running. Type $IP_ADDRESS:5001 on a browser to control your LEGO Interface B."
-EOF
-
-# Make the script executable
-chmod +x "$APP_DIR/check_control_lab.sh"
-
-# Create exit_control_lab.sh script in APP_DIR
-cat << 'EOF' > "$APP_DIR/exit_control_lab.sh"
-#!/bin/bash
-
-# Stop the controllabio-remote service
-sudo systemctl stop controllabio-remote.service
-
-echo "Control Lab IO Remote has been stopped."
-EOF
-
-# Make the script executable
-chmod +x "$APP_DIR/exit_control_lab.sh"
-
-# Create start_control_lab.sh script in APP_DIR
-cat << 'EOF' > "$APP_DIR/start_control_lab.sh"
-#!/bin/bash
-
-# Check if controllabio-remote service is active
-if systemctl is-active --quiet controllabio-remote.service; then
-    echo "Control Lab IO Remote is already running."
-else
-    # Start the controllabio-remote service
-    sudo systemctl start controllabio-remote.service
-    echo "Control Lab IO Remote has started."
-fi
-EOF
-
-# Make the script executable
-chmod +x "$APP_DIR/start_control_lab.sh"
+# Make sure utility scripts are executable
+chmod +x $APP_DIR/check_control_lab.sh
+chmod +x $APP_DIR/exit_control_lab.sh
+chmod +x $APP_DIR/start_control_lab.sh
 
 # Add aliases to .bashrc for easy access
 {
