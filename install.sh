@@ -129,10 +129,17 @@ echo
 printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
 echo "Installation of Control Lab IO Remote is complete."
+echo "The device's IP has been mapped to its hostname. You can access the device on port 5001 using:"
+echo "  - Hostname: http://$HOSTNAME:5001"
+echo "  - IP Address: http://$CURRENT_IP:5001"
+echo "This allows you to connect to your device more easily within your network."
+echo
 echo "You can now manage the Control Lab IO Remote service using the following commands:"
 echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
 echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
 echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
+echo
 echo "Enjoy and Play Well!"
 echo "********************************************************************************"
 printf "\033[0m" # Reset text color back to default
+
