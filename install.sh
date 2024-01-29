@@ -11,8 +11,8 @@ CURRENT_USER=$(whoami)
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Install Git and Python3 Pip if they aren't already installed
-sudo apt-get install -y git python3-pip
+# Install necessary system packages
+sudo apt-get install -y git python3-pip python3-venv
 
 # Clone the repository if it doesn't exist
 if [ ! -d "$APP_DIR" ]; then
@@ -25,8 +25,19 @@ fi
 # Change to the app directory
 cd $APP_DIR
 
-# Install Python dependencies
+# Create a virtual environment if it doesn't exist
+if [ ! -d "$APP_DIR/venv" ]; then
+    python3 -m venv $APP_DIR/venv
+fi
+
+# Activate the virtual environment
+source $APP_DIR/venv/bin/activate
+
+# Install Python dependencies within the virtual environment
 pip3 install -r requirements.txt
+
+# Deactivate the virtual environment
+deactivate
 
 # Create the systemd service file
 cat << EOF | sudo tee $SERVICE_FILE
@@ -35,7 +46,7 @@ Description=Control Lab IO Remote App
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 $APP_DIR/main.py
+ExecStart=$APP_DIR/venv/bin/python $APP_DIR/main.py
 WorkingDirectory=$APP_DIR
 StandardOutput=inherit
 StandardError=inherit
