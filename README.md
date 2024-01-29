@@ -14,6 +14,6 @@ NOTE: pi = username, and raspberrypi = hostname
 8. Open a web browser with a device on the same network and type the Raspberry Pi's IP followed by :5001 to connect.
 
 You can use the following commands via SSH after installation:
-- 'checkcontrollab' to check the status.
-- 'exitcontrollab' to stop the service.
-- 'startcontrollab' to start the service.
+- 'statuscontrollab' to check the status of the Control Lab IO Remote service."
+- 'stopcontrollab' to stop the Control Lab IO Remote service."
+- 'startcontrollab' to start the Control Lab IO Remote service."

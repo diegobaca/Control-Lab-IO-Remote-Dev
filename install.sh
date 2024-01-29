@@ -109,10 +109,11 @@ printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
 echo "Installation of Control Lab IO Remote is complete."
 echo "You can now manage the Control Lab IO Remote service using the following commands:"
-echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
+echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote service."
 echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
 echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
 echo "Enjoy and Play Well!"
 echo "********************************************************************************"
+echo
 printf "\033[0m" # Reset text color back to default
 
