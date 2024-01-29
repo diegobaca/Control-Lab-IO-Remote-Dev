@@ -72,8 +72,14 @@ sudo systemctl enable $SERVICE_NAME.service
 # Start the service
 sudo systemctl start $SERVICE_NAME.service
 
+# Check if APP_DIR exists and has write permission
+if [ ! -d "$APP_DIR" ] || [ ! -w "$APP_DIR" ]; then
+    echo "APP_DIR does not exist or is not writable: $APP_DIR"
+    exit 1
+fi
+
 # Create check_control_lab.sh script in APP_DIR
-cat << 'EOF' > $APP_DIR/check_control_lab.sh
+cat << 'EOF' > "$APP_DIR/check_control_lab.sh"
 #!/bin/bash
 
 # Fetch the IP address
@@ -84,10 +90,10 @@ echo "Control Lab IO Remote is now running. Type $IP_ADDRESS:5001 on a browser t
 EOF
 
 # Make the script executable
-chmod +x $APP_DIR/check_control_lab.sh
+chmod +x "$APP_DIR/check_control_lab.sh"
 
 # Create exit_control_lab.sh script in APP_DIR
-cat << 'EOF' > $APP_DIR/exit_control_lab.sh
+cat << 'EOF' > "$APP_DIR/exit_control_lab.sh"
 #!/bin/bash
 
 # Stop the controllabio-remote service
@@ -97,10 +103,10 @@ echo "Control Lab IO Remote has been stopped."
 EOF
 
 # Make the script executable
-chmod +x $APP_DIR/exit_control_lab.sh
+chmod +x "$APP_DIR/exit_control_lab.sh"
 
 # Create start_control_lab.sh script in APP_DIR
-cat << 'EOF' > $APP_DIR/start_control_lab.sh
+cat << 'EOF' > "$APP_DIR/start_control_lab.sh"
 #!/bin/bash
 
 # Check if controllabio-remote service is active
@@ -114,7 +120,7 @@ fi
 EOF
 
 # Make the script executable
-chmod +x $APP_DIR/start_control_lab.sh
+chmod +x "$APP_DIR/start_control_lab.sh"
 
 # Add aliases to .bashrc for easy access
 {
