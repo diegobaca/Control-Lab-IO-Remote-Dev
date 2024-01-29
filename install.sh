@@ -64,9 +64,6 @@ export checkcontrollab="$APP_DIR/check_control_lab.sh"
 export exitcontrollab="$APP_DIR/exit_control_lab.sh"
 export startcontrollab="$APP_DIR/start_control_lab.sh"
 
-# Reset text color back to default
-echo -e "\033[0m"
-
 # Reload the systemd daemon to recognize the new service
 sudo systemctl daemon-reload
 
@@ -89,3 +86,6 @@ echo -e "\033[1;32m  - 'exitcontrollab' to stop the service.\033[0m"
 echo -e "\033[1;32m  - 'startcontrollab' to start the service.\033[0m"
 echo "********************************************************************************"
 } 
+
+# Reset text color back to default
+echo -e "\033[0m"
