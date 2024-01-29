@@ -1,0 +1,198 @@
+/* Page background color */
+body {
+    background-color: #F4F4F4;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Output container with light grey border and white background */
+.output-container {
+    border: 1px solid #e0e0e0;
+    /* Light grey border */
+    padding: 15px 0;
+    margin-bottom: 10px;
+    /* Spacing between each output container */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    /* White background for the output container */
+    max-width: 550px;
+}
+
+/* Style for On/Off buttons */
+.on-off-btn {
+    background-color: black;
+    /* Set background color to black */
+    color: white;
+    /* Set text color to white */
+}
+
+.connection-container {
+    display: flex;
+    /* Use flexbox layout */
+    justify-content: space-between;
+    /* Space between child elements */
+    align-items: center;
+    /* Center items vertically */
+    padding: 15px;
+    /* Add some padding */
+    background-color: #F4F4F4;
+    /* Match the page background */
+    border: none;
+    /* No border */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    /* Spacing between this container and whatever comes next */
+    position: sticky;
+    /* Make the container sticky */
+    top: 0;
+    /* Stick to the top of the viewport */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+.connection-container .flex-grow {
+    flex-grow: 1;
+    /* Allow this element to grow and take up available space */
+    display: flex;
+    /* Use flexbox layout */
+    justify-content: center;
+    /* Center the button horizontally */
+}
+
+/* Custom style for the title container */
+.title-container {
+    background-color: #212529;
+    /* Dark background */
+    color: white;
+    /* White text */
+    padding: 20px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    /* Spacing between title container and connection container */
+    display: flex;
+    /* Align items horizontally */
+    align-items: center;
+    /* Align items vertically */
+}
+
+.logo-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.title-text {
+    margin: 0;
+    /* Remove margin to align title properly */
+}
+
+.power-level-display .material-symbols-outlined {
+    font-size: 48px;
+    /* Increased size */
+    vertical-align: middle;
+    /* Align with text if necessary */
+}
+
+.row {
+    display: flex;
+    /* Use flexbox layout */
+    align-items: center;
+    /* Vertically center items in the container */
+    justify-content: space-between;
+    /* Distribute space between items */
+    width: 100%;
+    /* Ensure the row takes full width of its parent */
+    margin-bottom: 0px;
+}
+
+.col.s1,
+.col.s11 {
+    display: flex;
+    /* Use flexbox layout */
+    align-items: center;
+    /* Align items vertically in the center */
+    justify-content: center;
+    /* Center items horizontally */
+}
+
+.col.s1 {
+    flex: 1;
+    /* Take 1 portion of the space */
+}
+
+.col.s11 {
+    flex: 11;
+    /* Take 11 portions of the space */
+    justify-content: space-evenly;
+    /* Distribute space evenly between the buttons */
+}
+
+.on-off-btn {
+    margin-left: 10px;
+    /* Left padding */
+    margin-right: 10px;
+    /* Right padding */
+}
+
+.footer-container {
+    background-color: #F4F4F4;
+    /* Match the page background */
+    color: #B0B0B0;
+    /* Light gray color for the text */
+    padding: 10px 0 30px 0;
+    /* Some padding */
+    width: 100%;
+    text-align: center;
+    /* Align text to the center */
+    border: none;
+    /* No border */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-container small {
+    font-size: smaller;
+    /* Small font size for the text */
+}
+
+/* Style for disabled On/Off buttons */
+.btn-floating.on-off-btn:disabled {
+    color: white !important;
+    /* Set text color to white, use !important to override */
+    cursor: not-allowed !important;
+    /* Optional: Change cursor to indicate the button is not clickable, use !important to override */
+}
+
+/* Style for outputs in two columns when the viewport is at least 800px wide */
+@media screen and (min-width: 850px) {
+    .outputs-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -15px;
+        /* Adjust as necessary */
+        margin-right: -15px;
+        /* Adjust as necessary */
+    }
+
+    .column {
+        width: 50%;
+        /* Set the width for each column */
+        padding: 0 10px;
+        /* Space between the columns */
+        box-sizing: border-box;
+    }
+
+    .output-container {
+        margin-bottom: 20px;
+        /* Space between each output container */
+    }
+}
