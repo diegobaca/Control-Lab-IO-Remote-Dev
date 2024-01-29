@@ -59,15 +59,10 @@ chmod +x $APP_DIR/check_control_lab.sh
 chmod +x $APP_DIR/exit_control_lab.sh
 chmod +x $APP_DIR/start_control_lab.sh
 
-# Add aliases to .profile for easy access
-{
-    echo "alias checkcontrollab='$APP_DIR/check_control_lab.sh'"
-    echo "alias exitcontrollab='$APP_DIR/exit_control_lab.sh'"
-    echo "alias startcontrollab='$APP_DIR/start_control_lab.sh'"
-} >> $HOME/.profile
-
-# Reload .profile to apply the changes
-source $HOME/.profile
+# Export aliases for easy access
+export checkcontrollab="$APP_DIR/check_control_lab.sh"
+export exitcontrollab="$APP_DIR/exit_control_lab.sh"
+export startcontrollab="$APP_DIR/start_control_lab.sh"
 
 # Carriage return before the final message
 echo
