@@ -63,21 +63,6 @@ User=$CURRENT_USER
 WantedBy=multi-user.target
 EOF
 
-# Reload the systemd daemon to recognize the new service
-sudo systemctl daemon-reload
-
-# Enable the service
-sudo systemctl enable $SERVICE_NAME.service
-
-# Start the service
-sudo systemctl start $SERVICE_NAME.service
-
-# Check if APP_DIR exists and has write permission
-if [ ! -d "$APP_DIR" ] || [ ! -w "$APP_DIR" ]; then
-    echo "APP_DIR does not exist or is not writable: $APP_DIR"
-    exit 1
-fi
-
 # Create check_control_lab.sh script in APP_DIR
 cat << 'EOF' > "$APP_DIR/check_control_lab.sh"
 #!/bin/bash
@@ -148,3 +133,12 @@ echo "**************************************************************************
 
 # Reset text color back to default
 echo -e "\033[0m"
+
+# Reload the systemd daemon to recognize the new service
+sudo systemctl daemon-reload
+
+# Enable the service
+sudo systemctl enable $SERVICE_NAME.service
+
+# Start the service
+sudo systemctl start $SERVICE_NAME.service
