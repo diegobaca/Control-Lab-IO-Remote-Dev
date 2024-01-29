@@ -64,6 +64,9 @@ export checkcontrollab="$APP_DIR/check_control_lab.sh"
 export exitcontrollab="$APP_DIR/exit_control_lab.sh"
 export startcontrollab="$APP_DIR/start_control_lab.sh"
 
+# Create the crontab file to run checkcontrollab on boot
+echo "@reboot $APP_DIR/check_control_lab.sh" | sudo tee /etc/cron.d/checkcontrollab
+
 # Reload the systemd daemon to recognize the new service
 sudo systemctl daemon-reload
 
@@ -89,3 +92,8 @@ echo "**************************************************************************
 
 # Reset text color back to default
 echo -e "\033[0m"
+
+# Reboot the system
+echo "System will reboot in 5 seconds..."
+sleep 5
+sudo reboot
