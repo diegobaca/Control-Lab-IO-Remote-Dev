@@ -95,14 +95,9 @@ for script in check_control_lab.sh exit_control_lab.sh start_control_lab.sh; do
     src="${APP_DIR}/${script}"
     dest="${GLOBAL_BIN_DIR}/${script%.*}" # Removes the '.sh' extension
     
-    # Check if the utility script already exists and is the same as the source
-    if [ -f "$dest" ] && cmp --silent "$src" "$dest"; then
-        echo "The script $dest is already up-to-date."
-    else
-        sudo cp "$src" "$dest"
-        sudo chmod +x "$dest"
-        echo "Installed $dest"
-    fi
+    sudo cp "$src" "$dest"
+    sudo chmod +x "$dest"
+    echo "Updated $dest"
 done
 
 # Append the statuscontrollab command to /etc/profile to run it when any user logs in via SSH
