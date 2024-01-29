@@ -19,9 +19,6 @@ fi
 # Install necessary system packages
 sudo apt-get install -y python3-pip python3-venv
 
-# Change to the app directory
-cd $APP_DIR
-
 # Create a virtual environment if it doesn't exist
 if [ ! -d "$APP_DIR/venv" ]; then
     python3 -m venv $APP_DIR/venv
@@ -59,12 +56,25 @@ chmod +x $APP_DIR/check_control_lab.sh
 chmod +x $APP_DIR/exit_control_lab.sh
 chmod +x $APP_DIR/start_control_lab.sh
 
-# Export aliases for easy access
-export checkcontrollab="$APP_DIR/check_control_lab.sh"
-export exitcontrollab="$APP_DIR/exit_control_lab.sh"
-export startcontrollab="$APP_DIR/start_control_lab.sh"
+# Define aliases and add them to ~/.bashrc for persistence
+ALIAS_CHECK="alias checkcontrollab='$APP_DIR/check_control_lab.sh'"
+ALIAS_EXIT="alias exitcontrollab='$APP_DIR/exit_control_lab.sh'"
+ALIAS_START="alias startcontrollab='$APP_DIR/start_control_lab.sh'"
 
-# Define the command to be added to ~/.profile
+# Append the aliases to ~/.bashrc if they don't already exist
+for ALIAS in "$ALIAS_CHECK" "$ALIAS_EXIT" "$ALIAS_START"
+do
+    if ! grep -Fxq "$ALIAS" ~/.bashrc; then
+        echo "$ALIAS" >> ~/.bashrc
+    fi
+done
+
+# Load the aliases to the current session
+eval "$ALIAS_CHECK"
+eval "$ALIAS_EXIT"
+eval "$ALIAS_START"
+
+# Define the command to be added to ~/.profile for auto execution on login
 CMD_TO_ADD="$APP_DIR/check_control_lab.sh"
 
 # Check if the command is already in ~/.profile, if not, add it
@@ -81,11 +91,8 @@ sudo systemctl enable $SERVICE_NAME.service
 # Start the service
 sudo systemctl start $SERVICE_NAME.service
 
-# Carriage return before the final message
-echo
-
 # Final message with border and color
-{
+echo
 echo "********************************************************************************"
 echo -e "\033[1;32mInstallation of Control Lab IO Remote is complete.\033[0m"
 echo -e "\033[1;32mUse the following commands to manage the service:\033[0m"
@@ -93,7 +100,6 @@ echo -e "\033[1;32m  - 'checkcontrollab' to check the status.\033[0m"
 echo -e "\033[1;32m  - 'exitcontrollab' to stop the service.\033[0m"
 echo -e "\033[1;32m  - 'startcontrollab' to start the service.\033[0m"
 echo "********************************************************************************"
-} 
 
 # Reset text color back to default
 echo -e "\033[0m"
