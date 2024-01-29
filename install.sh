@@ -100,6 +100,9 @@ sudo chmod +x ${GLOBAL_BIN_DIR}/stopcontrollab
 sudo cp "${APP_DIR}/start_control_lab.sh" ${GLOBAL_BIN_DIR}/startcontrollab
 sudo chmod +x ${GLOBAL_BIN_DIR}/startcontrollab
 
+# Append the statuscontrollab command to /etc/profile to run it when any user logs in via SSH
+echo "/usr/local/bin/statuscontrollab" | sudo tee -a /etc/profile
+
 # Final message with border and color
 echo
 printf "\033[1;32m" # Start coloring
