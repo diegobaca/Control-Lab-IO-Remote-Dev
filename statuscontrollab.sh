@@ -13,8 +13,8 @@ if [ "$service_status" == "active" ]; then
     echo "********************************************************************************"
     echo "Control Lab IO Remote is now running."
     echo "Access the Control Lab IO Remote by typing one of the following URLs into your browser:"
-    echo "  - Hostname: http://$HOSTNAME:5001"
-    echo "  - IP Address: http://$CURRENT_IP:5001"
+    echo "  - Hostname: http://$(hostname):5001"
+    echo "  - IP Address: http://$IP_ADDRESS:5001"
     echo "This will allow you to control your LEGO Interface B."
     echo
     echo "Manage the Control Lab IO Remote service using the following commands:"
