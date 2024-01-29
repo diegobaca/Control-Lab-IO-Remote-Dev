@@ -1,7 +1,7 @@
 # Control-Lab-IO-Remote
 Web-Based Control Interface for Motors on the LEGO Interface B.
 
-Installation:
+Installation on Raspberry Pi (takes ~15 min):
 
 1. Install Raspberry Pi OS Lite using Raspberry Pi Imager:  https://www.raspberrypi.com/software/
 2. Apply OS customization when asked. Edit Settings to configure, hostname, username, password, wireless network information, and enable SSH (under services).
@@ -10,6 +10,10 @@ NOTE: pi = username, and raspberrypi = hostname
 4. Install Git: "sudo apt install git"
 5. Clone Control Lab IO Remote: "git clone https://github.com/diegobaca/Control-Lab-IO-Remote.git"
 6. Navigate to Control Lab IO Remote folder: "cd /home/pi/Control-Lab-IO-Remote", replace pi with your own username if you changed it during OS customization.
-7. Make script executable "chmod +x install.sh"
-8. Run Script "sudo ./install.sh" (takes a while - look for message: Control Lab IO Remote is now running. Type [ip address]:5001 on a browser to control your LEGO Interface B.)
-9. Open a web browser with a device on the same network and type the Raspberry Pi's IP followed by :5001 to connect. 
+7. Run Script "sudo ./install.sh" (This can take a while if you choose 'yes' to the system updates - look for the following message when istallation is complete: Installation of Control Lab IO Remote is complete.)
+8. Open a web browser with a device on the same network and type the Raspberry Pi's IP followed by :5001 to connect.
+
+You can use the following commands via SSH after installation:
+- 'checkcontrollab' to check the status.
+- 'exitcontrollab' to stop the service.
+- 'startcontrollab' to start the service.
