@@ -65,13 +65,20 @@ FULL_APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
 
 # Add aliases to .bashrc for easy access
 {
+    echo "Adding aliases to ~/.bashrc..."
     echo "alias checkcontrollab='$FULL_APP_DIR/check_control_lab.sh'"
     echo "alias exitcontrollab='$FULL_APP_DIR/exit_control_lab.sh'"
     echo "alias startcontrollab='$FULL_APP_DIR/start_control_lab.sh'"
 } >> $HOME/.bashrc
 
+# Debugging: Print a message to indicate that the aliases have been added
+echo "Aliases added to ~/.bashrc"
+
 # Reload .bashrc to apply the changes
 source $HOME/.bashrc
+
+# Debugging: Print a message to indicate that .bashrc has been reloaded
+echo "Reloaded ~/.bashrc"
 
 # Carriage return before the final message
 echo
