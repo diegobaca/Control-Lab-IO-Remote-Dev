@@ -80,7 +80,7 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn">On</button>
+                                class="btn-floating btn-large on-off-btn">Off</button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
@@ -93,7 +93,7 @@
                                 <i class="material-icons">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
-                                <span class="material-symbols-outlined">counter_1</span>
+                                <span class="material-symbols-outlined">counter_4</span>
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
