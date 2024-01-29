@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Define variables
-REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
-APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+APP_DIR="$(pwd)"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -18,15 +17,7 @@ else
 fi
 
 # Install necessary system packages
-sudo apt-get install -y git python3-pip python3-venv
-
-# Clone the repository if it doesn't exist
-if [ ! -d "$APP_DIR" ]; then
-    git clone $REPO_URL $APP_DIR
-else
-    echo "Directory $APP_DIR already exists. Pulling latest changes."
-    git -C $APP_DIR pull
-fi
+sudo apt-get install -y python3-pip python3-venv
 
 # Change to the app directory
 cd $APP_DIR
