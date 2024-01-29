@@ -102,15 +102,14 @@ sudo chmod +x ${GLOBAL_BIN_DIR}/startcontrollab
 
 # Final message with border and color
 echo
+printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
-echo -e "\033[1;32mInstallation of Control Lab IO Remote is complete.\033[0m"
-echo -e "\033[1;32mYou can now manage the Control Lab IO Remote service using the following commands:\033[0m"
-echo -e "\033[1;32m  - 'statuscontrollab' to check the status of the Control Lab IO Remote.\033[0m"
-echo -e "\033[1;32m  - 'stopcontrollab' to stop the Control Lab IO Remote service.\033[0m"
-echo -e "\033[1;32m  - 'startcontrollab' to start the Control Lab IO Remote service.\033[0m"
-echo -e "\033[1;32mEnjoy and Play Well!"
+echo "Installation of Control Lab IO Remote is complete."
+echo "You can now manage the Control Lab IO Remote service using the following commands:"
+echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
+echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
+echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
+echo "Enjoy and Play Well!"
 echo "********************************************************************************"
-
-# Reset text color back to default
-echo -e "\033[0m"
+printf "\033[0m" # Reset text color back to default
 
