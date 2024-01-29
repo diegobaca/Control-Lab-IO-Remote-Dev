@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define variables
-APP_DIR="$PWD"
+APP_DIR="$(pwd)"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
