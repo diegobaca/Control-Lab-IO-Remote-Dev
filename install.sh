@@ -57,6 +57,21 @@ fi
 # Deactivate the virtual environment
 deactivate
 
+# Get the current IP address and the hostname
+CURRENT_IP=$(hostname -I | awk '{print $1}')
+HOSTNAME=$(hostname)
+
+# Update /etc/hosts file
+if grep -q "$HOSTNAME" /etc/hosts; then
+    echo "Updating existing hostname entry."
+    # Use sed to replace the line that contains the hostname
+    sudo sed -i "/$HOSTNAME/c\\$CURRENT_IP $HOSTNAME" /etc/hosts
+else
+    echo "Adding new hostname entry."
+    # Append new host entry at the end of /etc/hosts
+    echo "$CURRENT_IP $HOSTNAME" | sudo tee -a /etc/hosts
+fi
+
 # Check if the service already exists
 if [ -f "$SERVICE_FILE" ]; then
     echo "$SERVICE_FILE already exists."
