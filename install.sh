@@ -2,7 +2,7 @@
 
 # Define variables
 REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
-APP_DIR="/home/pi/Control-Lab-IO-Remote"
+APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
