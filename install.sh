@@ -2,7 +2,7 @@
 
 # Define variables
 REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
-APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+APP_DIR="$HOME/Control-Lab-IO-Remote"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -73,7 +73,7 @@ sudo systemctl enable $SERVICE_NAME.service
 sudo systemctl start $SERVICE_NAME.service
 
 # Create check_control_lab.sh script
-cat << 'EOF' > /home/pi/check_control_lab.sh
+cat << 'EOF' > $HOME/check_control_lab.sh
 #!/bin/bash
 
 # Fetch the IP address
@@ -84,10 +84,10 @@ echo "Control Lab IO Remote is now running. Type $IP_ADDRESS:5001 on a browser t
 EOF
 
 # Make the script executable
-chmod +x /home/pi/check_control_lab.sh
+chmod +x $HOME/check_control_lab.sh
 
 # Create exit_control_lab.sh script
-cat << 'EOF' > /home/pi/exit_control_lab.sh
+cat << 'EOF' > $HOME/exit_control_lab.sh
 #!/bin/bash
 
 # Stop the controllabio-remote service
@@ -97,10 +97,10 @@ echo "Control Lab IO Remote has been stopped."
 EOF
 
 # Make the script executable
-chmod +x /home/pi/exit_control_lab.sh
+chmod +x $HOME/exit_control_lab.sh
 
 # Create start_control_lab.sh script
-cat << 'EOF' > /home/pi/start_control_lab.sh
+cat << 'EOF' > $HOME/start_control_lab.sh
 #!/bin/bash
 
 # Check if controllabio-remote service is active
@@ -114,21 +114,28 @@ fi
 EOF
 
 # Make the script executable
-chmod +x /home/pi/start_control_lab.sh
+chmod +x $HOME/start_control_lab.sh
 
 # Add aliases to .bashrc for easy access
 {
-    echo "alias checkcontrollab='/home/pi/check_control_lab.sh'"
-    echo "alias exitcontrollab='/home/pi/exit_control_lab.sh'"
-    echo "alias startcontrollab='/home/pi/start_control_lab.sh'"
-} >> /home/pi/.bashrc
+    echo "alias checkcontrollab='$HOME/check_control_lab.sh'"
+    echo "alias exitcontrollab='$HOME/exit_control_lab.sh'"
+    echo "alias startcontrollab='$HOME/start_control_lab.sh'"
+} >> $HOME/.bashrc
 
 # Reload .bashrc to apply the changes
-source /home/pi/.bashrc
+source $HOME/.bashrc
 
-# Final message
-echo "Installation of Control Lab IO Remote is complete."
-echo "Use the following commands to manage the service:"
-echo "  - 'checkcontrollab' to check the status."
-echo "  - 'exitcontrollab' to stop the service."
-echo "  - 'startcontrollab' to start the service."
+# Final message with border and color
+{
+echo "********************************************************************************"
+echo -e "\033[1;32mInstallation of Control Lab IO Remote is complete.\033[0m"
+echo -e "\033[1;32mUse the following commands to manage the service:\033[0m"
+echo -e "\033[1;32m  - 'checkcontrollab' to check the status.\033[0m"
+echo -e "\033[1;32m  - 'exitcontrollab' to stop the service.\033[0m"
+echo -e "\033[1;32m  - 'startcontrollab' to start the service.\033[0m"
+echo "********************************************************************************"
+} 
+
+# Reset text color back to default
+echo -e "\033[0m"
