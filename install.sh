@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Define variables
-REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
-APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+APP_DIR="$(pwd)"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -60,16 +59,15 @@ chmod +x $APP_DIR/check_control_lab.sh
 chmod +x $APP_DIR/exit_control_lab.sh
 chmod +x $APP_DIR/start_control_lab.sh
 
-# Define full application directory path
-FULL_APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+# Add aliases to .profile for easy access
+{
+    echo "alias checkcontrollab='$APP_DIR/check_control_lab.sh'"
+    echo "alias exitcontrollab='$APP_DIR/exit_control_lab.sh'"
+    echo "alias startcontrollab='$APP_DIR/start_control_lab.sh'"
+} >> $HOME/.profile
 
-# Add aliases to .bashrc for easy access
-echo "alias checkcontrollab='$FULL_APP_DIR/check_control_lab.sh'" >> ~/.bashrc
-echo "alias exitcontrollab='$FULL_APP_DIR/exit_control_lab.sh'" >> ~/.bashrc
-echo "alias startcontrollab='$FULL_APP_DIR/start_control_lab.sh'" >> ~/.bashrc
-
-# Reload .bashrc to apply the changes
-source $HOME/.bashrc
+# Reload .profile to apply the changes
+source $HOME/.profile
 
 # Carriage return before the final message
 echo
