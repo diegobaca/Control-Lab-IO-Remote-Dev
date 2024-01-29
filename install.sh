@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Define variables
-APP_DIR="$(pwd)"
+REPO_URL="https://github.com/diegobaca/Control-Lab-IO-Remote.git"
+APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
@@ -59,11 +60,14 @@ chmod +x $APP_DIR/check_control_lab.sh
 chmod +x $APP_DIR/exit_control_lab.sh
 chmod +x $APP_DIR/start_control_lab.sh
 
+# Define full application directory path
+FULL_APP_DIR="/home/$(whoami)/Control-Lab-IO-Remote"
+
 # Add aliases to .bashrc for easy access
 {
-    echo "alias checkcontrollab='$APP_DIR/check_control_lab.sh'"
-    echo "alias exitcontrollab='$APP_DIR/exit_control_lab.sh'"
-    echo "alias startcontrollab='$APP_DIR/start_control_lab.sh'"
+    echo "alias checkcontrollab='$FULL_APP_DIR/check_control_lab.sh'"
+    echo "alias exitcontrollab='$FULL_APP_DIR/exit_control_lab.sh'"
+    echo "alias startcontrollab='$FULL_APP_DIR/start_control_lab.sh'"
 } >> $HOME/.bashrc
 
 # Reload .bashrc to apply the changes
