@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Check if controllabio-remote service is active
-if systemctl is-active --quiet controllabio-remote.service; then
+systemctl is-active --quiet controllabio-remote.service
+service_status=$?
+
+if [ $service_status -eq 0 ]; then
     # Fetch the IP address
     IP_ADDRESS=$(hostname -I | awk '{print $1}')
 
