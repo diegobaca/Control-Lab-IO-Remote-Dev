@@ -91,7 +91,7 @@ sudo systemctl enable "$SERVICE_NAME.service"
 sudo systemctl start "$SERVICE_NAME.service"
 
 # Copy utility scripts to /usr/local/bin and make them executable
-for script in check_control_lab.sh exit_control_lab.sh start_control_lab.sh; do
+for script in statuscontrollab.sh stopcontrollab.sh startcontrollab.sh; do
     src="${APP_DIR}/${script}"
     dest="${GLOBAL_BIN_DIR}/${script%.*}" # Removes the '.sh' extension
     
