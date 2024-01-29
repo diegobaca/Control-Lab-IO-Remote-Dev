@@ -11,6 +11,7 @@ APP_DIR="$(dirname "$(realpath "$0")")"
 SERVICE_NAME="controllabio-remote"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
 CURRENT_USER=$(whoami)
+GLOBAL_BIN_DIR="/usr/local/bin"
 
 # Welcome message and usage instructions
 echo "Starting installation of ${SERVICE_NAME}..."
@@ -89,15 +90,27 @@ sudo systemctl enable "$SERVICE_NAME.service"
 # Start the service
 sudo systemctl start "$SERVICE_NAME.service"
 
+# Copy utility scripts to /usr/local/bin and make them executable
+sudo cp "${APP_DIR}/check_control_lab.sh" ${GLOBAL_BIN_DIR}/statuscontrollab
+sudo chmod +x ${GLOBAL_BIN_DIR}/statuscontrollab
+
+sudo cp "${APP_DIR}/exit_control_lab.sh" ${GLOBAL_BIN_DIR}/stopcontrollab
+sudo chmod +x ${GLOBAL_BIN_DIR}/stopcontrollab
+
+sudo cp "${APP_DIR}/start_control_lab.sh" ${GLOBAL_BIN_DIR}/startcontrollab
+sudo chmod +x ${GLOBAL_BIN_DIR}/startcontrollab
+
 # Final message with border and color
 echo
 echo "********************************************************************************"
 echo -e "\033[1;32mInstallation of Control Lab IO Remote is complete.\033[0m"
-echo -e "\033[1;32mUse the following commands to manage the service:\033[0m"
-echo -e "\033[1;32m  - 'systemctl status $SERVICE_NAME' to check the status.\033[0m"
-echo -e "\033[1;32m  - 'systemctl stop $SERVICE_NAME' to stop the service.\033[0m"
-echo -e "\033[1;32m  - 'systemctl start $SERVICE_NAME' to start the service.\033[0m"
+echo -e "\033[1;32mYou can now manage the Control Lab IO Remote service using the following commands:\033[0m"
+echo -e "\033[1;32m  - 'statuscontrollab' to check the status of the Control Lab IO Remote.\033[0m"
+echo -e "\033[1;32m  - 'stopcontrollab' to stop the Control Lab IO Remote service.\033[0m"
+echo -e "\033[1;32m  - 'startcontrollab' to start the Control Lab IO Remote service.\033[0m"
+echo -e "\033[1;32mEnjoy and Play Well!"
 echo "********************************************************************************"
 
 # Reset text color back to default
 echo -e "\033[0m"
+
