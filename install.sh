@@ -64,8 +64,13 @@ export checkcontrollab="$APP_DIR/check_control_lab.sh"
 export exitcontrollab="$APP_DIR/exit_control_lab.sh"
 export startcontrollab="$APP_DIR/start_control_lab.sh"
 
-# Create the crontab file to run checkcontrollab on boot
-echo "@reboot $APP_DIR/check_control_lab.sh" | sudo tee /etc/cron.d/checkcontrollab
+# Define the command to be added to ~/.profile
+CMD_TO_ADD="$APP_DIR/check_control_lab.sh"
+
+# Check if the command is already in ~/.profile, if not, add it
+if ! grep -Fxq "$CMD_TO_ADD" ~/.profile; then
+    echo "$CMD_TO_ADD" >> ~/.profile
+fi
 
 # Reload the systemd daemon to recognize the new service
 sudo systemctl daemon-reload
