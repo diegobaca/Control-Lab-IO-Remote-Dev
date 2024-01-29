@@ -2,6 +2,7 @@
 
 # Fetch the service status
 service_status=$(systemctl is-active controllabio-remote.service)
+echo "Debug: Service status is '$service_status'"  # Debug line
 
 if [ "$service_status" == "active" ]; then
     # Fetch the IP address
@@ -16,13 +17,23 @@ if [ "$service_status" == "active" ]; then
     echo "********************************************************************************"
     echo
     printf "\033[0m" # Reset text color back to default
-else
+elif [ "$service_status" == "inactive" ] || [ "$service_status" == "failed" ]; then  # Handle other states explicitly
     # Start coloring and print the message that the service is not running
     printf "\033[1;32m" # Start coloring
     echo
     echo "********************************************************************************"
     echo "Control Lab IO Remote is not running."
     echo "Type command 'startcontrollab' to restart the service."
+    echo "********************************************************************************"
+    echo
+    printf "\033[0m" # Reset text color back to default
+else
+    # Handle unexpected status
+    printf "\033[1;33m" # Start coloring with yellow for warning
+    echo
+    echo "********************************************************************************"
+    echo "Control Lab IO Remote is in an unexpected state: '$service_status'."
+    echo "Please check the service status manually."
     echo "********************************************************************************"
     echo
     printf "\033[0m" # Reset text color back to default
