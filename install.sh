@@ -91,17 +91,28 @@ sudo systemctl enable "$SERVICE_NAME.service"
 sudo systemctl start "$SERVICE_NAME.service"
 
 # Copy utility scripts to /usr/local/bin and make them executable
-sudo cp "${APP_DIR}/check_control_lab.sh" ${GLOBAL_BIN_DIR}/statuscontrollab
-sudo chmod +x ${GLOBAL_BIN_DIR}/statuscontrollab
-
-sudo cp "${APP_DIR}/exit_control_lab.sh" ${GLOBAL_BIN_DIR}/stopcontrollab
-sudo chmod +x ${GLOBAL_BIN_DIR}/stopcontrollab
-
-sudo cp "${APP_DIR}/start_control_lab.sh" ${GLOBAL_BIN_DIR}/startcontrollab
-sudo chmod +x ${GLOBAL_BIN_DIR}/startcontrollab
+for script in check_control_lab.sh exit_control_lab.sh start_control_lab.sh; do
+    src="${APP_DIR}/${script}"
+    dest="${GLOBAL_BIN_DIR}/${script%.*}" # Removes the '.sh' extension
+    
+    # Check if the utility script already exists and is the same as the source
+    if [ -f "$dest" ] && cmp --silent "$src" "$dest"; then
+        echo "The script $dest is already up-to-date."
+    else
+        sudo cp "$src" "$dest"
+        sudo chmod +x "$dest"
+        echo "Installed $dest"
+    fi
+done
 
 # Append the statuscontrollab command to /etc/profile to run it when any user logs in via SSH
-echo "/usr/local/bin/statuscontrollab" | sudo tee -a /etc/profile
+# First, check if the line already exists to avoid duplicates
+if ! grep -q "/usr/local/bin/statuscontrollab" /etc/profile; then
+    echo "/usr/local/bin/statuscontrollab" | sudo tee -a /etc/profile
+    echo "Added statuscontrollab command to /etc/profile."
+else
+    echo "statuscontrollab command is already in /etc/profile."
+fi
 
 # Final message with border and color
 echo
@@ -109,11 +120,9 @@ printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
 echo "Installation of Control Lab IO Remote is complete."
 echo "You can now manage the Control Lab IO Remote service using the following commands:"
-echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote service."
+echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
 echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
 echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
 echo "Enjoy and Play Well!"
 echo "********************************************************************************"
-echo
 printf "\033[0m" # Reset text color back to default
-
