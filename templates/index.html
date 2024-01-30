@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
     <!-- Preload Core CSS and JS files -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" as="style">
-    <link rel="preload" href="/static/css/styles.css" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="/static/css/styles.css" as="style" onload="this.rel='stylesheet'">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" as="script">
     <link rel="preload" href="/static/js/scripts.js" as="script">
 
@@ -18,10 +18,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favicon-16x16.png">
 
     <title>Control Lab IO</title>
-    <!-- Materialize CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <!-- Local CSS File -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+    
+    <!-- Fallback for Materialize CSS -->
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></noscript>
+    <!-- Fallback for Local CSS File -->
+    <noscript><link rel="stylesheet" href="/static/css/styles.css"></noscript>
+    
     <!-- Material Icons (Materialize) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Material Symbols Outlined -->
