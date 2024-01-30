@@ -42,21 +42,24 @@
         <div class="connection-container">
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
-                class="btn-floating btn-large black">
+                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                 <i class="material-icons" id="connection-icon">link</i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
             <div class="flex-grow">
-                <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black">
+                <button id="sending-btn" onclick="toggleSending()" 
+                        class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                     <i class="material-icons" id="sending-icon">pause</i> <!-- Default icon -->
                 </button>
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
             <div>
-                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large black">
+                <button id="save-btn" onclick="saveOutputValues()" 
+                        class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                     <i class="material-icons">save</i> <!-- Save icon -->
                 </button>
-                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large black">
+                <button id="load-btn" onclick="loadOutputValues()" 
+                        class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                     <i class="material-icons">folder</i> <!-- Folder icon -->
                 </button>
             </div>
@@ -76,25 +79,25 @@
                         <!-- Buttons (larger column) -->
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
-                                onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn">Off</button>
+                                    onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large on-off-btn" style="width: 56px; height: 56px;">Off</button>
                             <button id="direction-{{ output_id }}"
-                                onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
-                                onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
                                 <span class="material-symbols-outlined">counter_4</span>
                             </span>
                             <button id="increase-{{ output_id }}"
-                                onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons">add_circle</i>
                             </button>
                         </div>
@@ -115,25 +118,25 @@
                         <!-- Buttons (larger column) -->
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
-                                onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn">Off</button>
+                                    onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large on-off-btn" style="width: 56px; height: 56px;">Off</button>
                             <button id="direction-{{ output_id }}"
-                                onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
-                                onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
                                 <span class="material-symbols-outlined">counter_4</span>
                             </span>
                             <button id="increase-{{ output_id }}"
-                                onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                    onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
+                                    class="btn-floating btn-large black" style="width: 56px; height: 56px;">
                                 <i class="material-icons">add_circle</i>
                             </button>
                         </div>
@@ -149,10 +152,8 @@
         </div>
     </div>
 
-    <!-- Materialize JavaScript, deferred to not block HTML parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
-    <!-- Local JavaScript File, deferred to not block HTML parsing -->
-    <script src="/static/js/scripts.js" defer></script>
+    <!-- ... Script tags ... -->
 </body>
+
 
 </html>
