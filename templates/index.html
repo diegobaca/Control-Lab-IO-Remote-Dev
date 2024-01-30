@@ -7,11 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-    <!-- Preload Core CSS and JS files -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="/static/css/styles.css" as="style" onload="this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" as="script">
-    <link rel="preload" href="/static/js/scripts.js" as="script">
+    <!-- Core CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 
     <!--Icons-->
     <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon-32x32.png">
@@ -19,27 +17,24 @@
 
     <title>Control Lab IO</title>
     
-    <!-- Fallback for Materialize CSS -->
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet"></noscript>
-    <!-- Fallback for Local CSS File -->
-    <noscript><link rel="stylesheet" href="/static/css/styles.css"></noscript>
-    
     <!-- Material Icons (Materialize) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Material Symbols Outlined -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     
-    <!-- Materialize JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <!-- Local JavaScript File -->
-    <script src="/static/js/scripts.js" defer></script>
+    <!-- Fallback for users with JavaScript disabled -->
+    <noscript>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/styles.css">
+    </noscript>
+    
 </head>
 
 <body>
     <div class="container">
         <!-- Custom container for Title with Image -->
         <div class="title-container">
-            <img src="{{ url_for('static', filename='assets/logo.png') }}" alt="Logo" class="logo-image">
+            <img src="/static/assets/logo.png" alt="Logo" class="logo-image">
             <h5 class="title-text">Control Lab IO</h5>
         </div>
 
@@ -153,6 +148,11 @@
             <small>Control Lab IO © 2024</small>
         </div>
     </div>
+
+    <!-- Materialize JavaScript, deferred to not block HTML parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+    <!-- Local JavaScript File, deferred to not block HTML parsing -->
+    <script src="/static/js/scripts.js" defer></script>
 </body>
 
 </html>
