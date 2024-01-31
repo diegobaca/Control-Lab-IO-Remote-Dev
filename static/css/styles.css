@@ -196,3 +196,8 @@ body {
         /* Space between each output container */
     }
 }
+
+html {
+    visibility: visible;
+    opacity: 1;
+}
