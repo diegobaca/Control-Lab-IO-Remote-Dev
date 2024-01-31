@@ -127,6 +127,7 @@ body {
 .col.s1 {
     flex: 1;
     /* Take 1 portion of the space */
+    padding-bottom: 7px;
 }
 
 .col.s11 {
