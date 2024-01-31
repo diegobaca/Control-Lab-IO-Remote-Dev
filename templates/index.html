@@ -6,23 +6,39 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
-    <!-- Core CSS Files -->
-    <style>html{visibility: hidden;opacity:0;}</style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="/static/css/styles.css">
+    
+    <!-- Material Symbols Outlined -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <!--Icons-->
     <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favicon-16x16.png">
 
     <title>Control Lab IO</title>
-    
-    <!-- Material Icons (Materialize) -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Material Symbols Outlined -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    
+
+    <style>html{visibility: hidden;opacity:0;}</style>
+
+    <!-- Font Face Observer -->
+    <script src="/static/js/fontfaceobserver.js"></script>
+    <script>
+        var font = new FontFaceObserver('Material Symbols Outlined');
+
+        font.load().then(function () {
+            // When the font is loaded, add the link to your CSS
+            var materializeLink = document.createElement('link');
+            materializeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';
+            materializeLink.rel = 'stylesheet';
+            document.head.appendChild(materializeLink);
+
+            var customStyleLink = document.createElement('link');
+            customStyleLink.href = '/static/css/styles.css';
+            customStyleLink.rel = 'stylesheet';
+            document.head.appendChild(customStyleLink);
+        }).catch(function (e) {
+            console.error('Font is not available', e);
+        });
+    </script>
+
     <!-- Fallback for users with JavaScript disabled -->
     <noscript>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
@@ -44,21 +60,21 @@
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
                 class="btn-floating btn-large black">
-                <i class="material-icons" id="connection-icon">link</i> <!-- Default icon -->
+                <i class="material-symbols-outlined" id="connection-icon">link</i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
             <div class="flex-grow">
                 <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black">
-                    <i class="material-icons" id="sending-icon">pause</i> <!-- Default icon -->
+                    <i class="material-symbols-outlined" id="sending-icon">pause</i> <!-- Default icon -->
                 </button>
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
             <div>
                 <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large black">
-                    <i class="material-icons">save</i> <!-- Save icon -->
+                    <i class="material-symbols-outlined">save</i> <!-- Save icon -->
                 </button>
                 <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large black">
-                    <i class="material-icons">folder</i> <!-- Folder icon -->
+                    <i class="material-symbols-outlined">folder</i> <!-- Folder icon -->
                 </button>
             </div>
         </div>
@@ -82,13 +98,13 @@
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons" id="direction-icon-{{ output_id }}">rotate_right</i>
+                                <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons">remove_circle</i>
+                                <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
                                 <span class="material-symbols-outlined">counter_4</span>
@@ -96,7 +112,7 @@
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons">add_circle</i>
+                                <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
                     </div>
@@ -121,13 +137,13 @@
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons" id="direction-icon-{{ output_id }}">rotate_right</i>
+                                <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons">remove_circle</i>
+                                <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
                                 <span class="material-symbols-outlined">counter_4</span>
@@ -135,7 +151,7 @@
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
-                                <i class="material-icons">add_circle</i>
+                                <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
                     </div>
