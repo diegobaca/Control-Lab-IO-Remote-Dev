@@ -60,21 +60,21 @@
         <div class="connection-container">
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
-                class="btn-floating btn-large black">
+                class="btn-floating btn-large black waves-effect waves-light">
                 <i class="material-symbols-outlined" id="connection-icon">link</i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
             <div class="flex-grow">
-                <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black">
+                <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black waves-effect waves-light">
                     <i class="material-symbols-outlined" id="sending-icon">pause</i> <!-- Default icon -->
                 </button>
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
             <div>
-                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large black">
+                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large black waves-effect waves-light">
                     <i class="material-symbols-outlined">save</i> <!-- Save icon -->
                 </button>
-                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large black">
+                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large black waves-effect waves-light">
                     <i class="material-symbols-outlined">folder</i> <!-- Folder icon -->
                 </button>
             </div>
@@ -95,10 +95,10 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn"></button>
+                                class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                class="btn-floating btn-large black waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
@@ -134,10 +134,10 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn"></button>
+                                class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black">
+                                class="btn-floating btn-large black waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
