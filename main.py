@@ -137,36 +137,32 @@ def index():
 
 @app.route('/toggle_connection', methods=['POST'])
 def toggle_connection():
-    global serial_connection, is_connected, is_sending  # include is_sending
+    global serial_connection, is_connected, is_sending
     if is_connected:
         stop_all_motors()  # Stop all motors before disconnecting
         if serial_connection:
-            serial_connection.close()
-            serial_connection = None
-        is_connected = False
-        is_sending = False  # Turn off sending when manually disconnecting
-
-        # Inform the user about the disconnection
+            serial_connection.close()  # Close the serial connection
+            serial_connection = None   # Reset the serial connection object
+        is_connected = False  # Update the connection status
+        is_sending = False    # Stop sending when manually disconnecting
         print("Disconnected from the serial port.")
     else:
         try:
-            serial_connection = find_ports()
+            serial_connection = find_ports()  # Attempt to find and connect to the port
             if serial_connection:
-                threading.Thread(target=keep_alive, args=(serial_connection,)).start()
-                threading.Thread(target=send_commands, daemon=True).start()
-                is_connected = True
-                # No need to change is_sending here; it should remain in its previous state
-                # until the user explicitly starts or stops sending
-
-                # Inform the user about the successful connection
+                threading.Thread(target=keep_alive, args=(serial_connection,)).start()  # Start the keep_alive thread
+                threading.Thread(target=send_commands, daemon=True).start()  # Start the send_commands thread
+                is_connected = True  # Update the connection status
                 print(f"Connected to {serial_connection.port}")
-
+            else:
+                is_connected = False  # Ensure the connection status is updated if the connection attempt fails
+                is_sending = False    # Ensure sending is stopped if the connection attempt fails
         except Exception as e:
             print(f"Connection failed: {str(e)}")
-            is_connected = False  # Ensure is_connected reflects the failed attempt
-            is_sending = False  # Ensure is_sending is turned off if the connection attempt fails
+            is_connected = False  # Ensure the connection status is updated on exception
+            is_sending = False    # Ensure sending is stopped on exception
 
-    # Return the current connection status and sending status
+    # Return the current connection status and sending status to the frontend
     return jsonify(is_connected=is_connected, is_sending=is_sending)
 
 @app.route('/toggle_on/<int:output_id>', methods=['POST'])
