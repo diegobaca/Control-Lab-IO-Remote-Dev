@@ -20,6 +20,9 @@ pPow = [0] * 8     # Previous power level
 On = [False] * 8   # On/off state
 pOn = [False] * 8  # Previous on/off state
 
+# Flag to control thread execution
+stop_threads = False
+
 def find_ports():
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
@@ -40,13 +43,13 @@ def find_ports():
     return None
 
 def keep_alive(port):
-    global is_connected  # Access the global variable
-    while True:
+    global is_connected, stop_threads
+    while not stop_threads:
         try:
             port.write([2])
             time.sleep(2)
         except serial.SerialException:
-            is_connected = False  # Update connection status
+            is_connected = False
             if port:
                 port.close()  # Close the connection properly
                 stop_all_motors()  # Stop all motors
@@ -54,8 +57,8 @@ def keep_alive(port):
             break  # Exit the loop if there's an error
 
 def send_commands():
-    global is_sending, was_sending, is_connected, serial_connection  # Access the global variables
-    while serial_connection:
+    global is_sending, was_sending, is_connected, serial_connection, stop_threads
+    while not stop_threads:
         if is_sending:
             try:
                 # Normal operation: send commands based on Dir, Pow, On
@@ -137,30 +140,33 @@ def index():
 
 @app.route('/toggle_connection', methods=['POST'])
 def toggle_connection():
-    global serial_connection, is_connected, is_sending
+    global serial_connection, is_connected, is_sending, stop_threads
     if is_connected:
-        stop_all_motors()  # Stop all motors before disconnecting
+        stop_threads = True  # Signal threads to stop
+        stop_all_motors()    # Stop all motors before disconnecting
         if serial_connection:
-            serial_connection.close()  # Close the serial connection
-            serial_connection = None   # Reset the serial connection object
-        is_connected = False  # Update the connection status
-        is_sending = False    # Stop sending when manually disconnecting
+            serial_connection.close()
+            serial_connection = None
+        is_connected = False
+        is_sending = False
+        stop_threads = False  # Reset the flag after all threads are expected to have stopped
         print("Disconnected from the serial port.")
     else:
         try:
-            serial_connection = find_ports()  # Attempt to find and connect to the port
+            serial_connection = find_ports()
             if serial_connection:
-                threading.Thread(target=keep_alive, args=(serial_connection,)).start()  # Start the keep_alive thread
-                threading.Thread(target=send_commands, daemon=True).start()  # Start the send_commands thread
-                is_connected = True  # Update the connection status
+                stop_threads = False  # Reset flag before starting threads
+                threading.Thread(target=keep_alive, args=(serial_connection,)).start()
+                threading.Thread(target=send_commands, daemon=True).start()
+                is_connected = True
                 print(f"Connected to {serial_connection.port}")
             else:
-                is_connected = False  # Ensure the connection status is updated if the connection attempt fails
-                is_sending = False    # Ensure sending is stopped if the connection attempt fails
+                is_connected = False
+                is_sending = False
         except Exception as e:
             print(f"Connection failed: {str(e)}")
-            is_connected = False  # Ensure the connection status is updated on exception
-            is_sending = False    # Ensure sending is stopped on exception
+            is_connected = False
+            is_sending = False
 
     # Return the current connection status and sending status to the frontend
     return jsonify(is_connected=is_connected, is_sending=is_sending)
