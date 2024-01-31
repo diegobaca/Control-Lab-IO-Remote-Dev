@@ -117,29 +117,33 @@ function updateConnectionStatus() {
         var connectionIcon = document.getElementById('connection-icon');
 
         if (data.is_connected) {
+            // "Connected" state
             connectionButton.classList.add('green');
             connectionButton.classList.remove('black', 'red', 'pulse');
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
-            isAttemptingConnection = false;  // Reset attempt flag on successful connection
-            isDisconnecting = false;  // Reset disconnecting flag
         } else {
             if (isAttemptingConnection) {
+                // "No connection found" state
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse');
                 connectionIcon.textContent = 'refresh';
             } else {
+                // "Default / Disconnected" state
                 connectionButton.classList.add('black');
                 connectionButton.classList.remove('green', 'red', 'pulse');
                 connectionIcon.textContent = 'link';
-                isAttemptingConnection = false;  // Ensure reset on normal disconnection
             }
             isConnected = false;
         }
-        isAttemptingConnection = false;  // Reset connection attempt flag
-        isDisconnecting = false;  // Reset disconnecting flag
+
+        isAttemptingConnection = false;
+        isDisconnecting = false;
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
+
+        // Now also handle sending status
+        is_sending = data.is_sending;  // Update is_sending based on the server response
         updateSendingStatus();  // Update the sending button UI
     };
     xhr.send();
