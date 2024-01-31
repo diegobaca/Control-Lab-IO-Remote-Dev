@@ -277,6 +277,10 @@ function periodicallyCheckConnection() {
                 updateConnectionStatus(); // Update UI to reflect connection is back
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
+                // Update all other UI elements to reflect the current state
+                updateButtonStates();
+                updateDirectionLabels();
+                updateOnOffLabels();
             } 
             
             // If the connection was there and now it's lost
@@ -286,6 +290,10 @@ function periodicallyCheckConnection() {
                 updateConnectionStatus(); // Update UI to reflect connection is lost
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
+                // Update all other UI elements to reflect the current state
+                updateButtonStates();
+                updateDirectionLabels();
+                updateOnOffLabels();
             }
         };
         xhr.send();
