@@ -269,13 +269,23 @@ function periodicallyCheckConnection() {
         xhr.open("GET", "/check_connection", true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
-            if (!data.is_connected && isConnected) {
-                // If the connection was lost, update the UI to reflect this change
-                isConnected = false;
-                is_sending = data.is_sending;  // Update is_sending based on the server response
-                updateConnectionStatus();
+            
+            // If the connection was lost and now it's back
+            if (data.is_connected && !isConnected) {
+                isConnected = true;
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is back
                 updateButtonAccessibility(isConnected);
-                updateSendingStatus();  // Update the sending button UI
+                updateSendingStatus(); // Update the sending button UI
+            } 
+            
+            // If the connection was there and now it's lost
+            else if (!data.is_connected && isConnected) {
+                isConnected = false;
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is lost
+                updateButtonAccessibility(isConnected);
+                updateSendingStatus(); // Update the sending button UI
             }
         };
         xhr.send();
