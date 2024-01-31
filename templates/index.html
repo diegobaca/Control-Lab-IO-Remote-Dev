@@ -24,7 +24,7 @@
 
     <!-- Pre-Style -->
     <style>html{visibility: hidden; opacity:0;}</style>
-    <style>.btn-floating.btn-large.black{background-color: #DFDFDF; color: white;}</style>
+    <style>.btn-floating.btn-large.on-off-btn{background-color: #DFDFDF; color: white;}</style>
 
     <!-- Font Face Observer -->
     <script src="/static/js/fontfaceobserver.js"></script>
@@ -95,7 +95,7 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn">Off</button>
+                                class="btn-floating btn-large on-off-btn">--</button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large black">
@@ -108,7 +108,7 @@
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
-                                <span class="material-symbols-outlined">counter_4</span>
+                                <span class="material-symbols-outlined">counter_0</span>
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
