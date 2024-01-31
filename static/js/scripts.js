@@ -299,8 +299,3 @@ window.onload = function () {
 
 };
 
-window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-        document.body.classList.remove('no-transition');
-    });
-});
