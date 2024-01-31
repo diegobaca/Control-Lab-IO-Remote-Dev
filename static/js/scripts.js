@@ -262,14 +262,6 @@ function updateButtonAccessibility(isConnected) {
     });
 }
 
-
-ChatGPT
-To ensure the entire UI reflects the current state of the system after a connection status change, you should not only update the button states, direction labels, and on/off labels but also fetch the latest data from the server for these components. This ensures that the UI components display the most up-to-date information.
-
-Here's how you can modify the periodicallyCheckConnection function to fetch and update the entire UI when the connection status changes:
-
-javascript
-Copy code
 // Function to check the connection status periodically
 function periodicallyCheckConnection() {
     setInterval(function () {
@@ -285,9 +277,10 @@ function periodicallyCheckConnection() {
                 updateConnectionStatus(); // Update UI to reflect connection is back
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
-                
-                // Fetch and update all other UI elements to reflect the current state
-                fetchAndUpdateAllUI();
+                // Update all other UI elements to reflect the current state
+                updateButtonStates();
+                updateDirectionLabels();
+                updateOnOffLabels();
             } 
             
             // If the connection was there and now it's lost
@@ -297,20 +290,14 @@ function periodicallyCheckConnection() {
                 updateConnectionStatus(); // Update UI to reflect connection is lost
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
-                
-                // Fetch and update all other UI elements to reflect the current state
-                fetchAndUpdateAllUI();
+                // Update all other UI elements to reflect the current state
+                updateButtonStates();
+                updateDirectionLabels();
+                updateOnOffLabels();
             }
         };
         xhr.send();
     }, 2000); // Check every 2000 milliseconds (2 seconds)
-}
-
-function fetchAndUpdateAllUI() {
-    // Fetch and update power levels, direction, and on/off states
-    updateButtonStates(); // This already fetches the latest power levels from the server and updates the UI
-    updateDirectionLabels(); // Fetch and update direction labels
-    updateOnOffLabels(); // Fetch and update on/off labels
 }
 
 window.onload = function () {
