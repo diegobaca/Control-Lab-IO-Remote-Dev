@@ -287,6 +287,11 @@ function periodicallyCheckConnection() {
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
             }
+
+            // Regardless of connection status, update the UI with the latest system states
+            updateOnOffLabels();
+            updateDirectionLabels();
+            updateButtonStates();
         };
         xhr.send();
     }, 2000); // Check every 2000 milliseconds (2 seconds)
