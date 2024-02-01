@@ -269,7 +269,7 @@ function periodicallyCheckConnection() {
         xhr.open("GET", "/check_connection", true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
-            
+
             // If the connection was lost and now it's back
             if (data.is_connected && !isConnected) {
                 isConnected = true;
@@ -292,9 +292,10 @@ function periodicallyCheckConnection() {
             updateOnOffLabels();
             updateDirectionLabels();
             updateButtonStates();
+            updateSendingStatus();  // Make sure this is called here to update sending status regularly
         };
         xhr.send();
-    }, 2000); // Check every 2000 milliseconds (2 seconds)
+    }, 1000); // Check every 1000 milliseconds (1 second)
 }
 
 window.onload = function () {
