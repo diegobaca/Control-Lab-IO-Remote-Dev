@@ -112,6 +112,7 @@ body {
     width: 100%;
     /* Ensure the row takes full width of its parent */
     margin-bottom: 0px;
+    height: 60px;
 }
 
 .col.s1,
