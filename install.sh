@@ -32,11 +32,19 @@ else
 fi
 
 # Install necessary system packages
-sudo apt-get install -y python3-pip python3-venv
+sudo apt-get install -y python3-pip python3-venv avahi-daemon # Added avahi-daemon here
 if [ $? -ne 0 ]; then
     echo "Failed to install required packages."
     exit 1
 fi
+
+# Start and enable Avahi daemon for .local domain resolution
+sudo systemctl start avahi-daemon
+sudo systemctl enable avahi-daemon
+echo "Avahi daemon has been started and enabled for .local domain resolution."
+
+# Optionally adjust firewall, only if you're using UFW and it's active
+# sudo ufw allow 5353/udp
 
 # Create a virtual environment if it doesn't exist
 if [ ! -d "${APP_DIR}/venv" ]; then
@@ -130,8 +138,8 @@ printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
 echo "Installation of Control Lab IO Remote is complete."
 echo "The device's IP has been mapped to its hostname. You can access the device on port 5001 using:"
-echo "  - Hostname: http://$HOSTNAME:5001"
-echo "  - IP Address: http://$CURRENT_IP:5001"
+echo "  - Hostname: http://$HOSTNAME.local" # Modified to use .local
+echo "  - IP Address: http://$CURRENT_IP"
 echo "This allows you to connect to your device more easily within your network."
 echo
 echo "You can now manage the Control Lab IO Remote service using the following commands:"
@@ -142,4 +150,3 @@ echo
 echo "Enjoy and Play Well!"
 echo "********************************************************************************"
 printf "\033[0m" # Reset text color back to default
-
