@@ -9,7 +9,7 @@ if [ "$service_status" == "active" ]; then
 
     if [ -z "$IP_ADDRESS" ]; then
         # Start coloring and print the message that the IP address could not be found
-        printf "\033[0;31m" # Start coloring with red
+        printf "\033[1;31m" # Start coloring with red
         echo
         echo "********************************************************************************"
         echo "Control Lab IO Remote is running, but the IP address could not be found."
@@ -38,7 +38,7 @@ if [ "$service_status" == "active" ]; then
     fi
 elif [ "$service_status" == "inactive" ] || [ "$service_status" == "failed" ]; then
     # Start coloring and print the message that the service is not running
-    printf "\033[0;31m" # Start coloring with red
+    printf "\033[1;31m" # Start coloring with red
     echo
     echo "********************************************************************************"
     echo "Control Lab IO Remote is not running."
@@ -48,7 +48,7 @@ elif [ "$service_status" == "inactive" ] || [ "$service_status" == "failed" ]; t
     printf "\033[0m" # Reset text color back to default
 else
     # Handle unexpected status
-    printf "\033[0;31m" # Start coloring with red for warning
+    printf "\033[1;31m" # Start coloring with red for warning
     echo
     echo "********************************************************************************"
     echo "Control Lab IO Remote is in an unexpected state: '$service_status'."

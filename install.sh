@@ -13,7 +13,7 @@ check_internet() {
         echo
         printf "\033[1;31m"
         echo "********************************************************************************"
-        echo "ERROR: Internet connection required."
+        echo "Internet connection required."
         echo "This script requires an internet connection but couldn't reach the internet."
         echo "Please check your network connection and try again."
         echo "********************************************************************************"
