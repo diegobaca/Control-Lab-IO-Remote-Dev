@@ -168,22 +168,23 @@ for i in {1..3}; do
 done
 echo
 
-# Re-check the current IP address
-CURRENT_IP=$(hostname -I | awk '{print $1}')
+# Re-check network connectivity (not just the IP address)
+ping -c 1 8.8.8.8 > /dev/null 2>&1
+NETWORK_STATUS=$?
 
 # Final message with border and color
 echo
 printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
-if [ -z "$CURRENT_IP" ]; then
-    # IP address not found
+if [ $NETWORK_STATUS -ne 0 ]; then
+    # Network connectivity lost
     printf "\033[1;31m" # Coloring with red for warning
-    echo "Installation of Control Lab IO Remote is complete, but the IP address could not be found."
-    echo "Check your network configuration or try restarting the network service."
+    echo "Installation of Control Lab IO Remote is complete, but the network connectivity was lost."
+    echo "Check your network connection or try reconnecting your network cable."
     printf "\033[1;32m" # Reverting back to green coloring for the rest of the message
     echo "You can still manage the Control Lab IO Remote service using the following commands:"
 else
-    # IP address found
+    # Network connectivity is fine
     echo "Installation of Control Lab IO Remote is complete."
     echo "The device's IP has been mapped to its hostname. Access the Control Lab IO Remote by typing one of the following URLs into your browser:"
     echo "  - Hostname: http://$HOSTNAME.local"
