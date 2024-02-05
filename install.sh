@@ -160,6 +160,14 @@ else
     echo "statuscontrollab command is already in /etc/profile."
 fi
 
+# Finishing up message with cycling dots
+echo -n "Finishing up"
+for i in {1..3}; do
+    sleep 1
+    echo -n "."
+done
+echo
+
 # Final message with border and color
 echo
 printf "\033[1;32m" # Start coloring
