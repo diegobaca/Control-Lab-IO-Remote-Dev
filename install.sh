@@ -168,6 +168,9 @@ for i in {1..3}; do
 done
 echo
 
+# Re-check the current IP address
+CURRENT_IP=$(hostname -I | awk '{print $1}')
+
 # Final message with border and color
 echo
 printf "\033[1;32m" # Start coloring
