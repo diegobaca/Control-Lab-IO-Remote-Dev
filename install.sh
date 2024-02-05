@@ -181,6 +181,7 @@ if [ $NETWORK_STATUS -ne 0 ]; then
     printf "\033[1;31m" # Coloring with red for warning
     echo "Installation of Control Lab IO Remote is complete, but the network connectivity was lost."
     echo "Check your network connection or try reconnecting your network cable."
+    echo
     printf "\033[1;32m" # Reverting back to green coloring for the rest of the message
     echo "You can still manage the Control Lab IO Remote service using the following commands:"
 else

@@ -6,20 +6,30 @@ service_status=$(systemctl is-active controllabio-remote.service)
 if [ "$service_status" == "active" ]; then
     # Fetch the IP address
     IP_ADDRESS=$(hostname -I | awk '{print $1}')
-
+    
     if [ -z "$IP_ADDRESS" ]; then
-        # Start coloring and print the message that the IP address could not be found
-        printf "\033[1;31m" # Start coloring with red
+        # Start with green color for the first border
+        printf "\033[1;32m"
         echo
         echo "********************************************************************************"
+        # Switch to red for the specific warning lines
+        printf "\033[1;31m"
         echo "Control Lab IO Remote is running, but the IP address could not be found."
         echo "Check your network configuration or try restarting the network service."
+        echo
+        # Continue with green color for the commands part
+        printf "\033[1;32m"
+        echo "You can still manage the Control Lab IO Remote service using the following commands:"
+        echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
+        echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
+        echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
         echo "********************************************************************************"
         echo
-        printf "\033[0m" # Reset text color back to default
+        # Reset text color back to default
+        printf "\033[0m"
     else
-        # Start coloring and print the message with the IP address and utility script information
-        printf "\033[1;32m" # Start coloring with green
+        # Start coloring with green and print the message with the IP address and utility script information
+        printf "\033[1;32m"
         echo
         echo "********************************************************************************"
         echo "Control Lab IO Remote is now running."
@@ -42,7 +52,7 @@ elif [ "$service_status" == "inactive" ] || [ "$service_status" == "failed" ]; t
     echo
     echo "********************************************************************************"
     echo "Control Lab IO Remote is not running."
-    echo "Type command 'startcontrollab' to restart the Control Lab IO Remote service."
+    echo "Type the command 'startcontrollab' to restart the Control Lab IO Remote service."
     echo "********************************************************************************"
     echo
     printf "\033[0m" # Reset text color back to default
