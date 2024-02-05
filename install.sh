@@ -6,6 +6,26 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Function to check internet connectivity
+check_internet() {
+    ping -c 1 8.8.8.8 > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo
+        printf "\033[1;31m"
+        echo "********************************************************************************"
+        echo "ERROR: Internet connection required."
+        echo "This script requires an internet connection but couldn't reach the internet."
+        echo "Please check your network connection and try again."
+        echo "********************************************************************************"
+        printf "\033[0m" # Reset text color back to default
+        exit 1
+    fi
+}
+
+# Initial check for internet connectivity
+echo "Checking for internet connectivity..."
+check_internet
+
 # Define variables
 APP_DIR="$(dirname "$(realpath "$0")")"
 SERVICE_NAME="controllabio-remote"
@@ -22,11 +42,17 @@ read -p "Do you want to update and upgrade system packages? (yes/no) " update_up
 if [[ $update_upgrade_choice == "yes" || $update_upgrade_choice == "y" ]]; then
     # Update and Upgrade
     sudo apt-get update -y
-    sudo apt-get upgrade -y
     if [ $? -ne 0 ]; then
-        echo "Failed to update and upgrade system packages."
+        echo "Failed to update system packages."
         exit 1
     fi
+    check_internet
+    sudo apt-get upgrade -y
+    if [ $? -ne 0 ]; then
+        echo "Failed to upgrade system packages."
+        exit 1
+    fi
+    check_internet
 else
     echo "Skipping system update and upgrade."
 fi
@@ -37,6 +63,7 @@ if [ $? -ne 0 ]; then
     echo "Failed to install required packages."
     exit 1
 fi
+check_internet
 
 # Start and enable Avahi daemon for .local domain resolution
 sudo systemctl start avahi-daemon
@@ -61,6 +88,7 @@ if [ $? -ne 0 ]; then
     deactivate
     exit 1
 fi
+check_internet
 
 # Deactivate the virtual environment
 deactivate
@@ -136,13 +164,23 @@ fi
 echo
 printf "\033[1;32m" # Start coloring
 echo "********************************************************************************"
-echo "Installation of Control Lab IO Remote is complete."
-echo "The device's IP has been mapped to its hostname. You can access the device on port 5001 using:"
-echo "  - Hostname: http://$HOSTNAME.local" # Modified to use .local
-echo "  - IP Address: http://$CURRENT_IP"
-echo "This allows you to connect to your device more easily within your network."
-echo
-echo "You can now manage the Control Lab IO Remote service using the following commands:"
+if [ -z "$CURRENT_IP" ]; then
+    # IP address not found
+    printf "\033[1;31m" # Coloring with red for warning
+    echo "Installation of Control Lab IO Remote is complete, but the IP address could not be found."
+    echo "Check your network configuration or try restarting the network service."
+    printf "\033[1;32m" # Reverting back to green coloring for the rest of the message
+    echo "You can still manage the Control Lab IO Remote service using the following commands:"
+else
+    # IP address found
+    echo "Installation of Control Lab IO Remote is complete."
+    echo "The device's IP has been mapped to its hostname. Access the Control Lab IO Remote by typing one of the following URLs into your browser:"
+    echo "  - Hostname: http://$HOSTNAME.local"
+    echo "  - IP Address: http://$CURRENT_IP"
+    echo "This will allow you to control your LEGO Interface B."
+    echo
+    echo "You can now manage the Control Lab IO Remote service using the following commands:"
+fi
 echo "  - 'statuscontrollab' to check the status of the Control Lab IO Remote."
 echo "  - 'stopcontrollab' to stop the Control Lab IO Remote service."
 echo "  - 'startcontrollab' to start the Control Lab IO Remote service."
