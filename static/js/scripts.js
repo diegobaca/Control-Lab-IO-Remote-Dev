@@ -9,42 +9,31 @@ function sendCommand(url, output_id) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         console.log('Command sent: ' + url);
-        // The UI update dependent on the command's effect is handled within the onload and timeouts
+        if (output_id === 0) {
+            updateConnectionStatus();
+        } else {
+            updateButtonStates(output_id);
+            updateDirectionLabels();
+            updateOnOffLabels();
+        }
     };
-
     if (url === '/toggle_connection') {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        // Immediately disable the button to prevent further clicks
-        connectionButton.disabled = true;
-
         if (isConnected) {
-            // If currently connected and intending to disconnect
-            connectionIcon.textContent = 'link_off'; // Use 'link_off' to indicate disconnecting
-            connectionButton.classList.add('pulse', 'black');
+            // Initiating disconnection process
+            connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('green', 'red');
-
-            setTimeout(() => {
-                // Only transition to disconnected state after 6 seconds
-                isConnected = false;
-                // Re-enable the button and update the icon back to 'link'
-                connectionButton.disabled = false;
-                connectionIcon.textContent = 'link';
-                connectionButton.classList.remove('pulse', 'black');
-                // Update the connection status to reflect changes
-                updateConnectionStatus();
-            }, 6000); // Delay transition to disconnected state by 6 seconds
+            connectionIcon.textContent = 'link_off';
+            isDisconnecting = true;
+            isConnected = false; // Assume disconnection until confirmed by updateConnectionStatus
         } else {
-            // For connecting, revert to immediate action without the 6-second delay
-            // Ensure this part correctly transitions without delay
-            isAttemptingConnection = true; // Assuming attempt to connect starts immediately
-            xhr.onload = function () {
-                // Check connection status directly after sending command
-                updateConnectionStatus();
-            };
-            // Re-enable the button for further actions, adjusted based on actual connection result
-            connectionButton.disabled = false;
+            // Transition to "Looking for connection" state from any other state
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('red', 'green');
+            connectionIcon.textContent = 'link';
+            isAttemptingConnection = true;
         }
     }
     xhr.send();
@@ -134,7 +123,13 @@ function updateConnectionStatus() {
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
-            if (isAttemptingConnection) {
+            if (isDisconnecting) {
+                // "Is Disconnecting" state
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+                connectionButton.disabled = true; // Disable the button to prevent further clicks
+            } else if (isAttemptingConnection) {
                 // "No connection found" state
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse');
@@ -149,7 +144,8 @@ function updateConnectionStatus() {
         }
 
         isAttemptingConnection = false;
-        isDisconnecting = false;
+        isDisconnecting = false; // Reset disconnection flag after updating UI
+        connectionButton.disabled = false; // Re-enable the button after updating UI
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
 
