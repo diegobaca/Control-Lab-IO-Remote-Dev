@@ -40,7 +40,7 @@ function sendCommand(url, output_id) {
                 connectionButton.disabled = false; // Re-enable the button after the process is done
                 updateButtonAccessibility(isConnected); // Update button accessibility based on connection status
                 updateConnectionStatus(); // Call this to update the UI based on the new connection status
-            }, 3000); // 3-second delay for the disconnection process
+            }, 6000); // 6-second delay for the disconnection process
         } else {
             // If not connected, handle the connection process (same as before)
             connectionButton.classList.add('black', 'pulse');
