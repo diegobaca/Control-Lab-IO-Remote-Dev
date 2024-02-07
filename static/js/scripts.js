@@ -23,38 +23,28 @@ function sendCommand(url, output_id) {
 
         // If disconnecting, handle the process separately
         if (isConnected) {
+            // Initiate the temporary "disconnecting" state
             isDisconnecting = true; // Mark as disconnecting
+            isConnected = false; // Immediately mark as not connected to enter the temporary state
             connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('green', 'red');
-            connectionIcon.textContent = 'link_off'; // Display the 'link_off' icon
-            connectionButton.disabled = true; // Disable the button to prevent multiple clicks
+            connectionIcon.textContent = 'link_off';
+            connectionButton.disabled = true;
 
-            // Extend the disconnection delay to 6 seconds
+            // After 6 seconds, complete the disconnection process
             setTimeout(function() {
-                // Process to update UI and states after the disconnection is simulated
-                connectionButton.classList.add('black');
-                connectionButton.classList.remove('green', 'red', 'pulse');
-                connectionIcon.textContent = 'link'; // Change the icon back to 'link'
-                connectionButton.disabled = false; // Re-enable the button after the process is done
-                
-                isConnected = false;
-                updateButtonAccessibility(isConnected); // Update button accessibility based on connection status
-                updateConnectionStatus(); // Call this to update the UI based on the new connection status
-
-                // Delay the reset of isDisconnecting to ensure it remains true through the UI update phase
-                setTimeout(function() {
-                    isDisconnecting = false; // Reset isDisconnecting after ensuring all UI updates are complete
-                }, 500); // Additional delay to reset isDisconnecting flag
-
+                isDisconnecting = false; // Now fully disconnected, exit the temporary state
+                connectionButton.classList.remove('pulse');
+                connectionIcon.textContent = 'link'; // Reflect the disconnected state
+                connectionButton.disabled = false; // Re-enable the button
+                updateButtonAccessibility(isConnected); // Update button accessibility based on current state
+                updateConnectionStatus(); // Update the UI to reflect the new connection status
             }, 6000); // 6-second delay for the disconnection process
-
         } else {
-            // If not connected, handle the connection process
-            connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('red', 'green');
-            connectionIcon.textContent = 'link';
+            // Handle the connection process
             isAttemptingConnection = true;
-            isDisconnecting = false;
+            // If adding a similar delay for connection, implement here
+            // For now, proceed with immediate attempt without simulating delay
         }
     }
     xhr.send();
