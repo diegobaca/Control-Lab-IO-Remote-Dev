@@ -7,56 +7,36 @@ function sendCommand(url, output_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    
-    var connectionButton = document.getElementById('connection-btn');
-    var connectionIcon = document.getElementById('connection-icon');
-
-    if (url === '/toggle_connection') {
-        if (isConnected) {
-            // Mark as beginning the disconnection process
-            isDisconnecting = true; // This flag indicates we're in the temporary disconnection state
-            // No immediate change to isConnected; it will change after the delay
-            connectionButton.classList.add('pulse');
-            connectionButton.classList.remove('green', 'red');
-            connectionIcon.textContent = 'link_off';
-            connectionButton.disabled = true; // Disable button to prevent further actions during this state
-
-            // After 6 seconds, complete the disconnection process
-            setTimeout(function() {
-                // Now, officially disconnect
-                isConnected = false; // Update isConnected to reflect the disconnection
-                isDisconnecting = false; // Reset disconnection flag
-                connectionButton.classList.remove('pulse');
-                connectionButton.classList.add('black'); // Ensure visual feedback of disconnection
-                connectionIcon.textContent = 'link'; // Change icon back to indicate disconnection is complete
-                connectionButton.disabled = false; // Re-enable button
-                
-                // Update UI to reflect disconnection
-                updateConnectionStatus();
-                updateButtonAccessibility(isConnected);
-            }, 6000); // Delay set to 6 seconds for the disconnection process
+    xhr.onload = function () {
+        console.log('Command sent: ' + url);
+        if (output_id === 0) {
+            updateConnectionStatus();
         } else {
-            // Handle connection process
-            isConnected = false; // Ensure isConnected is accurately set for connection attempts
+            updateButtonStates(output_id);
+            updateDirectionLabels();
+            updateOnOffLabels();
+        }
+    };
+    if (url === '/toggle_connection') {
+        var connectionButton = document.getElementById('connection-btn');
+        var connectionIcon = document.getElementById('connection-icon');
+
+        // Transition to "Default / Disconnected" state if currently in "Connected" state
+        if (isConnected) {
+            connectionButton.classList.add('black');
+            connectionButton.classList.remove('green', 'red', 'pulse');
+            connectionIcon.textContent = 'link';
+            isConnected = false;
+        } else {
+            // Transition to "Looking for connection" state from any other state
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('red', 'green');
+            connectionIcon.textContent = 'link';
             isAttemptingConnection = true;
-            // Assuming immediate action for connection without delay for simplicity
+            isDisconnecting = false;
         }
     }
-
-    // Only send the XMLHttpRequest if not disconnecting, or for other commands
-    if (!isDisconnecting) {
-        xhr.onload = function () {
-            console.log('Command sent: ' + url);
-            if (output_id === 0) {
-                updateConnectionStatus();
-            } else {
-                updateButtonStates(output_id);
-                updateDirectionLabels();
-                updateOnOffLabels();
-            }
-        };
-        xhr.send();
-    }
+    xhr.send();
 }
 
 function updateButtonStates() {
