@@ -17,47 +17,48 @@ function sendCommand(url, output_id) {
             updateOnOffLabels();
         }
     };
-
     if (url === '/toggle_connection') {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        // Check if we're currently connected and not already disconnecting
-        if (isConnected && !isDisconnecting) {
-            // Transition to "disconnecting" state
-            startDisconnectingProcess();
-        } else if (!isConnected && !isAttemptingConnection) {
-            // Transition to "Looking for connection" state from any other state
+        // Disable the button immediately to prevent further clicks
+        connectionButton.disabled = true;
+
+        if (isConnected) {
+            // Start the disconnect process with visual feedback
             connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('red', 'green', 'disabled'); // Make sure 'disabled' is removed
+            connectionButton.classList.remove('green', 'red');
+            connectionIcon.textContent = 'link_off'; // Change to 'link_off' icon with pulse effect
+
+            // Introduce a delay of 6 seconds before completing the disconnect process
+            setTimeout(() => {
+                // Transition to "Default / Disconnected" state after delay
+                connectionButton.classList.remove('pulse');
+                connectionButton.classList.add('black');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link'; // Change back to 'link' icon
+                isConnected = false;
+
+                // Re-enable the button after the state change is complete
+                connectionButton.disabled = false;
+
+                // Call any additional updates here if needed
+                updateConnectionStatus(); // Make sure to update the rest of the UI as needed
+            }, 6000); // 6000 milliseconds equals 6 seconds
+        } else {
+            // If not connected, start the connection attempt immediately (no delay)
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('red', 'green');
             connectionIcon.textContent = 'link';
             isAttemptingConnection = true;
-            isDisconnecting = false; // Ensure isDisconnecting is reset if we're trying to connect
+            isDisconnecting = false;
+
+            // Re-enable the button immediately for connection attempts
+            // Note: You might want to handle this asynchronously or based on server response
+            connectionButton.disabled = false;
         }
     }
     xhr.send();
-}
-
-function startDisconnectingProcess() {
-    var connectionButton = document.getElementById('connection-btn');
-    var connectionIcon = document.getElementById('connection-icon');
-
-    // Set UI to "disconnecting" state
-    connectionButton.classList.add('black', 'pulse', 'disabled'); // Add 'disabled' to visually indicate and prevent clicks
-    connectionButton.classList.remove('green', 'red');
-    connectionIcon.textContent = 'link_off'; // Use the 'link_off' icon for disconnecting
-    isDisconnecting = true;
-    isConnected = false; // Immediately set isConnected to false to handle UI state
-
-    // After 6 seconds, finalize disconnection
-    setTimeout(() => {
-        if (isDisconnecting) { // Ensure state hasn't changed in the meantime
-            connectionButton.classList.remove('pulse', 'disabled'); // Remove 'pulse' and 'disabled' after disconnecting
-            connectionIcon.textContent = 'link'; // Change back to the link icon
-            isDisconnecting = false;
-            updateConnectionStatus(); // Update UI to reflect disconnected state
-        }
-    }, 6000); // 6000 milliseconds = 6 seconds
 }
 
 function updateButtonStates() {
