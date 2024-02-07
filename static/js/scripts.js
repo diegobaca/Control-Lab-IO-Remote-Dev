@@ -21,14 +21,28 @@ function sendCommand(url, output_id) {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        // Transition to "Default / Disconnected" state if currently in "Connected" state
+        // If disconnecting, handle the process separately
         if (isConnected) {
-            connectionButton.classList.add('black');
-            connectionButton.classList.remove('green', 'red', 'pulse');
-            connectionIcon.textContent = 'link';
-            isConnected = false;
+            isDisconnecting = true;
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('green', 'red');
+            connectionIcon.textContent = 'link_off'; // Optional: Change to a different icon if you want
+            connectionButton.disabled = true; // Disable the button to prevent multiple clicks
+
+            // Simulate disconnection delay
+            setTimeout(function() {
+                // Actual disconnection process
+                connectionButton.classList.add('black');
+                connectionButton.classList.remove('green', 'red', 'pulse');
+                connectionIcon.textContent = 'link';
+                isConnected = false;
+                isDisconnecting = false;
+                connectionButton.disabled = false; // Re-enable the button after the process is done
+                updateButtonAccessibility(isConnected); // Update button accessibility based on connection status
+                updateConnectionStatus(); // Call this to update the UI based on the new connection status
+            }, 3000); // 3-second delay for the disconnection process
         } else {
-            // Transition to "Looking for connection" state from any other state
+            // If not connected, handle the connection process (same as before)
             connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('red', 'green');
             connectionIcon.textContent = 'link';
