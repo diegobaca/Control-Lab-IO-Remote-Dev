@@ -14,11 +14,17 @@ function sendCommand(url, output_id) {
             if (url === '/toggle_connection' && isConnected) {
                 // Begin "Is Disconnecting" state with a 6-second delay
                 isDisconnecting = true; // Mark as disconnecting
-                updateConnectionStatus(); // Immediately update UI to reflect disconnecting state
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+                connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
 
                 // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
                     isDisconnecting = false; // Reset disconnecting flag after delay
+                    connectionButton.disabled = false; // Re-enable the button after the delay
                     updateConnectionStatus(); // Check and update connection status after delay
                 }, 6000); // 6 seconds delay
             } else {
@@ -30,15 +36,17 @@ function sendCommand(url, output_id) {
             updateOnOffLabels();
         }
     };
-    if (url === '/toggle_connection' && !isConnected) {
-        // Transition to "Is Connecting" state from "Disconnected" state
-        var connectionButton = document.getElementById('connection-btn');
-        var connectionIcon = document.getElementById('connection-icon');
-        connectionButton.classList.add('black', 'pulse');
-        connectionButton.classList.remove('red', 'green');
-        connectionIcon.textContent = 'link';
-        isAttemptingConnection = true;
-        isDisconnecting = false; // Ensure disconnection flag is reset when attempting to connect
+    if (url === '/toggle_connection') {
+        // Handle connection initiation logic here as well, if necessary
+        if (!isConnected) {
+            // Transition to "Is Connecting" state from "Disconnected" state
+            var connectionButton = document.getElementById('connection-btn');
+            var connectionIcon = document.getElementById('connection-icon');
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('red', 'green');
+            connectionIcon.textContent = 'link';
+            isAttemptingConnection = true;
+        }
     }
     xhr.send();
 }
