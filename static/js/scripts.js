@@ -9,48 +9,46 @@ function sendCommand(url, output_id) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         console.log('Command sent: ' + url);
-        // Parse the server response
-        var response = JSON.parse(xhr.responseText);
-        // Check if the server response includes connection status
-        if (response.is_connected !== undefined) {
-            isConnected = response.is_connected;
-        }
-        if (response.is_sending !== undefined) {
-            is_sending = response.is_sending;
-        }
-
-        // Depending on the command sent, update the UI accordingly
         if (output_id === 0) {
-            // For connection-related commands, update connection status based on the server's response
-            updateConnectionStatus(); // This function will now rely on the updated 'isConnected' global variable
+            // Check if initiating a disconnection
+            if (url === '/toggle_connection' && isConnected) {
+                // Begin "Is Disconnecting" state with a 6-second delay
+                isDisconnecting = true; // Mark as disconnecting
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+                connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
+
+                // Wait for 6 seconds before resetting the disconnecting state and updating the UI
+                setTimeout(function() {
+                    isDisconnecting = false; // Reset disconnecting flag after delay
+                    connectionButton.disabled = false; // Re-enable the button after the delay
+                    updateConnectionStatus(); // Check and update connection status after delay
+                }, 6000); // 6 seconds delay
+            } else {
+                updateConnectionStatus();
+            }
         } else {
-            // For other commands, proceed to update the UI as before
             updateButtonStates(output_id);
             updateDirectionLabels();
             updateOnOffLabels();
         }
-
-        // Additional handling based on the command sent or server response
-        // E.g., handle retries or show error messages if the command was not successful
     };
-    xhr.onerror = function () {
-        // Handle network error
-        console.error('Network error occurred while sending command.');
-        // Optionally, update the UI to reflect the network error
-    };
-    xhr.send();
-}
-
-// Example of a retry mechanism
-function attemptDisconnection(retryCount) {
-    if (retryCount <= 0) return; // Stop retrying after a certain number of attempts
-
-    sendCommand('/toggle_connection', 0, function(success) {
-        if (!success) {
-            console.log(`Disconnection failed. Retrying... (${retryCount})`);
-            setTimeout(() => attemptDisconnection(retryCount - 1), 2000); // Wait 2 seconds before retrying
+    if (url === '/toggle_connection') {
+        // Handle connection initiation logic here as well, if necessary
+        if (!isConnected) {
+            // Transition to "Is Connecting" state from "Disconnected" state
+            var connectionButton = document.getElementById('connection-btn');
+            var connectionIcon = document.getElementById('connection-icon');
+            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.remove('red', 'green');
+            connectionIcon.textContent = 'link';
+            isAttemptingConnection = true;
         }
-    });
+    }
+    xhr.send();
 }
 
 function updateButtonStates() {
