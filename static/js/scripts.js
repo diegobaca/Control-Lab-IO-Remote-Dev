@@ -35,7 +35,7 @@ function sendCommand(url, output_id) {
                 isDisconnecting = false;
                 connectionButton.classList.add('black');
                 connectionButton.classList.remove('green', 'red', 'pulse');
-                connectionIcon.textContent = 'link'; // Change the icon back to 'link' after the delay
+                connectionIcon.textContent = 'link_off'; // Change the icon back to 'link' after the delay
                 connectionButton.disabled = false; // Re-enable the button after the process is done
                 updateButtonAccessibility(isConnected); // Update button accessibility based on connection status
                 updateConnectionStatus(); // Call this to update the UI based on the new connection status
