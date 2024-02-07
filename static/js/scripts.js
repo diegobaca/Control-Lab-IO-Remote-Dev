@@ -24,17 +24,18 @@ function sendCommand(url, output_id) {
         // If disconnecting, handle the process separately
         if (isConnected) {
             isDisconnecting = true;
-            connectionButton.classList.add('black', 'pulse');
+            // Update the UI to indicate the disconnection process
+            connectionButton.classList.add('pulse'); // Keep pulsing effect
             connectionButton.classList.remove('green', 'red');
-            connectionIcon.textContent = 'link_off'; // Optional: Change to a different icon if you want
+            connectionIcon.textContent = 'link_off'; // Keep the 'link_off' icon during the process
             connectionButton.disabled = true; // Disable the button to prevent multiple clicks
 
             // Simulate disconnection delay
             setTimeout(function() {
-                // Actual disconnection process
+                // After the delay, update the UI to show the device is disconnected
                 connectionButton.classList.add('black');
-                connectionButton.classList.remove('green', 'red', 'pulse');
-                connectionIcon.textContent = 'link';
+                connectionButton.classList.remove('pulse'); // Remove pulsing effect
+                connectionIcon.textContent = 'link'; // Change back to 'link' icon
                 isConnected = false;
                 isDisconnecting = false;
                 connectionButton.disabled = false; // Re-enable the button after the process is done
