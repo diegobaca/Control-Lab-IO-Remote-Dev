@@ -10,7 +10,20 @@ function sendCommand(url, output_id) {
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
-            updateConnectionStatus();
+            // Check if initiating a disconnection
+            if (url === '/toggle_connection' && isConnected) {
+                // Begin "Is Disconnecting" state with a 6-second delay
+                isDisconnecting = true; // Mark as disconnecting
+                updateConnectionStatus(); // Immediately update UI to reflect disconnecting state
+
+                // Wait for 6 seconds before resetting the disconnecting state and updating the UI
+                setTimeout(function() {
+                    isDisconnecting = false; // Reset disconnecting flag after delay
+                    updateConnectionStatus(); // Check and update connection status after delay
+                }, 6000); // 6 seconds delay
+            } else {
+                updateConnectionStatus();
+            }
         } else {
             updateButtonStates(output_id);
             updateDirectionLabels();
@@ -21,20 +34,8 @@ function sendCommand(url, output_id) {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        if (isConnected) {
-            // Initiating disconnection process
-            connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('green', 'red');
-            connectionIcon.textContent = 'link_off';
-            isDisconnecting = true;
-            isConnected = false; // Assume disconnection until confirmed by updateConnectionStatus
-        } else {
-            // Transition to "Looking for connection" state from any other state
-            connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('red', 'green');
-            connectionIcon.textContent = 'link';
-            isAttemptingConnection = true;
-        }
+        // Directly handle UI updates for disconnecting state here if needed
+        // Note: The actual UI update for disconnecting state will happen in updateConnectionStatus
     }
     xhr.send();
 }
