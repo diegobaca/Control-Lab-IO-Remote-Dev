@@ -30,12 +30,15 @@ function sendCommand(url, output_id) {
             updateOnOffLabels();
         }
     };
-    if (url === '/toggle_connection') {
+    if (url === '/toggle_connection' && !isConnected) {
+        // Transition to "Is Connecting" state from "Disconnected" state
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
-
-        // Directly handle UI updates for disconnecting state here if needed
-        // Note: The actual UI update for disconnecting state will happen in updateConnectionStatus
+        connectionButton.classList.add('black', 'pulse');
+        connectionButton.classList.remove('red', 'green');
+        connectionIcon.textContent = 'link';
+        isAttemptingConnection = true;
+        isDisconnecting = false; // Ensure disconnection flag is reset when attempting to connect
     }
     xhr.send();
 }
@@ -131,10 +134,11 @@ function updateConnectionStatus() {
                 connectionIcon.textContent = 'link_off';
                 connectionButton.disabled = true; // Disable the button to prevent further clicks
             } else if (isAttemptingConnection) {
-                // "No connection found" state
-                connectionButton.classList.add('red');
-                connectionButton.classList.remove('black', 'green', 'pulse');
-                connectionIcon.textContent = 'refresh';
+                // "Is Connecting" state
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link';
+                connectionButton.disabled = true; // Optionally disable during connection attempt
             } else {
                 // "Default / Disconnected" state
                 connectionButton.classList.add('black');
