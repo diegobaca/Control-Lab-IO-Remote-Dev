@@ -21,7 +21,7 @@ function sendCommand(url, output_id) {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        // If disconnecting, handle the process separately
+        // If attempting to disconnect, modify the UI accordingly
         if (isConnected) {
             isDisconnecting = true;
             // Keep the 'link_off' icon to indicate disconnection process
@@ -31,29 +31,28 @@ function sendCommand(url, output_id) {
 
             // Simulate disconnection delay
             setTimeout(function() {
-                // Once disconnection process is simulated/complete:
                 isConnected = false;
                 isDisconnecting = false;
                 
-                // Update button and icon to reflect disconnected state
+                // Now that disconnection process is complete, update UI to reflect disconnected state
                 connectionButton.classList.remove('pulse'); // Remove pulsing effect
-                connectionButton.classList.add('black'); // Ensure button is black indicating disconnected state
-                connectionIcon.textContent = 'link'; // Change icon back to 'link'
                 
+                // Only change the icon back to 'link' and remove 'black' class when re-enabling the button
                 connectionButton.disabled = false; // Re-enable the button after process completion
-                
-                // Call to update UI based on current connection status
+                connectionButton.classList.add('black'); // Ensure button is black indicating disconnected state
+                connectionIcon.textContent = 'link'; // Change icon back to 'link' here
+
+                // Update UI based on current connection status
                 updateConnectionStatus();
                 updateButtonAccessibility(isConnected); // Update buttons' accessibility based on connection status
             }, 6000); // Delay for 6 seconds to simulate disconnection time
         } else {
             // Handle connection process if currently not connected
-            // This part remains as it was, initiating the connection attempt
             isAttemptingConnection = true;
             isDisconnecting = false;
             connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('red', 'green');
-            connectionIcon.textContent = 'link'; // Ensure icon is set for connection attempt
+            connectionIcon.textContent = 'link'; // Set icon for connection attempt
         }
     }
     xhr.send();
