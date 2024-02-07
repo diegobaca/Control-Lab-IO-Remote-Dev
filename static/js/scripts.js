@@ -23,23 +23,31 @@ function sendCommand(url, output_id) {
 
         // If disconnecting, handle the process separately
         if (isConnected) {
-            isDisconnecting = true;
+            isDisconnecting = true; // Mark as disconnecting
             connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('green', 'red');
-            connectionIcon.textContent = 'link_off'; // Keep the 'link_off' icon during the delay
+            connectionIcon.textContent = 'link_off'; // Display the 'link_off' icon
             connectionButton.disabled = true; // Disable the button to prevent multiple clicks
 
             // Extend the disconnection delay to 6 seconds
             setTimeout(function() {
-                isConnected = false;
-                isDisconnecting = false;
+                // Process to update UI and states after the disconnection is simulated
                 connectionButton.classList.add('black');
                 connectionButton.classList.remove('green', 'red', 'pulse');
-                connectionIcon.textContent = 'link'; // Change the icon back to 'link' after the delay
+                connectionIcon.textContent = 'link'; // Change the icon back to 'link'
                 connectionButton.disabled = false; // Re-enable the button after the process is done
+                
+                isConnected = false;
                 updateButtonAccessibility(isConnected); // Update button accessibility based on connection status
                 updateConnectionStatus(); // Call this to update the UI based on the new connection status
+
+                // Delay the reset of isDisconnecting to ensure it remains true through the UI update phase
+                setTimeout(function() {
+                    isDisconnecting = false; // Reset isDisconnecting after ensuring all UI updates are complete
+                }, 500); // Additional delay to reset isDisconnecting flag
+
             }, 6000); // 6-second delay for the disconnection process
+
         } else {
             // If not connected, handle the connection process
             connectionButton.classList.add('black', 'pulse');
