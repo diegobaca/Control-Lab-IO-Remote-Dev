@@ -302,32 +302,25 @@ function periodicallyCheckConnection() {
             if (data.is_connected && !isConnected) {
                 isConnected = true;
                 is_sending = data.is_sending; // Update is_sending based on the server response
-                // Ensure we're not in the middle of disconnecting before updating UI
-                if (!isDisconnecting) {
-                    updateConnectionStatus(); // Update UI to reflect connection is back
-                    updateButtonAccessibility(isConnected);
-                    updateSendingStatus(); // Update the sending button UI
-                }
+                updateConnectionStatus(); // Update UI to reflect connection is back
+                updateButtonAccessibility(isConnected);
+                updateSendingStatus(); // Update the sending button UI
             } 
+            
             // If the connection was there and now it's lost
             else if (!data.is_connected && isConnected) {
                 isConnected = false;
                 is_sending = data.is_sending; // Update is_sending based on the server response
-                // Ensure we're not in the middle of disconnecting before updating UI
-                if (!isDisconnecting) {
-                    updateConnectionStatus(); // Update UI to reflect connection is lost
-                    updateButtonAccessibility(isConnected);
-                    updateSendingStatus(); // Update the sending button UI
-                }
+                updateConnectionStatus(); // Update UI to reflect connection is lost
+                updateButtonAccessibility(isConnected);
+                updateSendingStatus(); // Update the sending button UI
             }
 
-            // Regardless of connection status, if not disconnecting, update the UI with the latest system states
-            if (!isDisconnecting) {
-                updateOnOffLabels();
-                updateDirectionLabels();
-                updateButtonStates();
-                updateSendingStatus();  // Make sure this is called here to update sending status regularly
-            }
+            // Regardless of connection status, update the UI with the latest system states
+            updateOnOffLabels();
+            updateDirectionLabels();
+            updateButtonStates();
+            updateSendingStatus();  // Make sure this is called here to update sending status regularly
         };
         xhr.send();
     }, 1000); // Check every 1000 milliseconds (1 second)
