@@ -21,19 +21,30 @@ function sendCommand(url, output_id) {
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
 
-        // Transition to "Default / Disconnected" state if currently in "Connected" state
+        // Disable the button immediately to prevent further clicks
+        connectionButton.disabled = true;
+
         if (isConnected) {
-            connectionButton.classList.add('black');
-            connectionButton.classList.remove('green', 'red', 'pulse');
-            connectionIcon.textContent = 'link';
-            isConnected = false;
+            // Apply initial disconnecting state
+            connectionIcon.textContent = 'link_off'; // Change to 'link_off' icon
+            connectionButton.classList.add('pulse', 'black');
+            connectionButton.classList.remove('green', 'red');
+
+            // Delay the transition to "disconnected" state
+            setTimeout(() => {
+                // After 6 seconds, update the icon and button appearance
+                connectionIcon.textContent = 'link'; // Reset icon to 'link'
+                connectionButton.classList.remove('pulse'); // Remove pulsing effect
+
+                // Transition to "Default / Disconnected" state
+                isConnected = false;
+
+                // Re-enable the button after the state change is complete
+                connectionButton.disabled = false;
+                updateConnectionStatus(); // Update the UI to reflect the new state
+            }, 6000); // Delay of 6 seconds
         } else {
-            // Transition to "Looking for connection" state from any other state
-            connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('red', 'green');
-            connectionIcon.textContent = 'link';
-            isAttemptingConnection = true;
-            isDisconnecting = false;
+            // Handle connection attempts here (as per your existing logic)
         }
     }
     xhr.send();
