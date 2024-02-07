@@ -7,47 +7,56 @@ function sendCommand(url, output_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        console.log('Command sent: ' + url);
-        if (output_id === 0) {
-            updateConnectionStatus();
-        } else {
-            updateButtonStates(output_id);
-            updateDirectionLabels();
-            updateOnOffLabels();
-        }
-    };
-    if (url === '/toggle_connection') {
-        var connectionButton = document.getElementById('connection-btn');
-        var connectionIcon = document.getElementById('connection-icon');
+    
+    var connectionButton = document.getElementById('connection-btn');
+    var connectionIcon = document.getElementById('connection-icon');
 
-        // If disconnecting, handle the process separately
+    if (url === '/toggle_connection') {
         if (isConnected) {
-            // Initiate the temporary "disconnecting" state
-            isDisconnecting = true; // Mark as disconnecting
-            isConnected = false; // Immediately mark as not connected to enter the temporary state
-            connectionButton.classList.add('black', 'pulse');
+            // Mark as beginning the disconnection process
+            isDisconnecting = true; // This flag indicates we're in the temporary disconnection state
+            // No immediate change to isConnected; it will change after the delay
+            connectionButton.classList.add('pulse');
             connectionButton.classList.remove('green', 'red');
             connectionIcon.textContent = 'link_off';
-            connectionButton.disabled = true;
+            connectionButton.disabled = true; // Disable button to prevent further actions during this state
 
             // After 6 seconds, complete the disconnection process
             setTimeout(function() {
-                isDisconnecting = false; // Now fully disconnected, exit the temporary state
+                // Now, officially disconnect
+                isConnected = false; // Update isConnected to reflect the disconnection
+                isDisconnecting = false; // Reset disconnection flag
                 connectionButton.classList.remove('pulse');
-                connectionIcon.textContent = 'link'; // Reflect the disconnected state
-                connectionButton.disabled = false; // Re-enable the button
-                updateButtonAccessibility(isConnected); // Update button accessibility based on current state
-                updateConnectionStatus(); // Update the UI to reflect the new connection status
-            }, 6000); // 6-second delay for the disconnection process
+                connectionButton.classList.add('black'); // Ensure visual feedback of disconnection
+                connectionIcon.textContent = 'link'; // Change icon back to indicate disconnection is complete
+                connectionButton.disabled = false; // Re-enable button
+                
+                // Update UI to reflect disconnection
+                updateConnectionStatus();
+                updateButtonAccessibility(isConnected);
+            }, 6000); // Delay set to 6 seconds for the disconnection process
         } else {
-            // Handle the connection process
+            // Handle connection process
+            isConnected = false; // Ensure isConnected is accurately set for connection attempts
             isAttemptingConnection = true;
-            // If adding a similar delay for connection, implement here
-            // For now, proceed with immediate attempt without simulating delay
+            // Assuming immediate action for connection without delay for simplicity
         }
     }
-    xhr.send();
+
+    // Only send the XMLHttpRequest if not disconnecting, or for other commands
+    if (!isDisconnecting) {
+        xhr.onload = function () {
+            console.log('Command sent: ' + url);
+            if (output_id === 0) {
+                updateConnectionStatus();
+            } else {
+                updateButtonStates(output_id);
+                updateDirectionLabels();
+                updateOnOffLabels();
+            }
+        };
+        xhr.send();
+    }
 }
 
 function updateButtonStates() {
