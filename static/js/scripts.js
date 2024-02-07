@@ -7,6 +7,53 @@ function sendCommand(url, output_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    if (url === '/toggle_connection') {
+        var connectionButton = document.getElementById('connection-btn');
+        var connectionIcon = document.getElementById('connection-icon');
+
+        if (isConnected) {
+            // If already connected, initiate disconnection process
+            isDisconnecting = true;
+            connectionIcon.textContent = 'link_off'; // Immediately change to 'link_off' to indicate disconnection
+            connectionButton.classList.add('pulse');
+            connectionButton.disabled = true;
+
+            // Delay further actions to simulate disconnection time
+            setTimeout(function() {
+                // Simulate completion of disconnection process
+                xhr.onload = function() {
+                    // Now update the UI to reflect the disconnected state
+                    console.log('Command sent: ' + url);
+                    updateConnectionStatus();
+                    if (output_id !== 0) {
+                        updateButtonStates(output_id);
+                        updateDirectionLabels();
+                        updateOnOffLabels();
+                    }
+                };
+                xhr.send(); // Send the XHR request after the delay
+
+                // Reset UI elements after the simulated delay
+                isConnected = false;
+                isDisconnecting = false;
+                connectionButton.classList.remove('pulse');
+                connectionButton.disabled = false; // Re-enable the button
+                // Update the icon here after ensuring the request was made
+                connectionIcon.textContent = 'link'; // Change back to 'link' after re-enabling the button
+
+            }, 6000); // Set timeout to 6 seconds
+
+            // Prevent further execution to ensure xhr.send() is delayed
+            return;
+        } else {
+            // Handle connection attempt
+            isAttemptingConnection = true;
+            connectionIcon.textContent = 'link'; // Set appropriate icon for attempting connection
+        }
+    }
+
+    // For all other commands or if connecting, proceed without delay
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
@@ -17,44 +64,6 @@ function sendCommand(url, output_id) {
             updateOnOffLabels();
         }
     };
-    if (url === '/toggle_connection') {
-        var connectionButton = document.getElementById('connection-btn');
-        var connectionIcon = document.getElementById('connection-icon');
-
-        // If attempting to disconnect, modify the UI accordingly
-        if (isConnected) {
-            isDisconnecting = true;
-            // Keep the 'link_off' icon to indicate disconnection process
-            connectionIcon.textContent = 'link_off';
-            connectionButton.classList.add('pulse'); // Add pulsing effect to indicate processing
-            connectionButton.disabled = true; // Disable the button to prevent multiple clicks during process
-
-            // Simulate disconnection delay
-            setTimeout(function() {
-                isConnected = false;
-                isDisconnecting = false;
-                
-                // Now that disconnection process is complete, update UI to reflect disconnected state
-                connectionButton.classList.remove('pulse'); // Remove pulsing effect
-                
-                // Only change the icon back to 'link' and remove 'black' class when re-enabling the button
-                connectionButton.disabled = false; // Re-enable the button after process completion
-                connectionButton.classList.add('black'); // Ensure button is black indicating disconnected state
-                connectionIcon.textContent = 'link'; // Change icon back to 'link' here
-
-                // Update UI based on current connection status
-                updateConnectionStatus();
-                updateButtonAccessibility(isConnected); // Update buttons' accessibility based on connection status
-            }, 6000); // Delay for 6 seconds to simulate disconnection time
-        } else {
-            // Handle connection process if currently not connected
-            isAttemptingConnection = true;
-            isDisconnecting = false;
-            connectionButton.classList.add('black', 'pulse');
-            connectionButton.classList.remove('red', 'green');
-            connectionIcon.textContent = 'link'; // Set icon for connection attempt
-        }
-    }
     xhr.send();
 }
 
