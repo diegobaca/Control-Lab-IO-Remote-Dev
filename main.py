@@ -122,33 +122,14 @@ def send_commands():
 def keep_alive(port):
     global is_connected  # Access the global variable
     while True:
-        if port and port.is_open:  # Check if the port is still open
-            try:
-                # Send "2" as a byte to maintain communication
-                port.write(b'2')  # Convert "2" to bytes
-                time.sleep(2)  # Wait for 2 seconds before sending the next keep-alive signal
-                
-            except serial.SerialException:
-                # Handle the loss of connection
-                is_connected = False  # Update connection status
-                print("Connection lost. Attempting to reconnect...")  # Log message
-                if port:
-                    port.close()  # Properly close the port
-                
-                break  # Exit the loop if there's an error
-        else:
-            # Port is closed or not set, indicating a problem with the connection
-            is_connected = False
-            print("Serial port is closed. Checking for available ports...")
-            # Attempt to re-establish connection if needed
-            serial_connection = find_ports()  # Assuming find_ports attempts to re-establish the connection
-            if serial_connection:
-                print(f"Reconnected on port {serial_connection.port}")
-                is_connected = True
-                break
-            else:
-                print("Unable to reconnect. Please check the device connection.")
-                break
+        try:
+            port.write([2])
+            time.sleep(2)
+        except serial.SerialException:
+            is_connected = False  # Update connection status
+            if port:
+                port.close()  # Close the connection properly
+            break  # Exit the loop if there's an error
 
 @app.route('/')
 def index():
