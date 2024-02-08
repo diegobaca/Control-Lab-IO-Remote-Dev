@@ -150,15 +150,19 @@ function updateConnectionStatus() {
             connectionButton.classList.remove('black', 'red', 'pulse');
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
-            isAttemptingConnection = false; // Reset attempt flag
         } else {
-            // Check if it was attempting to connect
-            if (isAttemptingConnection) {
-                // "No connection found" state
+            if (isDisconnecting) {
+                // "Is Disconnecting" state
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+            } else if (isAttemptingConnection) {
+                // Here, you check if the attempt to connect has failed
+                // "No connection found" state should be handled here
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse');
-                connectionIcon.textContent = 'link_off'; // Or use a different icon to indicate failure
-                isAttemptingConnection = false; // Reset attempt flag
+                connectionIcon.textContent = 'link_off'; // Indicate no connection found
+                // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
             } else {
                 // "Default / Disconnected" state
                 connectionButton.classList.add('black');
@@ -168,14 +172,14 @@ function updateConnectionStatus() {
             isConnected = false;
         }
 
-        // Do not reset isDisconnecting here; let the setTimeout handle it to respect the 6-second duration
-        // Only re-enable the button if not in the process of disconnecting
-        if (!isDisconnecting) {
-            connectionButton.disabled = false;
-        }
+        isAttemptingConnection = false; // Reset the flag after handling
+        isDisconnecting = false; // Consider if you need to reset this here or elsewhere
+
+        connectionButton.disabled = false; // Ensure the button is always re-enabled after any state update
 
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
+
         // Now also handle sending status
         is_sending = data.is_sending;  // Update is_sending based on the server response
         updateSendingStatus();  // Update the sending button UI
