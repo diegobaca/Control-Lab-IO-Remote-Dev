@@ -20,7 +20,9 @@ function sendCommand(url, output_id) {
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
                 connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
-
+            
+                updateButtonAccessibility(false); // Disable all other buttons immediately
+            
                 // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
                     isDisconnecting = false; // Reset disconnecting flag after delay
