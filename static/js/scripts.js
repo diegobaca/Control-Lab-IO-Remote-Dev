@@ -23,6 +23,13 @@ function sendCommand(url, output_id) {
             
                 updateButtonAccessibility(false); // Disable all other buttons immediately
             
+                // Additionally, update the sending button icon to indicate sending is paused/stopped
+                var sendingButton = document.getElementById('sending-btn');
+                var sendingIcon = document.getElementById('sending-icon');
+                sendingIcon.textContent = 'pause'; // Update to reflect the paused/stopped state
+                sendingButton.classList.add('orange'); // Change color to indicate paused/stopped state
+                sendingButton.classList.remove('green', 'pulse'); // Remove classes that indicate active sending
+            
                 // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
                     isDisconnecting = false; // Reset disconnecting flag after delay
@@ -31,7 +38,7 @@ function sendCommand(url, output_id) {
                 }, 6000); // 6 seconds delay
             } else {
                 updateConnectionStatus();
-            }
+            }            
         } else {
             updateButtonStates(output_id);
             updateDirectionLabels();
