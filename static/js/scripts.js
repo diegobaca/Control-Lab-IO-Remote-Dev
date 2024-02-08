@@ -329,6 +329,18 @@ function periodicallyCheckConnection() {
                 updateSendingStatus(); // Update the sending button UI
             }
 
+            // Add condition to handle "is disconnecting" state update
+            if (isDisconnecting) {
+                // Here, you can add any UI updates that should occur while in the "is disconnecting" state.
+                // For example, you might want to update the connection button to show a different icon or disable it.
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+                connectionButton.disabled = true; // Keep the button disabled while disconnecting
+            }
+
             // Regardless of connection status, update the UI with the latest system states
             updateOnOffLabels();
             updateDirectionLabels();
