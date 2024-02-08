@@ -284,11 +284,11 @@ function updateButtonAccessibility(isConnected) {
 
     // Change color of output labels and power icons based on connection status
     outputLabels.forEach(function (label) {
-        label.style.color = isConnected ? 'black' : '#E9E9E9'; // Default color when connected, grey when disconnected
+        label.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
 
     powerIcons.forEach(function (icon) {
-        icon.style.color = isConnected ? 'black' : '#E9E9E9'; // Default color when connected, grey when disconnected
+        icon.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
 }
 
