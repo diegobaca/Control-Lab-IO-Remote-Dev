@@ -23,12 +23,19 @@ function sendCommand(url, output_id) {
             
                 updateButtonAccessibility(false); // Disable all other buttons immediately
             
-                // Additionally, update the sending button icon to indicate sending is paused/stopped
+                // Update the sending button icon to indicate sending is paused/stopped
                 var sendingButton = document.getElementById('sending-btn');
                 var sendingIcon = document.getElementById('sending-icon');
                 sendingIcon.textContent = 'pause'; // Update to reflect the paused/stopped state
                 sendingButton.classList.add('orange'); // Change color to indicate paused/stopped state
                 sendingButton.classList.remove('green', 'pulse'); // Remove classes that indicate active sending
+            
+                // Immediately update on/off buttons to reflect they are disabled
+                for (var i = 1; i <= 8; i++) {
+                    var onOffButton = document.getElementById('on-off-' + i);
+                    onOffButton.classList.add('red'); // Use red to indicate off or disabled
+                    onOffButton.classList.remove('green', 'orange', 'pulse'); // Remove any classes that indicate on or active state
+                }
             
                 // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
@@ -38,7 +45,7 @@ function sendCommand(url, output_id) {
                 }, 6000); // 6 seconds delay
             } else {
                 updateConnectionStatus();
-            }            
+            }           
         } else {
             updateButtonStates(output_id);
             updateDirectionLabels();
