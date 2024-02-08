@@ -172,10 +172,13 @@ function updateConnectionStatus() {
             isConnected = false;
         }
 
-        isAttemptingConnection = false; // Reset the flag after handling
-        isDisconnecting = false; // Consider if you need to reset this here or elsewhere
+        isAttemptingConnection = false;
+        // Do not reset isDisconnecting here; let the setTimeout handle it to respect the 6-second duration
 
-        connectionButton.disabled = false; // Ensure the button is always re-enabled after any state update
+        // Only re-enable the button if not in the process of disconnecting
+        if (!isDisconnecting) {
+            connectionButton.disabled = false;
+        }
 
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
