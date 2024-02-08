@@ -161,7 +161,7 @@ function updateConnectionStatus() {
                 // "No connection found" state should be handled here
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse');
-                connectionIcon.textContent = 'link_off'; // Indicate no connection found
+                connectionIcon.textContent = 'refresh'; // Indicate no connection found
                 // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
             } else {
                 // "Default / Disconnected" state
