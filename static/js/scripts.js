@@ -311,41 +311,36 @@ function periodicallyCheckConnection() {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
 
-            // If the connection was lost and now it's back
             if (data.is_connected && !isConnected) {
+                // Connection restored
                 isConnected = true;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is back
+                is_sending = data.is_sending;
+                updateConnectionStatus();
                 updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
+                updateSendingStatus();
                 intentionalDisconnect = false; // Reset on successful reconnection
-            } 
-            // If the connection was there and now it's lost
-            else if (!data.is_connected && isConnected) {
+            } else if (!data.is_connected && isConnected) {
+                // Connection lost
                 isConnected = false;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                if (!intentionalDisconnect && !isDisconnecting) {
+                is_sending = data.is_sending;
+                if (!intentionalDisconnect) {
                     // Handle as unexpected disconnection
-                    isDisconnecting = true;
-                    updateConnectionStatus(); // Immediately reflect disconnecting state
-                    setTimeout(() => { 
-                        isDisconnecting = false; 
-                        updateConnectionStatus(); // Reflect the disconnected state after delay
-                    }, 6000); // Reset flag after a delay
+                    isDisconnecting = true; // Set disconnecting flag for unexpected disconnection
+                    setTimeout(() => { isDisconnecting = false; }, 6000); // Reset flag after a delay
                 }
-                updateConnectionStatus(); // Update UI to reflect connection is lost
+                updateConnectionStatus();
                 updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
+                updateSendingStatus();
+                intentionalDisconnect = false; // Reset flag once handled
             }
 
-            // Regardless of connection status, update the UI with the latest system states
             updateOnOffLabels();
             updateDirectionLabels();
             updateButtonStates();
-            updateSendingStatus();  // Make sure this is called here to update sending status regularly
+            updateSendingStatus();
         };
         xhr.send();
-    }, 1000); // Check every 1000 milliseconds (1 second)
+    }, 1000); // Check every 1 second
 }
 
 window.onload = function () {
