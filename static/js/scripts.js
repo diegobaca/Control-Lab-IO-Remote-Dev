@@ -58,7 +58,7 @@ function sendCommand(url, output_id) {
             // Transition to "Is Connecting" state from "Disconnected" state
             var connectionButton = document.getElementById('connection-btn');
             var connectionIcon = document.getElementById('connection-icon');
-            connectionButton.classList.add('black', 'pulse');
+            connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Also disable pointer events
             connectionButton.classList.remove('red', 'green');
             connectionIcon.textContent = 'link';
             isAttemptingConnection = true;
@@ -147,7 +147,7 @@ function updateConnectionStatus() {
         if (data.is_connected) {
             // "Connected" state
             connectionButton.classList.add('green');
-            connectionButton.classList.remove('black', 'red', 'pulse');
+            connectionButton.classList.remove('black', 'red', 'pulse', 'disable-pointer'); // Also re-enable pointer events
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
@@ -166,7 +166,7 @@ function updateConnectionStatus() {
             } else {
                 // "Default / Disconnected" state
                 connectionButton.classList.add('black');
-                connectionButton.classList.remove('green', 'red', 'pulse');
+                connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'link';
             }
             isConnected = false;
