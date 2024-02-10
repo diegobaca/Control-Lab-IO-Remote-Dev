@@ -10,64 +10,61 @@ function sendCommand(url, output_id) {
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
+            // Check if initiating a disconnection
             if (url === '/toggle_connection' && isConnected) {
-                isDisconnecting = true;
+                // Begin "Is Disconnecting" state with a 6-second delay
+                isDisconnecting = true; // Mark as disconnecting
                 var connectionButton = document.getElementById('connection-btn');
                 var connectionIcon = document.getElementById('connection-icon');
                 connectionButton.classList.add('black', 'pulse');
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
-                connectionButton.disabled = true;
+                connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
             
-                updateButtonAccessibility(false);
+                updateButtonAccessibility(false); // Disable all other buttons immediately
             
+                // Update the sending button icon to indicate sending is paused/stopped
                 var sendingButton = document.getElementById('sending-btn');
                 var sendingIcon = document.getElementById('sending-icon');
-                sendingIcon.textContent = 'pause';
-                sendingButton.classList.add('orange');
-                sendingButton.classList.remove('green', 'pulse');
+                sendingIcon.textContent = 'pause'; // Update to reflect the paused/stopped state
+                sendingButton.classList.add('orange'); // Change color to indicate paused/stopped state
+                sendingButton.classList.remove('green', 'pulse'); // Remove classes that indicate active sending
             
+                // Immediately update on/off buttons to reflect they are disabled
                 for (var i = 1; i <= 8; i++) {
                     var onOffButton = document.getElementById('on-off-' + i);
-                    onOffButton.classList.add('red');
-                    onOffButton.classList.remove('green', 'orange', 'pulse');
+                    onOffButton.classList.add('red'); // Use red to indicate off or disabled
+                    onOffButton.classList.remove('green', 'orange', 'pulse'); // Remove any classes that indicate on or active state
                 }
             
+                // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
-                    isDisconnecting = false;
-                    connectionButton.disabled = false;
-                    updateConnectionStatus();
-                }, 6000);
+                    isDisconnecting = false; // Reset disconnecting flag after delay
+                    connectionButton.disabled = false; // Re-enable the button after the delay
+                    updateConnectionStatus(); // Check and update connection status after delay
+                }, 6000); // 6 seconds delay
             } else {
                 updateConnectionStatus();
-            }
+            }           
         } else {
             updateButtonStates(output_id);
             updateDirectionLabels();
             updateOnOffLabels();
         }
     };
-
     if (url === '/toggle_connection') {
-        if (!isConnected && !isAttemptingConnection) { // Prevent connection attempt if already trying to connect
-            isAttemptingConnection = true; // Indicate a connection attempt is in progress
-            
-            // Visual feedback indicating an attempt is in progress (optional but recommended)
+        // Handle connection initiation logic here as well, if necessary
+        if (!isConnected) {
+            // Transition to "Is Connecting" state from "Disconnected" state
             var connectionButton = document.getElementById('connection-btn');
             var connectionIcon = document.getElementById('connection-icon');
             connectionButton.classList.add('black', 'pulse');
             connectionButton.classList.remove('red', 'green');
             connectionIcon.textContent = 'link';
-
-            // The actual sending of the request is moved inside the condition to prevent sending if an attempt is in progress
-            xhr.send();
-        } else {
-            console.log('Connection attempt is already in progress or connected. Ignoring additional request.');
+            isAttemptingConnection = true;
         }
-    } else {
-        // For all other commands, send the request as usual
-        xhr.send();
     }
+    xhr.send();
 }
 
 function updateButtonStates() {
@@ -358,16 +355,6 @@ window.onload = function () {
     periodicallyCheckConnection();
 
 };
-
-document.getElementById('connection-btn').addEventListener('click', function(event) {
-    if (isAttemptingConnection) {
-        console.log('Connection attempt in progress. Ignoring additional clicks.');
-        event.preventDefault(); // Prevent the default click action
-        // Optionally, you can provide feedback to the user here.
-    } else {
-        // Your existing logic to initiate connection can remain as is
-    }
-});
 
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
