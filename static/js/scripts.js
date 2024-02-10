@@ -400,6 +400,14 @@ window.onload = function () {
 
 };
 
+document.getElementById('connection-btn').addEventListener('click', function(event) {
+    if (this.classList.contains('disable-pointer')) {
+        event.preventDefault();
+        return false; // Prevent the click action when the button is in a pseudo-disabled state
+    }
+    // Place your connection logic here if the button is not pseudo-disabled
+});
+
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
         document.body.classList.remove('no-transition');
