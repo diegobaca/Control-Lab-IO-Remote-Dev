@@ -160,7 +160,7 @@ function updateConnectionStatus() {
                 // Here, you check if the attempt to connect has failed
                 // "No connection found" state should be handled here
                 connectionButton.classList.add('red');
-                connectionButton.classList.remove('black', 'green', 'pulse');
+                connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'refresh'; // Indicate no connection found
                 // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
             } else {
