@@ -2,7 +2,6 @@ var isConnected = false;  // Initialize the isConnected variable
 var isAttemptingConnection = false; // Global flag to track connection attempts
 var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
-var intentionalDisconnect = false; // New flag to track if a disconnection was initiated by the user
 
 function sendCommand(url, output_id) {
     var xhr = new XMLHttpRequest();
@@ -304,6 +303,7 @@ function updateButtonAccessibility(isConnected) {
     });
 }
 
+// Function to check the connection status periodically
 function periodicallyCheckConnection() {
     setInterval(function () {
         var xhr = new XMLHttpRequest();
@@ -311,36 +311,32 @@ function periodicallyCheckConnection() {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
 
+            // If the connection was lost and now it's back
             if (data.is_connected && !isConnected) {
-                // Connection restored
                 isConnected = true;
-                is_sending = data.is_sending;
-                updateConnectionStatus();
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is back
                 updateButtonAccessibility(isConnected);
-                updateSendingStatus();
-                intentionalDisconnect = false; // Reset on successful reconnection
-            } else if (!data.is_connected && isConnected) {
-                // Connection lost
+                updateSendingStatus(); // Update the sending button UI
+            } 
+            
+            // If the connection was there and now it's lost
+            else if (!data.is_connected && isConnected) {
                 isConnected = false;
-                is_sending = data.is_sending;
-                if (!intentionalDisconnect) {
-                    // Handle as unexpected disconnection
-                    isDisconnecting = true; // Set disconnecting flag for unexpected disconnection
-                    setTimeout(() => { isDisconnecting = false; }, 6000); // Reset flag after a delay
-                }
-                updateConnectionStatus();
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is lost
                 updateButtonAccessibility(isConnected);
-                updateSendingStatus();
-                intentionalDisconnect = false; // Reset flag once handled
+                updateSendingStatus(); // Update the sending button UI
             }
 
+            // Regardless of connection status, update the UI with the latest system states
             updateOnOffLabels();
             updateDirectionLabels();
             updateButtonStates();
-            updateSendingStatus();
+            updateSendingStatus();  // Make sure this is called here to update sending status regularly
         };
         xhr.send();
-    }, 1000); // Check every 1 second
+    }, 1000); // Check every 1000 milliseconds (1 second)
 }
 
 window.onload = function () {
