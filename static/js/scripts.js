@@ -146,47 +146,46 @@ function updateConnectionStatus() {
         var connectionIcon = document.getElementById('connection-icon');
 
         if (data.is_connected) {
-            // "Connected" state
-            connectionButton.classList.add('green');
-            connectionButton.classList.remove('black', 'red', 'pulse');
-            connectionIcon.textContent = 'power_settings_new';
+            // Connected state
             isConnected = true;
-            connectionButton.disabled = false; // Ensure button is enabled
+            connectionButton.classList.remove('black', 'red', 'pulse');
+            connectionButton.classList.add('green');
+            connectionIcon.textContent = 'power_settings_new';
+            connectionButton.disabled = false; // Enable the button
         } else {
             isConnected = false;
 
             if (isDisconnecting) {
-                // "Is Disconnecting" state
+                // Is Disconnecting state
                 connectionButton.classList.add('black', 'pulse');
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
-                connectionButton.disabled = true; // Explicitly disable the button here
+                connectionButton.disabled = true; // Keep the button disabled
             } else if (isAttemptingConnection) {
-                // "Attempting Connection" state
-                connectionButton.classList.add('red');
+                // Failed connection attempt
                 connectionButton.classList.remove('black', 'green', 'pulse');
-                connectionIcon.textContent = 'refresh'; // Indicate no connection found or attempting connection
-                // Consider disabling the button here if you don't want users to retry during attempt
-                connectionButton.disabled = true;
+                connectionButton.classList.add('red');
+                connectionIcon.textContent = 'refresh'; // Indicate retry is possible
+                connectionButton.disabled = false; // Re-enable the button for retry
             } else {
-                // "Disconnected" state
+                // Default / Disconnected state
                 connectionButton.classList.add('black');
                 connectionButton.classList.remove('green', 'red', 'pulse');
                 connectionIcon.textContent = 'link';
-                connectionButton.disabled = false; // Ensure button is enabled unless in isDisconnecting state
+                connectionButton.disabled = false; // Enable the button
             }
         }
 
         isAttemptingConnection = false;
+        isDisconnecting = false; // Ensure this is reset after handling disconnection
 
-        // Update UI elements related to connection state
+        // Update other UI components based on the current connection status
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
-        updateSendingStatus(); // Update the sending button UI
+        updateSendingStatus(); // Update the sending button UI accordingly
     };
     xhr.send();
 }
-
 
 function toggleSending() {
     var xhr = new XMLHttpRequest();
