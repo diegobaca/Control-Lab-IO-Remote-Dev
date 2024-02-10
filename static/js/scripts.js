@@ -117,10 +117,24 @@ const buttonHandlers = {
     }
 };
 
-// Initial setup and event listeners
 window.onload = function () {
+    // Previous initialization code
+
+    // Add event listener for the Connect button
+    document.getElementById('connection-btn').addEventListener('click', function() {
+        connection.toggleConnection();
+    });
+
+    // Add event listeners for other buttons as needed
+    document.getElementById('sending-btn').addEventListener('click', function() {
+        buttonHandlers.toggleSending();
+    });
+
+    // Initialize connection status and button states
     connection.updateConnectionUI();
     buttonHandlers.updateAllButtonStates();
+
+    // Setup periodic checks for connection status
     setInterval(() => {
         utils.sendRequest('GET', '/check_connection', xhr => {
             const data = JSON.parse(xhr.responseText);
