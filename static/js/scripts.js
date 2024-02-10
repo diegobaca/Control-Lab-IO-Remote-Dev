@@ -366,30 +366,20 @@ function periodicallyCheckConnection() {
         xhr.open("GET", "/check_connection", true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
+            console.log("Periodic check - Server connection state:", data.is_connected, "Client connection state:", isConnected);
 
-            // If the connection was lost and now it's back
             if (data.is_connected && !isConnected) {
+                console.log("Restoring to connected state based on server indication.");
                 isConnected = true;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is back
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
-            } 
-            
-            // If the connection was there and now it's lost
-            else if (!data.is_connected && isConnected) {
+                updateConnectionStatus();
+            } else if (!data.is_connected && isConnected) {
+                console.log("Updating to disconnected state based on server indication.");
                 isConnected = false;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is lost
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
+                updateConnectionStatus();
             }
 
-            // Regardless of connection status, update the UI with the latest system states
-            updateOnOffLabels();
-            updateDirectionLabels();
-            updateButtonStates();
-            updateSendingStatus();  // Make sure this is called here to update sending status regularly
+            updateButtonAccessibility(isConnected);
+            updateSendingStatus();
         };
         xhr.send();
     }, 1000); // Check every 1000 milliseconds (1 second)
