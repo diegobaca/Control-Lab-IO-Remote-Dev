@@ -1,132 +1,140 @@
-var is_sending = false; // Initialize the is_sending variable if needed
-
-function sendCommand(url, output_id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        console.log('Command sent: ' + url);
-        updateButtonStates(output_id);
-        updateDirectionLabels();
-        updateOnOffLabels();
-    };
-    xhr.send();
-}
-
-function updateButtonStates() {
-    var xhrPowerLevels = new XMLHttpRequest();
-    xhrPowerLevels.open("GET", "/get_power_levels", true);
-    xhrPowerLevels.onload = function () {
-        var dataPower = JSON.parse(xhrPowerLevels.responseText);
-        var powerLevels = dataPower.power_levels;
-
-        for (var i = 1; i <= 8; i++) {
-            var powerLevelIcon = 'counter_' + (powerLevels[i - 1] + 1);
-            document.getElementById('power-level-' + i).innerHTML = '<span class="material-symbols-outlined">' + powerLevelIcon + '</span>';
-            document.getElementById('increase-' + i).disabled = (powerLevels[i - 1] == 7);
-            document.getElementById('decrease-' + i).disabled = (powerLevels[i - 1] == 0);
+// Utility functions for common operations
+const utils = {
+    updateClassList: function (elementId, addClasses, removeClasses) {
+        const element = document.getElementById(elementId);
+        element.classList.add(...addClasses);
+        element.classList.remove(...removeClasses);
+    },
+    setDisabledState: function (elementId, state) {
+        document.getElementById(elementId).disabled = state;
+    },
+    sendRequest: function (method, url, callback, data = null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        if (method === "POST") {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
-    };
-    xhrPowerLevels.send();
-}
-
-function updateDirectionLabels() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/get_direction_states", true);
-    xhr.onload = function () {
-        var data = JSON.parse(xhr.responseText);
-        var directionStates = data.direction_states;
-
-        for (var i = 1; i <= 8; i++) {
-            var directionIcon = document.getElementById('direction-icon-' + i);
-            directionIcon.textContent = directionStates[i - 1] ? 'rotate_right' : 'rotate_left';
-        }
-    };
-    xhr.send();
-}
-
-function updateOnOffLabels() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/get_on_off_states", true);
-    xhr.onload = function () {
-        var data = JSON.parse(xhr.responseText);
-        var onOffStates = data.on_off_states;
-
-        for (var i = 1; i <= 8; i++) {
-            var onOffButton = document.getElementById('on-off-' + i);
-            var onOffLabel = onOffStates[i - 1] ? 'On' : 'Off';
-            onOffButton.textContent = onOffLabel;
-
-            onOffButton.classList.remove('red', 'green', 'orange', 'pulse');
-            if (onOffLabel === 'On') {
-                onOffButton.classList.add(is_sending ? 'green' : 'orange');
-                if (is_sending) onOffButton.classList.add('pulse');
-            } else {
-                onOffButton.classList.add('red');
-            }
-        }
-        updateButtonStates();
-    };
-    xhr.send();
-}
-
-function toggleSending() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/toggle_sending", true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function () {
-        console.log('Sending state toggled');
-        updateSendingStatus();
-    };
-    xhr.send();
-}
-
-function updateSendingStatus() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/get_sending_status", true);
-    xhr.onload = function () {
-        var data = JSON.parse(xhr.responseText);
-        is_sending = data.is_sending;
-        var sendingButton = document.getElementById('sending-btn');
-        var sendingIcon = document.getElementById('sending-icon');
-
-        if (is_sending) {
-            sendingButton.classList.add('green', 'pulse');
-            sendingIcon.textContent = 'play_arrow';
-        } else {
-            sendingButton.classList.add('orange');
-            sendingIcon.textContent = 'pause';
-        }
-
-        for (var i = 1; i <= 8; i++) {
-            var onOffButton = document.getElementById('on-off-' + i);
-            if (onOffButton.textContent === 'On') {
-                onOffButton.classList.add(is_sending ? 'green' : 'orange');
-                onOffButton.classList.toggle('pulse', is_sending);
-            }
-        }
-    };
-    xhr.send();
-}
-
-function updateButtonAccessibility(isConnected) {
-    var buttons = document.querySelectorAll('.btn-floating');
-    buttons.forEach(function (button) {
-        button.disabled = !isConnected;
-    });
-}
-
-// Simplified initialization and event listener setup
-window.onload = function () {
-    updateSendingStatus();
-    updateButtonStates();
-    updateDirectionLabels();
-    updateOnOffLabels();
-    updateButtonAccessibility(true); // Assume always connected for simplification
+        xhr.onload = function () {
+            if (callback) callback(xhr);
+        };
+        xhr.send(data);
+    }
 };
 
-window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-        document.body.classList.remove('no-transition');
-    });
-});
+// Simplified connection management
+const connection = {
+    isConnected: false,
+    isAttempting: false,
+    isDisconnecting: false,
+    isSending: false,
+
+    toggleConnection: function () {
+        utils.sendRequest('POST', '/toggle_connection', this.handleToggleConnectionResponse.bind(this));
+    },
+
+    handleToggleConnectionResponse: function (xhr) {
+        const response = JSON.parse(xhr.responseText);
+        this.isConnected = response.is_connected;
+        this.updateConnectionUI();
+        buttonHandlers.updateAllButtonStates();
+    },
+
+    updateConnectionUI: function () {
+        // Update connection button based on current state
+        const connectionClasses = this.isConnected ? ['green', 'pulse'] : ['red'];
+        const connectionIcon = this.isConnected ? 'power_settings_new' : 'link';
+        utils.updateClassList('connection-btn', connectionClasses, ['black', 'red', 'pulse']);
+        utils.updateClassList('connection-icon', [], []);
+        document.getElementById('connection-icon').textContent = connectionIcon;
+
+        // Update other UI elements based on connection state
+        document.querySelectorAll('.btn-floating').forEach(button => {
+            if (button.id !== 'connection-btn') {
+                button.disabled = !this.isConnected;
+            }
+        });
+
+        const color = this.isConnected ? 'black' : '#DFDFDF';
+        document.querySelectorAll('.output-label, .power-level-display').forEach(element => {
+            element.style.color = color;
+        });
+    }
+};
+
+// Handlers for UI updates and interactions
+const buttonHandlers = {
+    updateAllButtonStates: function () {
+        this.updatePowerLevels();
+        this.updateDirectionLabels();
+        this.updateOnOffLabels();
+    },
+
+    updatePowerLevels: function () {
+        utils.sendRequest('GET', '/get_power_levels', xhr => {
+            const data = JSON.parse(xhr.responseText);
+            data.power_levels.forEach((level, i) => {
+                document.getElementById(`power-level-${i+1}`).innerHTML = `<span class="material-symbols-outlined">counter_${level + 1}</span>`;
+                utils.setDisabledState(`increase-${i+1}`, !connection.isConnected || level === 7);
+                utils.setDisabledState(`decrease-${i+1}`, !connection.isConnected || level === 0);
+            });
+        });
+    },
+
+    updateDirectionLabels: function () {
+        utils.sendRequest('GET', '/get_direction_states', xhr => {
+            const data = JSON.parse(xhr.responseText);
+            data.direction_states.forEach((state, i) => {
+                document.getElementById(`direction-icon-${i+1}`).textContent = state ? 'rotate_right' : 'rotate_left';
+            });
+        });
+    },
+
+    updateOnOffLabels: function () {
+        utils.sendRequest('GET', '/get_on_off_states', xhr => {
+            const data = JSON.parse(xhr.responseText);
+            data.on_off_states.forEach((state, i) => {
+                const onOffButton = document.getElementById(`on-off-${i+1}`);
+                onOffButton.textContent = state ? 'On' : 'Off';
+                utils.updateClassList(`on-off-${i+1}`, [state ? 'green' : 'red'], ['orange', 'pulse']);
+            });
+        });
+    },
+
+    toggleSending: function () {
+        utils.sendRequest('POST', '/toggle_sending', xhr => {
+            const data = JSON.parse(xhr.responseText);
+            connection.isSending = data.is_sending;
+            this.updateSendingStatus();
+        });
+    },
+
+    updateSendingStatus: function () {
+        // Simplified updating of sending status UI
+        const sendingStatus = connection.isSending ? ['green', 'pulse'] : ['orange'];
+        const sendingIconText = connection.isSending ? 'play_arrow' : 'pause';
+        utils.updateClassList('sending-btn', sendingStatus, ['black', 'orange']);
+        document.getElementById('sending-icon').textContent = sendingIconText;
+    }
+};
+
+// Initial setup and event listeners
+window.onload = function () {
+    connection.updateConnectionUI();
+    buttonHandlers.updateAllButtonStates();
+    setInterval(() => {
+        utils.sendRequest('GET', '/check_connection', xhr => {
+            const data = JSON.parse(xhr.responseText);
+            if (data.is_connected !== connection.isConnected) {
+                connection.isConnected = data.is_connected;
+                connection.updateConnectionUI();
+            }
+            if (data.is_sending !== connection.isSending) {
+                connection.isSending = data.is_sending;
+                buttonHandlers.updateSendingStatus();
+            }
+            buttonHandlers.updateAllButtonStates();
+        });
+    }, 1000); // Check connection status every second
+};
+
+// Add more event listeners as needed for user interactions
