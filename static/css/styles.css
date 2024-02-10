@@ -176,7 +176,7 @@ body {
 
 .disable-pointer {
     pointer-events: none;
-    opacity: 0.5; /* Optional: reduces the opacity to give a visual cue that the button is disabled */
+    /* opacity: 0.5; Optional: reduces the opacity to give a visual cue that the button is disabled */
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
