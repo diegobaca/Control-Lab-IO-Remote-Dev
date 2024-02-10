@@ -105,11 +105,27 @@ function proceedWithConnectionAttempt(url, output_id) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         console.log('Command sent: ' + url);
-        // Implement the rest of the original sendCommand logic here
-        // For example, handling connection state changes, UI updates, etc.
+        // Additional logic for connection attempts
         if (url === '/toggle_connection') {
-            isAttemptingConnection = !isAttemptingConnection; // Update your connection attempt flag as needed
-            updateConnectionStatus(); // Make sure to call any functions that update your UI based on the new state
+            if (!isConnected) {
+                // Apply UI changes for "Is Connecting" state
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Add missing classes
+                connectionButton.classList.remove('red', 'green'); // Remove any conflicting classes
+                connectionIcon.textContent = 'link'; // Adjust icon as needed for connecting state
+            }
+            isAttemptingConnection = !isAttemptingConnection; // Toggle the attempt flag as appropriate
+            updateConnectionStatus(); // Reflect the change in UI based on the new state
+        }
+        // Implement the rest of your original logic here, especially for handling the response
+        if (output_id === 0) {
+            // This section should include your disconnection logic if needed
+        } else {
+            // Handle updates for other types of commands
+            updateButtonStates(output_id);
+            updateDirectionLabels();
+            updateOnOffLabels();
         }
     };
     xhr.send();
