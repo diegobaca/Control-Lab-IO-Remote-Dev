@@ -40,27 +40,25 @@ def find_ports():
     return None
 
 def keep_alive(port):
-    global is_connected  # Access the global variable
-    while True:
+    global is_connected
+    while is_connected:
         try:
-            port.write([2])
+            port.write(b'\x00')  # Example keep-alive signal
             time.sleep(2)
         except serial.SerialException:
-            is_connected = False  # Update connection status
-            if port:
-                port.close()  # Close the connection properly
-                stop_all_motors()  # Stop all motors
-                print("Connection lost. Motors stopped.")  # Log message
-            break  # Exit the loop if there's an error
+            is_connected = False
+            print("Connection lost. Attempting to reconnect...")
+            toggle_connection()  # Attempt reconnection or finalize disconnection
+            break
 
 def send_commands():
-    global is_sending, was_sending, is_connected, serial_connection  # Access the global variables
-    while serial_connection:
+    global is_sending, was_sending, is_connected, serial_connection
+    while serial_connection and is_connected:
         if is_sending:
             try:
                 # Normal operation: send commands based on Dir, Pow, On
-                # Send Direction commands
                 for i in range(8):
+                    # Send Direction commands
                     if Dir[i] != pDir[i] or not was_sending:
                         buf = 147 if Dir[i] else 148
                         buf2 = 0x01 << i
@@ -68,8 +66,7 @@ def send_commands():
                         serial_connection.write(dcommand)
                         pDir[i] = Dir[i]
 
-                # Send Power commands
-                for i in range(8):
+                    # Send Power commands
                     if Pow[i] != pPow[i] or not was_sending:
                         buf = 176 + Pow[i]
                         buf2 = 0x01 << i
@@ -77,8 +74,7 @@ def send_commands():
                         serial_connection.write(pcommand)
                         pPow[i] = Pow[i]
 
-                # Send On/Off commands
-                for i in range(8):
+                    # Send On/Off commands
                     if On[i] != pOn[i] or not was_sending:
                         buf = 145 if On[i] else 144
                         buf2 = 0x01 << i
@@ -86,19 +82,18 @@ def send_commands():
                         serial_connection.write(ocommand)
                         pOn[i] = On[i]
 
+                was_sending = True
             except serial.SerialException as e:
                 print(f"Serial communication error: {e}")
-                is_connected = False  # Update connection status
+                # Handle disconnection or communication errors
+                is_connected = False
+                is_sending = False
                 if serial_connection:
                     serial_connection.close()  # Close the connection properly
-                    serial_connection = None  # Clear the serial connection object
-                break  # Exit the loop if there's an error
-
-            # Update was_sending at the end of the loop
-            was_sending = is_sending
-
+                    serial_connection = None
+                # Optionally, try to reconnect or inform the frontend of the error
         else:
-            # Only send "turn off" command for all outputs if was_sending was previously True
+            # If is_sending was True before and now it's False, turn off all outputs
             if was_sending:
                 try:
                     for i in range(8):
@@ -106,18 +101,16 @@ def send_commands():
                         buf2 = 0x01 << i
                         ocommand = bytes([buf, buf2])
                         serial_connection.write(ocommand)
+                    was_sending = False
                 except serial.SerialException as e:
-                    print(f"Serial communication error: {e}")
-                    is_connected = False  # Update connection status
+                    print(f"Serial communication error while stopping: {e}")
+                    is_connected = False
                     if serial_connection:
-                        serial_connection.close()  # Close the connection properly
-                        serial_connection = None  # Clear the serial connection object
-                    break  # Exit the loop if there's an error
-            # Update was_sending at the end of the loop
-            was_sending = is_sending
-
-        # Delay before the next iteration
-        time.sleep(1)
+                        serial_connection.close()  # Properly close the connection
+                        serial_connection = None
+                    # Optionally, manage reconnection or error notification here
+            # Delay to prevent a tight loop when not sending commands
+            time.sleep(1)
 
 def keep_alive(port):
     global is_connected  # Access the global variable
@@ -137,36 +130,32 @@ def index():
 
 @app.route('/toggle_connection', methods=['POST'])
 def toggle_connection():
-    global serial_connection, is_connected, is_sending  # include is_sending
+    global serial_connection, is_connected, is_sending
     if is_connected:
-        stop_all_motors()  # Stop all motors before disconnecting
-        if serial_connection:
-            serial_connection.close()
-            serial_connection = None
-        is_connected = False
-        is_sending = False  # Turn off sending when manually disconnecting
-
-        # Inform the user about the disconnection
-        print("Disconnected from the serial port.")
+        # Attempt to disconnect
+        try:
+            if serial_connection:
+                serial_connection.close()
+                print("Disconnected from the serial port.")
+            is_connected = False
+            is_sending = False  # Ensure sending is stopped upon disconnection
+        except Exception as e:
+            print(f"Error during disconnection: {str(e)}")
+            return jsonify(is_connected=is_connected, is_sending=is_sending, error=True)
     else:
+        # Attempt to connect
         try:
             serial_connection = find_ports()
             if serial_connection:
-                threading.Thread(target=keep_alive, args=(serial_connection,)).start()
-                threading.Thread(target=send_commands, daemon=True).start()
                 is_connected = True
-                # No need to change is_sending here; it should remain in its previous state
-                # until the user explicitly starts or stops sending
-
-                # Inform the user about the successful connection
+                threading.Thread(target=keep_alive, args=(serial_connection,), daemon=True).start()
                 print(f"Connected to {serial_connection.port}")
-
+            else:
+                raise Exception("No suitable serial port found.")
         except Exception as e:
             print(f"Connection failed: {str(e)}")
-            is_connected = False  # Ensure is_connected reflects the failed attempt
-            is_sending = False  # Ensure is_sending is turned off if the connection attempt fails
-
-    # Return the current connection status and sending status
+            is_connected = False
+            return jsonify(is_connected=is_connected, error=True)
     return jsonify(is_connected=is_connected, is_sending=is_sending)
 
 @app.route('/toggle_on/<int:output_id>', methods=['POST'])
@@ -199,7 +188,8 @@ def get_power_levels():
 
 @app.route('/get_connection_status')
 def get_connection_status():
-    return jsonify(is_connected=is_connected)
+    # This endpoint now provides the connection status and whether commands are being sent
+    return jsonify(is_connected=is_connected, is_sending=is_sending)
 
 @app.route('/get_direction_states')
 def get_direction_states():
