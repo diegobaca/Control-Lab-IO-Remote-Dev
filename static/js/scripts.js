@@ -2,6 +2,7 @@ var isConnected = false;  // Initialize the isConnected variable
 var isAttemptingConnection = false; // Global flag to track connection attempts
 var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
+
 function sendCommand(url, output_id) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -65,12 +66,14 @@ function sendCommand(url, output_id) {
     }
     xhr.send();
 }
+
 function updateButtonStates() {
     var xhrPowerLevels = new XMLHttpRequest();
     xhrPowerLevels.open("GET", "/get_power_levels", true);
     xhrPowerLevels.onload = function () {
         var dataPower = JSON.parse(xhrPowerLevels.responseText);
         var powerLevels = dataPower.power_levels;
+
         for (var i = 1; i <= 8; i++) {
             var powerLevelIcon = 'counter_' + (powerLevels[i - 1] + 1);
             document.getElementById('power-level-' + i).innerHTML = '<span class="material-symbols-outlined">' + powerLevelIcon + '</span>';
@@ -81,12 +84,14 @@ function updateButtonStates() {
     };
     xhrPowerLevels.send();
 }
+
 function updateDirectionLabels() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/get_direction_states", true);
     xhr.onload = function () {
         var data = JSON.parse(xhr.responseText);
         var directionStates = data.direction_states;
+
         for (var i = 1; i <= 8; i++) {
             var directionIcon = document.getElementById('direction-icon-' + i);
             if (directionStates[i - 1]) {
@@ -98,6 +103,7 @@ function updateDirectionLabels() {
     };
     xhr.send();
 }
+
 function updateOnOffLabels() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/get_on_off_states", true);
@@ -105,10 +111,12 @@ function updateOnOffLabels() {
         var data = JSON.parse(xhr.responseText);
         console.log("Received On/Off States:", data);  // Debugging line
         var onOffStates = data.on_off_states;
+
         for (var i = 1; i <= 8; i++) {
             var onOffButton = document.getElementById('on-off-' + i);
             var onOffLabel = onOffStates[i - 1] ? 'On' : 'Off';
             onOffButton.textContent = onOffLabel;
+
             onOffButton.classList.remove('red', 'green', 'orange', 'pulse'); // Remove all classes
             if (onOffLabel === 'On') {
                 if (is_sending) {
@@ -121,11 +129,13 @@ function updateOnOffLabels() {
                 onOffButton.classList.add('red');
             }
         }
+
         // Call updateButtonStates after updating on-off labels to ensure buttons reflect the new on-off states
         updateButtonStates();
     };
     xhr.send();
 }
+
 function updateConnectionStatus() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/get_connection_status", true);
@@ -133,6 +143,7 @@ function updateConnectionStatus() {
         var data = JSON.parse(xhr.responseText);
         var connectionButton = document.getElementById('connection-btn');
         var connectionIcon = document.getElementById('connection-icon');
+
         if (data.is_connected) {
             // "Connected" state
             connectionButton.classList.add('green');
@@ -160,20 +171,25 @@ function updateConnectionStatus() {
             }
             isConnected = false;
         }
+
         isAttemptingConnection = false;
         // Do not reset isDisconnecting here; let the setTimeout handle it to respect the 6-second duration
+
         // Only re-enable the button if not in the process of disconnecting
         if (!isDisconnecting) {
             connectionButton.disabled = false;
         }
+
         updateButtonAccessibility(data.is_connected);
         updateButtonStates();
+
         // Now also handle sending status
         is_sending = data.is_sending;  // Update is_sending based on the server response
         updateSendingStatus();  // Update the sending button UI
     };
     xhr.send();
 }
+
 function toggleSending() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/toggle_sending", true);
@@ -184,6 +200,7 @@ function toggleSending() {
     };
     xhr.send();
 }
+
 function updateSendingStatus() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/get_sending_status", true);
@@ -192,11 +209,13 @@ function updateSendingStatus() {
         is_sending = data.is_sending;  // Update the is_sending variable
         var sendingButton = document.getElementById('sending-btn');
         var sendingIcon = document.getElementById('sending-icon');
+
         // Update button classes and icon based on sending status
         if (is_sending) {
             sendingButton.classList.add('green', 'pulse'); // Add green color and pulse effect
             sendingButton.classList.remove('black', 'orange'); // Remove black and orange color
             sendingIcon.textContent = 'play_arrow'; // Use the play_arrow icon
+
             // Change any orange on/off buttons to green and add pulse
             for (var i = 1; i <= 8; i++) {
                 var onOffButton = document.getElementById('on-off-' + i);
@@ -209,6 +228,7 @@ function updateSendingStatus() {
             sendingButton.classList.add('orange'); // Add orange color
             sendingButton.classList.remove('green', 'black', 'pulse'); // Remove green color, black color, and pulse effect
             sendingIcon.textContent = 'pause'; // Use the pause icon
+
             // Change any green on/off buttons to orange and remove pulse
             for (var i = 1; i <= 8; i++) {
                 var onOffButton = document.getElementById('on-off-' + i);
@@ -221,12 +241,14 @@ function updateSendingStatus() {
     };
     xhr.send();
 }
+
 // Global variable to store the saved state
 var savedState = {
     On: [],
     Dir: [],
     Pow: []
 };
+
 function saveOutputValues() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/save_state", true);
@@ -240,6 +262,7 @@ function saveOutputValues() {
     };
     xhr.send();
 }
+
 function loadOutputValues() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/load_state", true);
@@ -257,82 +280,82 @@ function loadOutputValues() {
     };
     xhr.send();
 }
+
 function updateButtonAccessibility(isConnected) {
     var buttons = document.querySelectorAll('.btn-floating'); // Select all floating buttons
     var outputLabels = document.querySelectorAll('.output-label'); // Select all output labels
     var powerIcons = document.querySelectorAll('.power-level-display'); // Select all power level display icons
+
     buttons.forEach(function (button) {
         // Disable all buttons except the connection button when disconnected
         if (button.id !== 'connection-btn') {
             button.disabled = !isConnected;
         }
     });
+
     // Change color of output labels and power icons based on connection status
     outputLabels.forEach(function (label) {
         label.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
+
     powerIcons.forEach(function (icon) {
         icon.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
 }
+
 // Function to check the connection status periodically
 function periodicallyCheckConnection() {
     setInterval(function () {
         var xhr = new XMLHttpRequest();
-         xhr.open("GET", "/check_connection", true);
-         xhr.onload = function () {
-             var data = JSON.parse(xhr.responseText);
-             var previouslyConnected = isConnected;
+        xhr.open("GET", "/check_connection", true);
+        xhr.onload = function () {
+            var data = JSON.parse(xhr.responseText);
 
-             isConnected = data.is_connected;
-             is_sending = data.is_sending; // Always update is_sending based on the latest server response
+            // If the connection was lost and now it's back
+            if (data.is_connected && !isConnected) {
+                isConnected = true;
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is back
+                updateButtonAccessibility(isConnected);
+                updateSendingStatus(); // Update the sending button UI
+            } 
+            
+            // If the connection was there and now it's lost
+            else if (!data.is_connected && isConnected) {
+                isConnected = false;
+                is_sending = data.is_sending; // Update is_sending based on the server response
+                updateConnectionStatus(); // Update UI to reflect connection is lost
+                updateButtonAccessibility(isConnected);
+                updateSendingStatus(); // Update the sending button UI
+            }
 
-             // Connection status has changed
-             if (isConnected !== previouslyConnected) {
-                 updateConnectionStatus(); // Handle all UI updates for connection status change
-                 updateButtonAccessibility(isConnected);
-             }
+            // Regardless of connection status, update the UI with the latest system states
+            updateOnOffLabels();
+            updateDirectionLabels();
+            updateButtonStates();
+            updateSendingStatus();  // Make sure this is called here to update sending status regularly
+        };
+        xhr.send();
+    }, 1000); // Check every 1000 milliseconds (1 second)
+}
 
-             // If currently in "is disconnecting" state, ensure UI correctly reflects this state without assuming change
-             if (isDisconnecting) {
-                 handleIsDisconnectingUI();
-             } else {
-                 // If not disconnecting, ensure UI is correct for either connected or disconnected states
-                 updateSendingStatus(); // Always update the sending status as it might change independently
-             }
+window.onload = function () {
+    // Fetch and set the initial state of is_sending
+    updateSendingStatus(); // Fetch and update sending status on page load
 
-             // UI updates that should occur regardless of connection status
-             updateOnOffLabels();
-             updateDirectionLabels();
-             updateButtonStates();
-         };
-         xhr.send();
-     }, 1000); // Check every 1000 milliseconds (1 second)
- }
-
- function handleIsDisconnectingUI() {
-     // UI updates specific to "is disconnecting" state
-     var connectionButton = document.getElementById('connection-btn');
-     var connectionIcon = document.getElementById('connection-icon');
-     connectionButton.classList.add('black', 'pulse');
-     connectionButton.classList.remove('green', 'red');
-     connectionIcon.textContent = 'link_off';
-     connectionButton.disabled = true; // Keep the button disabled while disconnecting
- }
-
- window.onload = function () {
-     // Fetch and set the initial state of is_sending
-     updateSendingStatus(); // Fetch and update sending status on page load
     // Update other UI elements based on the initial state
     updateButtonStates(0);
     updateConnectionStatus();
     updateDirectionLabels();
     updateOnOffLabels();
+
     // Initially, assume disconnected and disable buttons
     updateButtonAccessibility(false);
     // Start checking the connection status periodically
     periodicallyCheckConnection();
+
 };
+
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
         document.body.classList.remove('no-transition');
