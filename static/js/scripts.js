@@ -10,11 +10,17 @@ function sendCommand(url, output_id) {
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
-            // Add logic here to explicitly check connection status if attempting to connect
             if (url === '/toggle_connection' && !isConnected) {
-                checkAndUpdateConnectionStatus(); // Check and update connection status from the server
+                // Before sending the command to connect, visually indicate an attempt to connect
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Ensure these classes are correctly set
+                connectionButton.classList.remove('red', 'green');
+                connectionIcon.textContent = 'link'; // Adjust icon as needed for your UI
+                
+                // Call checkAndUpdateConnectionStatus or keep the connection attempt logic here
+                isAttemptingConnection = true; // Indicate an attempt to connect is being made
             } else if (url === '/toggle_connection' && isConnected) {
-                // Existing logic for handling disconnection
                 handleDisconnection(url);
             } else {
                 updateConnectionStatus();
