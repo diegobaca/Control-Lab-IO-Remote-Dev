@@ -10,30 +10,39 @@ function sendCommand(url, output_id) {
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
-            if (url === '/toggle_connection' && !isConnected) {
+            // Assuming the connection attempt is for toggling connection state
+            if (url === '/toggle_connection') {
                 var connectionButton = document.getElementById('connection-btn');
                 var connectionIcon = document.getElementById('connection-icon');
 
-                // Visually indicate an attempt to connect without disabling the button
-                connectionButton.classList.add('black', 'pulse');
-                connectionButton.classList.remove('red', 'green');
-                connectionIcon.textContent = 'link';
-
-                // Apply disable-pointer without setting disabled to true
-                connectionButton.classList.add('disable-pointer');
-
-                isAttemptingConnection = true;
-                checkAndUpdateConnectionStatus(); // Ensure this function is properly defined and called
-            } else if (url === '/toggle_connection' && isConnected) {
-                handleDisconnection(url);
-            } else {
+                // Immediately upon response, assess if further UI updates are needed
+                if (!isConnected) {
+                    // Here you would handle the UI update for a successful connection attempt
+                    isConnected = true; // Update the isConnected state as needed based on server response
+                    connectionButton.classList.remove('pulse', 'disable-pointer'); // Remove classes to stop pulsing and re-enable pointer events
+                    connectionButton.classList.add('green'); // Example class for successful connection
+                    connectionIcon.textContent = 'link_off'; // Update icon as per your UI's logic
+                } else {
+                    // Here you manage the UI for a disconnection or failed connection attempt
+                    isConnected = false; // Update accordingly
+                    connectionButton.classList.remove('pulse', 'disable-pointer'); // Ensure button is clickable again and stops pulsing
+                    connectionButton.classList.add('red'); // Example class for disconnection/not connected
+                    connectionIcon.textContent = 'link'; // Reset icon
+                }
+                // Update the UI based on the new connection state
                 updateConnectionStatus();
             }
         } else {
+            // Handle other types of commands that might require UI updates
             updateButtonStates(output_id);
             updateDirectionLabels();
             updateOnOffLabels();
         }
+    };
+    xhr.onerror = function() {
+        // Handle communication errors here
+        console.error("Error communicating with the server.");
+        // Optionally reset UI elements that were expecting a server response
     };
     xhr.send();
 }
@@ -401,11 +410,19 @@ window.onload = function () {
 };
 
 document.getElementById('connection-btn').addEventListener('click', function(event) {
-    if (this.classList.contains('disable-pointer')) {
+    // Check if we are in a state that allows attempting to connect
+    if (!isConnected && !this.classList.contains('disable-pointer')) {
+        // Apply visual feedback immediately
+        this.classList.add('pulse', 'disable-pointer');
+        var connectionIcon = document.getElementById('connection-icon');
+        connectionIcon.textContent = 'link'; // Adjust the icon as per your UI's logic
+
+        // Proceed to attempt to connect
+        sendCommand('/toggle_connection', 0);
+    } else {
+        // Prevent default action if already in the process of connecting or if disabled
         event.preventDefault();
-        return false; // Prevent the click action when the button is in a pseudo-disabled state
     }
-    // Place your connection logic here if the button is not pseudo-disabled
 });
 
 window.addEventListener('load', () => {
