@@ -11,6 +11,7 @@ serial_connection = None
 is_connected = False
 is_sending = False
 was_sending = False
+is_attempting_connection = False
 
 # Output states
 Dir = [True] * 8   # Initialize direction to Right
@@ -137,36 +138,32 @@ def index():
 
 @app.route('/toggle_connection', methods=['POST'])
 def toggle_connection():
-    global serial_connection, is_connected, is_sending  # include is_sending
-    if is_connected:
-        stop_all_motors()  # Stop all motors before disconnecting
-        if serial_connection:
-            serial_connection.close()
-            serial_connection = None
-        is_connected = False
-        is_sending = False  # Turn off sending when manually disconnecting
-
-        # Inform the user about the disconnection
-        print("Disconnected from the serial port.")
-    else:
+    global serial_connection, is_connected, is_sending, is_attempting_connection
+    if not is_connected and not is_attempting_connection:
+        is_attempting_connection = True
         try:
             serial_connection = find_ports()
             if serial_connection:
                 threading.Thread(target=keep_alive, args=(serial_connection,)).start()
                 threading.Thread(target=send_commands, daemon=True).start()
                 is_connected = True
-                # No need to change is_sending here; it should remain in its previous state
-                # until the user explicitly starts or stops sending
-
-                # Inform the user about the successful connection
                 print(f"Connected to {serial_connection.port}")
-
+            else:
+                is_connected = False
+                print("Connection failed: No serial ports found.")
         except Exception as e:
             print(f"Connection failed: {str(e)}")
-            is_connected = False  # Ensure is_connected reflects the failed attempt
-            is_sending = False  # Ensure is_sending is turned off if the connection attempt fails
-
-    # Return the current connection status and sending status
+            is_connected = False
+        finally:
+            is_attempting_connection = False
+    elif is_connected:
+        stop_all_motors()
+        if serial_connection:
+            serial_connection.close()
+            serial_connection = None
+        is_connected = False
+        is_sending = False
+        print("Disconnected from the serial port.")
     return jsonify(is_connected=is_connected, is_sending=is_sending)
 
 @app.route('/toggle_on/<int:output_id>', methods=['POST'])
@@ -265,6 +262,11 @@ def check_connection():
         is_connected = False
         is_sending = False  # Turn off sending if connection is lost
     return jsonify(is_connected=is_connected, is_sending=is_sending)
+
+@app.route('/get_connection_attempt_status')
+def get_connection_attempt_status():
+    global is_attempting_connection
+    return jsonify(is_attempting_connection=is_attempting_connection)
 
 def stop_all_motors():
     global serial_connection
