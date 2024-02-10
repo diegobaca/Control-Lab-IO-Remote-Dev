@@ -11,15 +11,19 @@ function sendCommand(url, output_id) {
         console.log('Command sent: ' + url);
         if (output_id === 0) {
             if (url === '/toggle_connection' && !isConnected) {
-                // Before sending the command to connect, visually indicate an attempt to connect
                 var connectionButton = document.getElementById('connection-btn');
                 var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Ensure these classes are correctly set
+
+                // Visually indicate an attempt to connect without disabling the button
+                connectionButton.classList.add('black', 'pulse');
                 connectionButton.classList.remove('red', 'green');
-                connectionIcon.textContent = 'link'; // Adjust icon as needed for your UI
-                
-                // Call checkAndUpdateConnectionStatus or keep the connection attempt logic here
-                isAttemptingConnection = true; // Indicate an attempt to connect is being made
+                connectionIcon.textContent = 'link';
+
+                // Apply disable-pointer without setting disabled to true
+                connectionButton.classList.add('disable-pointer');
+
+                isAttemptingConnection = true;
+                checkAndUpdateConnectionStatus(); // Ensure this function is properly defined and called
             } else if (url === '/toggle_connection' && isConnected) {
                 handleDisconnection(url);
             } else {
