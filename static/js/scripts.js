@@ -12,24 +12,27 @@ function sendCommand(url, output_id) {
         if (output_id === 0) {
             // Assuming the connection attempt is for toggling connection state
             if (url === '/toggle_connection') {
+                var response = JSON.parse(xhr.responseText);
+                // Update the isConnected variable based on the actual response from the server
+                isConnected = response.is_connected;
+
                 var connectionButton = document.getElementById('connection-btn');
                 var connectionIcon = document.getElementById('connection-icon');
 
-                // Immediately upon response, assess if further UI updates are needed
-                if (!isConnected) {
-                    // Here you would handle the UI update for a successful connection attempt
-                    isConnected = true; // Update the isConnected state as needed based on server response
+                // Update UI based on the new connection status
+                if (isConnected) {
+                    // If connected, update UI for a successful connection
                     connectionButton.classList.remove('pulse', 'disable-pointer'); // Remove classes to stop pulsing and re-enable pointer events
                     connectionButton.classList.add('green'); // Example class for successful connection
-                    connectionIcon.textContent = 'link_off'; // Update icon as per your UI's logic
+                    connectionIcon.textContent = 'power_settings_new'; // Adjust icon/text as per your UI's logic
                 } else {
-                    // Here you manage the UI for a disconnection or failed connection attempt
-                    isConnected = false; // Update accordingly
+                    // If not connected, update UI for disconnection or failed connection attempt
                     connectionButton.classList.remove('pulse', 'disable-pointer'); // Ensure button is clickable again and stops pulsing
                     connectionButton.classList.add('red'); // Example class for disconnection/not connected
-                    connectionIcon.textContent = 'link'; // Reset icon
+                    connectionIcon.textContent = 'link'; // Reset icon/text to indicate disconnected state
                 }
-                // Update the UI based on the new connection state
+
+                // Call function to reflect changes in the UI based on the updated connection status
                 updateConnectionStatus();
             }
         } else {
