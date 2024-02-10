@@ -39,10 +39,24 @@ function sendCommand(url, output_id) {
             
                 // Wait for 6 seconds before resetting the disconnecting state and updating the UI
                 setTimeout(function() {
-                    isDisconnecting = false; // Reset disconnecting flag after delay
-                    connectionButton.disabled = false; // Re-enable the button after the delay
-                    updateConnectionStatus(); // Check and update connection status after delay
-                }, 6000); // 6 seconds delay
+                    // Send a request to the server to confirm if the connection has been successfully closed
+                    var checkConnectionXhr = new XMLHttpRequest();
+                    checkConnectionXhr.open("GET", "/get_connection_status", true);
+                    checkConnectionXhr.onload = function () {
+                        var statusData = JSON.parse(checkConnectionXhr.responseText);
+                        if (!statusData.is_connected) {
+                            // Successfully disconnected
+                            isDisconnecting = false; // Reset disconnecting flag
+                            connectionButton.disabled = false; // Re-enable the button
+                            updateConnectionStatus(); // Reflect disconnected state in the UI
+                        } else {
+                            // Handle unsuccessful disconnection, e.g., retry or notify user
+                            console.error("Disconnection failed, retrying...");
+                            // Optionally, insert retry logic or user notification here
+                        }
+                    };
+                    checkConnectionXhr.send();
+                }, 6000); // Check status after 6 seconds delay
             } else {
                 updateConnectionStatus();
             }           
