@@ -1,6 +1,10 @@
 /* Page background color */
 body {
     background-color: #F4F4F4;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .container {
@@ -177,6 +181,10 @@ body {
 .disable-pointer {
     pointer-events: none;
     /* opacity: 0.5; Optional: reduces the opacity to give a visual cue that the button is disabled */
+}
+
+.btn-floating {
+    cursor: pointer;
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
