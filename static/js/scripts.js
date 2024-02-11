@@ -85,16 +85,10 @@ function handleDisconnection() {
                 connectionButton.disabled = false; // Re-enable the button
                 updateConnectionStatus(); // Reflect disconnected state in the UI
             } else {
-                // Unsuccessful disconnection
+                // Handle unsuccessful disconnection, e.g., retry or notify user
                 console.error("Disconnection failed, retrying...");
-                // Update the button to reflect an error state
-                var connectionButton = document.getElementById('connection-btn');
-                var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('red'); // Make the button red to indicate an error
-                connectionButton.classList.remove('black', 'pulse', 'disable-pointer'); // Remove other styling classes
-                connectionIcon.textContent = 'link_off'; // Assuming 'link_off' is used to indicate disconnection or error
-                // Optionally, here you can insert retry logic or display a notification to the user
-            }    
+                // Optionally, insert retry logic or user notification here
+            }
         };
         checkConnectionXhr.send();
     }, 6000); // Check status after 6 seconds delay
