@@ -4,6 +4,7 @@ var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
+    // Handle connection attempts
     if (url === '/toggle_connection' && !isConnected) {
         checkConnectionAttemptStatus(function(isAttempting) {
             if (isAttempting) {
@@ -15,28 +16,42 @@ function sendCommand(url, output_id) {
                 connectionButton.classList.add('black', 'pulse', 'disable-pointer');
                 connectionButton.classList.remove('red', 'green');
                 connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
-                isAttemptingConnection = true; // Assuming you track connection attempt status
+                isAttemptingConnection = true;
 
                 // Proceed with the actual connection attempt
                 proceedWithConnectionAttempt(url, output_id);
             }
         });
+    } else if (url === '/toggle_connection' && isConnected) {
+        // Handle disconnection attempts
+        checkDisconnectionAttemptStatus(function(isDisconnecting) {
+            if (isDisconnecting) {
+                alert('A disconnection attempt is already in progress.');
+            } else {
+                // Immediate UI feedback for attempting to disconnect
+                // This is where you would adjust the UI similar to how you do for connecting
+                // For simplicity, let's just change the icon as an example
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red', 'disable-pointer');
+                connectionIcon.textContent = 'link_off'; // Indicate disconnection process
+                isDisconnecting = true;
+
+                // Proceed with the actual disconnection attempt
+                handleDisconnection(); // Assuming this function initiates the disconnection
+            }
+        });
     } else {
-        // For disconnection and all other commands, proceed as before
+        // For all other commands, proceed as before
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
-                if (url === '/toggle_connection' && isConnected) {
-                    // Your original disconnection logic...
-                    handleDisconnection(); // Make sure this function is defined as per your original logic
-                } else {
-                    updateConnectionStatus(); // Update the connection status accordingly
-                }
+                updateConnectionStatus();
             } else {
-                // Handling for other commands remains unchanged
                 updateButtonStates(output_id);
                 updateDirectionLabels();
                 updateOnOffLabels();
@@ -123,6 +138,32 @@ function proceedWithConnectionAttempt(url, output_id) {
             updateDirectionLabels();
             updateOnOffLabels();
         }
+    };
+    xhr.send();
+}
+
+function checkDisconnectionAttemptStatus(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/get_disconnection_attempt_status", true);
+    xhr.onload = function() {
+        var status = JSON.parse(xhr.responseText);
+        callback(status.is_disconnecting);
+    };
+    xhr.send();
+}
+
+function proceedWithDisconnectionAttempt(url, output_id) {
+    // UI feedback for disconnection attempt could be similar to connection
+    // For instance, disabling buttons or showing a "disconnecting" state
+    // This part is up to your application's needs
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        console.log('Disconnection attempt: ' + url);
+        // Handle the aftermath of the disconnection attempt
+        // For example, updating UI based on the successful or failed disconnection
     };
     xhr.send();
 }
