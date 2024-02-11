@@ -185,7 +185,7 @@ body {
 }
 
 .btn-floating {
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
