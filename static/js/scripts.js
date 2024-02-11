@@ -369,32 +369,53 @@ function periodicallyCheckConnection() {
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
 
-            // If the connection was lost and now it's back
-            if (data.is_connected && !isConnected) {
-                isConnected = true;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is back
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
-            } 
-            
-            // If the connection was there and now it's lost
-            else if (!data.is_connected && isConnected) {
-                isConnected = false;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is lost
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
-            }
+            // Update connection and sending status
+            isConnected = data.is_connected;
+            is_sending = data.is_sending; // Update is_sending based on the server response
+            updateConnectionStatus();
+            updateButtonAccessibility(isConnected);
+            updateSendingStatus();
 
-            // Regardless of connection status, update the UI with the latest system states
+            // Update UI with the latest system states
             updateOnOffLabels();
             updateDirectionLabels();
             updateButtonStates();
-            updateSendingStatus();  // Make sure this is called here to update sending status regularly
+            updateSendingStatus(); // Update sending status regularly
         };
         xhr.send();
+
+        // Add another request to check the disconnection status
+        var xhrDisconnection = new XMLHttpRequest();
+        xhrDisconnection.open("GET", "/get_disconnection_status", true);
+        xhrDisconnection.onload = function () {
+            var disconnectionData = JSON.parse(xhrDisconnection.responseText);
+            isDisconnecting = disconnectionData.is_disconnecting;
+
+            // If isDisconnecting has changed, update the UI to reflect this
+            if (isDisconnecting) {
+                handleDisconnectionUIUpdate(); // Handle the UI update for disconnection
+            } else {
+                // Possibly handle re-enabling the UI if necessary
+                if (!isConnected) {
+                    // If not connected but not disconnecting, ensure UI is in a proper state
+                    updateConnectionStatus();
+                }
+            }
+        };
+        xhrDisconnection.send();
     }, 1000); // Check every 1000 milliseconds (1 second)
+}
+
+function handleDisconnectionUIUpdate() {
+    // Update the UI to reflect the disconnection process
+    var connectionButton = document.getElementById('connection-btn');
+    var connectionIcon = document.getElementById('connection-icon');
+    connectionButton.classList.add('black', 'pulse');
+    connectionButton.classList.remove('green', 'red');
+    connectionIcon.textContent = 'link_off';
+    connectionButton.disabled = true;
+
+    updateButtonAccessibility(false); // Disable all other buttons
 }
 
 window.onload = function () {
