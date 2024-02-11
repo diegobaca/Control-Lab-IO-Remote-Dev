@@ -7,7 +7,7 @@ function sendCommand(url, output_id) {
     if (url === '/toggle_connection' && !isConnected) {
         checkConnectionAttemptStatus(function(isAttempting) {
             if (isAttempting) {
-                alert('Control Lab IO is currently in the process of establishing a connection with LEGO Interface B.');
+                alert('Control Lab IO is currently in the process of establishing a connection with the LEGO Interface B.');
             } else {
                 // Immediate UI feedback for attempting to connect
                 var connectionButton = document.getElementById('connection-btn');
@@ -153,7 +153,7 @@ function handleFailedConnection() {
     connectionButton.classList.remove('black', 'pulse', 'disable-pointer', 'green');
     connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
 
-    alert('Kindly wait for Control Lab IO to complete its disconnection from LEGO Interface B before attempting to reconnect. Please try again.'); // Optionally, show an alert message
+    alert('Kindly wait for Control Lab IO to complete its disconnection from the LEGO Interface B before attempting to reconnect. Please try again.'); // Optionally, show an alert message
 }
 
 function updateButtonStates() {
