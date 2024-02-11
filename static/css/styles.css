@@ -1,10 +1,11 @@
 /* Page background color */
 body {
     background-color: #F4F4F4;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
+    cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
 }
 
 .container {
