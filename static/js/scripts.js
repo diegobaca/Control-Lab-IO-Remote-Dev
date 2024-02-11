@@ -55,7 +55,6 @@ function handleDisconnection() {
     connectionButton.classList.remove('green', 'red');
     connectionIcon.textContent = 'link_off';
     connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
-    isAttemptingConnection = true; // Assuming you track connection attempt status
 
     updateButtonAccessibility(false); // Disable all other buttons immediately
 
@@ -217,19 +216,13 @@ function updateConnectionStatus() {
                 connectionButton.classList.add('black', 'pulse');
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
-            } else if (isAttemptingConnection && isDisconnecting) {
-                // This scenario might not make logical sense because it implies being in the process
-                // of both connecting and disconnecting at the same time.
-                // You might want to re-evaluate the logic here.
-                connectionButton.classList.add('red');
-                connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
-                connectionIcon.textContent = 'refresh'; // Indicate a specific state or error
             } else if (isAttemptingConnection) {
-                // Handle just the attempting to connect state
+                // Here, you check if the attempt to connect has failed
+                // "No connection found" state should be handled here
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'refresh'; // Indicate no connection found
-                // Optionally, revert the icon back to 'link' after some time
+                // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
             } else {
                 // "Default / Disconnected" state
                 connectionButton.classList.add('black');
