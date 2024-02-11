@@ -13,6 +13,14 @@ body {
     max-width: 900px;
 }
 
+img {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    pointer-events: none; /* This makes it not clickable and not draggable */
+  }
+
 /* Output container with light grey border and white background */
 .output-container {
     border: 1px solid #e0e0e0;
