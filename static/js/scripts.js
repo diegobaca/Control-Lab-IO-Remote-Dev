@@ -425,7 +425,7 @@ function periodicallyCheckConnection() {
             updateSendingStatus();  // Make sure this is called here to update sending status regularly
         };
         xhr.send();
-    }, 500); // Check every 500 milliseconds (0.5 second)
+    }, 1000); // Check every 1000 milliseconds (1 second)
 }
 
 window.onload = function () {
