@@ -4,23 +4,45 @@ var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
-    if (url === '/toggle_connection' && !isConnected) {
-        checkConnectionAttemptStatus(function(isAttempting) {
-            if (isAttempting) {
-                alert('Another connection attempt is already in progress.');
-            } else {
-                // Immediate UI feedback for attempting to connect
-                var connectionButton = document.getElementById('connection-btn');
-                var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('black', 'pulse', 'disable-pointer');
-                connectionButton.classList.remove('red', 'green');
-                connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
-                isAttemptingConnection = true; // Assuming you track connection attempt status
+    if (url === '/toggle_connection') {
+        if (!isConnected) {
+            checkConnectionAttemptStatus(function(isAttempting) {
+                if (isAttempting) {
+                    alert('Another connection attempt is already in progress.');
+                } else {
+                    // Immediate UI feedback for attempting to connect
+                    var connectionButton = document.getElementById('connection-btn');
+                    var connectionIcon = document.getElementById('connection-icon');
+                    connectionButton.classList.add('black', 'pulse', 'disable-pointer');
+                    connectionButton.classList.remove('red', 'green');
+                    connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
+                    isAttemptingConnection = true;
 
-                // Proceed with the actual connection attempt
-                proceedWithConnectionAttempt(url, output_id);
-            }
-        });
+                    // Proceed with the actual connection attempt
+                    proceedWithConnectionAttempt(url, output_id);
+                }
+            });
+        } else {
+            // New condition to handle the scenario where the UI indicates disconnected but the backend is connected
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get_connection_status", true);
+            xhr.onload = function() {
+                var data = JSON.parse(xhr.responseText);
+                if (data.is_connected) {
+                    // Handle the error state
+                    var connectionButton = document.getElementById('connection-btn');
+                    var connectionIcon = document.getElementById('connection-icon');
+                    connectionButton.classList.add('red');
+                    connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
+                    connectionIcon.textContent = 'refresh'; // Use 'refresh' icon to indicate an error or mismatch state
+                    alert('Connection state mismatch. Please refresh the page or try again.');
+                } else {
+                    // Proceed with disconnection logic if the backend agrees that it's connected
+                    handleDisconnection(); // Make sure this function correctly handles the disconnection logic
+                }
+            };
+            xhr.send();
+        }
     } else {
         // For disconnection and all other commands, proceed as before
         var xhr = new XMLHttpRequest();
@@ -30,13 +52,11 @@ function sendCommand(url, output_id) {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
                 if (url === '/toggle_connection' && isConnected) {
-                    // Your original disconnection logic...
-                    handleDisconnection(); // Make sure this function is defined as per your original logic
+                    handleDisconnection();
                 } else {
-                    updateConnectionStatus(); // Update the connection status accordingly
+                    updateConnectionStatus();
                 }
             } else {
-                // Handling for other commands remains unchanged
                 updateButtonStates(output_id);
                 updateDirectionLabels();
                 updateOnOffLabels();
