@@ -55,6 +55,7 @@ function handleDisconnection() {
     connectionButton.classList.remove('green', 'red');
     connectionIcon.textContent = 'link_off';
     connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
+    isAttemptingConnection = true; // Assuming you track connection attempt status
 
     updateButtonAccessibility(false); // Disable all other buttons immediately
 
@@ -228,7 +229,7 @@ function updateConnectionStatus() {
                 connectionButton.classList.add('black');
                 connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'link';
-
+            }
             isConnected = false;
         }
 
