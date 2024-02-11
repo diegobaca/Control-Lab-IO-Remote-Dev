@@ -47,16 +47,21 @@ function sendCommand(url, output_id) {
 }
 
 function handleDisconnection() {
-    // Begin "Is Disconnecting" state with a 6-second delay
-    isDisconnecting = true; // Mark as disconnecting
+    isDisconnecting = true;
     var connectionButton = document.getElementById('connection-btn');
     var connectionIcon = document.getElementById('connection-icon');
     connectionButton.classList.add('black', 'pulse');
     connectionButton.classList.remove('green', 'red');
     connectionIcon.textContent = 'link_off';
-    connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
+    connectionButton.disabled = true;
 
-    updateButtonAccessibility(false); // Disable all other buttons immediately
+    updateButtonAccessibility(false);
+
+    // Disable power control buttons immediately
+    for (var i = 1; i <= 8; i++) {
+        document.getElementById('increase-' + i).disabled = true;
+        document.getElementById('decrease-' + i).disabled = true;
+    }
 
     // Update the sending button icon to indicate sending is paused/stopped
     var sendingButton = document.getElementById('sending-btn');
