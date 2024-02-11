@@ -112,14 +112,14 @@ function proceedWithConnectionAttempt(url, output_id) {
         // Debug message to log the server's response
         console.log('Server response: ', xhr.responseText);
 
-        // Existing code to handle the server's response
-        console.log('Command sent: ' + url);
         var response = JSON.parse(xhr.responseText);
-        // Assuming the server responds with a JSON object that includes a 'success' field
-        if (response.success) {
-            // Connection attempt was successful
+        // Use the is_connected field from the server's response
+        if (response.is_connected) {
+            // The connection attempt was successful based on the is_connected flag
             isAttemptingConnection = false; // Reset this flag once the attempt is complete
+            isConnected = true; // Update the isConnected flag based on the server's response
             updateConnectionStatus(); // Reflect the new connection status in the UI
+            // Additional logic for different output_id values
             if (output_id === 0) {
                 // Additional logic if needed
             } else {
@@ -128,16 +128,17 @@ function proceedWithConnectionAttempt(url, output_id) {
                 updateOnOffLabels();
             }
         } else {
-            // Connection attempt failed
+            // The connection attempt failed or the server's response did not indicate a connection
             isAttemptingConnection = false; // Reset attempt flag
+            isConnected = false; // Ensure isConnected reflects the failed attempt
             handleFailedConnection(); // Handle the failed connection case
         }
     };
     xhr.onerror = function() {
         // Network error or server did not respond
         isAttemptingConnection = false; // Reset attempt flag
+        isConnected = false; // Reflect network error as not connected
         handleFailedConnection(); // Handle the failed connection case
-        // Debug message for network error or no response
         console.error('Network error or no response from server');
     };
     xhr.send();
