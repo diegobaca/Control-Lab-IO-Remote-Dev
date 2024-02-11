@@ -105,26 +105,48 @@ function checkConnectionAttemptStatus(callback) {
 }
 
 function proceedWithConnectionAttempt(url, output_id) {
-    // This function should be defined as you provided, handling the connection attempt
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         console.log('Command sent: ' + url);
-        // Your logic for after attempting to connect goes here
-        if (url === '/toggle_connection') {
+        var response = JSON.parse(xhr.responseText);
+        // Assuming the server responds with a JSON object that includes a 'success' field
+        if (response.success) {
+            // Connection attempt was successful
             isAttemptingConnection = false; // Reset this flag once the attempt is complete
             updateConnectionStatus(); // Reflect the new connection status in the UI
-        }
-        if (output_id === 0) {
-            // Additional logic if needed
+            if (output_id === 0) {
+                // Additional logic if needed
+            } else {
+                updateButtonStates(output_id);
+                updateDirectionLabels();
+                updateOnOffLabels();
+            }
         } else {
-            updateButtonStates(output_id);
-            updateDirectionLabels();
-            updateOnOffLabels();
+            // Connection attempt failed
+            isAttemptingConnection = false; // Reset attempt flag
+            handleFailedConnection(); // Handle the failed connection case
         }
     };
+    xhr.onerror = function() {
+        // Network error or server did not respond
+        isAttemptingConnection = false; // Reset attempt flag
+        handleFailedConnection(); // Handle the failed connection case
+    };
     xhr.send();
+}
+
+function handleFailedConnection() {
+    // Function to handle UI changes for failed connection attempt
+    var connectionButton = document.getElementById('connection-btn');
+    var connectionIcon = document.getElementById('connection-icon');
+    
+    connectionButton.classList.add('red');
+    connectionButton.classList.remove('black', 'pulse', 'disable-pointer', 'green');
+    connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
+
+    alert('Failed to establish a connection. Please try again.'); // Optionally, show an alert message
 }
 
 function updateButtonStates() {
