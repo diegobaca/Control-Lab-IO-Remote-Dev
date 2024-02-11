@@ -111,27 +111,23 @@ function proceedWithConnectionAttempt(url, output_id) {
     xhr.onload = function () {
         console.log('Command sent: ' + url);
         var response = JSON.parse(xhr.responseText);
-        // Assuming the server responds with a JSON object that includes a 'success' field
+        // Adjust this based on your server response
         if (response.success) {
             // Connection attempt was successful
             isAttemptingConnection = false; // Reset this flag once the attempt is complete
+            isConnected = true; // Explicitly set isConnected to true only on success
             updateConnectionStatus(); // Reflect the new connection status in the UI
-            if (output_id === 0) {
-                // Additional logic if needed
-            } else {
-                updateButtonStates(output_id);
-                updateDirectionLabels();
-                updateOnOffLabels();
-            }
         } else {
             // Connection attempt failed
             isAttemptingConnection = false; // Reset attempt flag
+            isConnected = false; // Ensure isConnected is false on failure
             handleFailedConnection(); // Handle the failed connection case
         }
     };
     xhr.onerror = function() {
         // Network error or server did not respond
         isAttemptingConnection = false; // Reset attempt flag
+        isConnected = false; // Ensure isConnected is false on network error
         handleFailedConnection(); // Handle the failed connection case
     };
     xhr.send();
