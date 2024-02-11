@@ -78,7 +78,7 @@ function handleDisconnection() {
                 }
             } else {
                 console.error("Disconnection failed, checking for concurrent attempts...");
-                if (isAttemptingConnection || isDisconnecting) {
+                if (isAttemptingConnection === true && isConnected === true) {
                     // If another attempt was made during the disconnection process, enter an error state
                     isErrorState = true;
                     handleConnectionError();
