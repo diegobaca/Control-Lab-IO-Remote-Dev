@@ -12,7 +12,6 @@ is_connected = False
 is_sending = False
 was_sending = False
 is_attempting_connection = False
-isDisconnecting = False
 
 # Output states
 Dir = [True] * 8   # Initialize direction to Right
@@ -268,10 +267,6 @@ def check_connection():
 def get_connection_attempt_status():
     global is_attempting_connection
     return jsonify(is_attempting_connection=is_attempting_connection)
-
-@app.route('/get_disconnection_attempt_status')
-def get_disconnection_attempt_status():
-    return jsonify(is_disconnecting=isDisconnecting)
 
 def stop_all_motors():
     global serial_connection
