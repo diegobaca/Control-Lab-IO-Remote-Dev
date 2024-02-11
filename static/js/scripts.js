@@ -364,34 +364,42 @@ function updateButtonAccessibility(isConnected) {
 // Function to check the connection status periodically
 function periodicallyCheckConnection() {
     setInterval(function () {
+        // First, check if we're currently in the process of disconnecting
+        if (isDisconnecting) {
+            // Optional: Update the UI to indicate that a disconnection is in progress
+            // This could involve disabling buttons, showing a loading spinner, etc.
+            console.log('Currently disconnecting...');
+            // You might decide not to check the connection status with the server during this time
+            // or you might continue checking but handle the results differently.
+        }
+
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/check_connection", true);
         xhr.onload = function () {
             var data = JSON.parse(xhr.responseText);
 
-            // If the connection was lost and now it's back
-            if (data.is_connected && !isConnected) {
-                isConnected = true;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is back
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
-            } 
-            
-            // If the connection was there and now it's lost
-            else if (!data.is_connected && isConnected) {
-                isConnected = false;
-                is_sending = data.is_sending; // Update is_sending based on the server response
-                updateConnectionStatus(); // Update UI to reflect connection is lost
-                updateButtonAccessibility(isConnected);
-                updateSendingStatus(); // Update the sending button UI
+            if (!isDisconnecting) { // Proceed only if not in the process of disconnecting
+                // If the connection was lost and now it's back
+                if (data.is_connected && !isConnected) {
+                    isConnected = true;
+                    is_sending = data.is_sending; // Update is_sending based on the server response
+                    updateConnectionStatus(); // Update UI to reflect connection is back
+                    updateButtonAccessibility(isConnected);
+                    updateSendingStatus(); // Update the sending button UI
+                } 
+                // If the connection was there and now it's lost
+                else if (!data.is_connected && isConnected) {
+                    isConnected = false;
+                    is_sending = data.is_sending; // Update is_sending based on the server response
+                    updateConnectionStatus(); // Update UI to reflect connection is lost
+                    updateButtonAccessibility(isConnected);
+                    updateSendingStatus(); // Update the sending button UI
+                }
             }
 
-            // Regardless of connection status, update the UI with the latest system states
-            updateOnOffLabels();
-            updateDirectionLabels();
-            updateButtonStates();
-            updateSendingStatus();  // Make sure this is called here to update sending status regularly
+            // Regardless of connection status or disconnecting state, you might want to update
+            // certain UI elements to reflect the latest state or simply log the current state.
+            // This could be a good place to handle any cleanup or UI resets needed after a disconnection.
         };
         xhr.send();
     }, 1000); // Check every 1000 milliseconds (1 second)
