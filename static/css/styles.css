@@ -184,7 +184,7 @@ body {
     /* opacity: 0.5; Optional: reduces the opacity to give a visual cue that the button is disabled */
 }
 
-.btn-floating {
+.btn-floating:hover {
     cursor: pointer !important;
 }
 
