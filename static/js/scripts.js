@@ -364,21 +364,22 @@ function updateButtonAccessibility(isConnected) {
 // Function to check the connection status periodically
 function periodicallyCheckConnection() {
     setInterval(function () {
-        // First, check if we're currently in the process of disconnecting
+        var connectionButton = document.getElementById('connection-btn'); // Get the connection button
+
         if (isDisconnecting) {
-            // Optional: Update the UI to indicate that a disconnection is in progress
-            // This could involve disabling buttons, showing a loading spinner, etc.
-            console.log('Currently disconnecting...');
-            // You might decide not to check the connection status with the server during this time
-            // or you might continue checking but handle the results differently.
-        }
+            // Disable the connection button if currently disconnecting
+            connectionButton.disabled = true;
+            console.log('Currently disconnecting, connection button disabled.');
+            // Optionally, update other UI elements as needed
+        } else {
+            // Ensure the connection button is enabled if not disconnecting
+            connectionButton.disabled = false;
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/check_connection", true);
-        xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/check_connection", true);
+            xhr.onload = function () {
+                var data = JSON.parse(xhr.responseText);
 
-            if (!isDisconnecting) { // Proceed only if not in the process of disconnecting
                 // If the connection was lost and now it's back
                 if (data.is_connected && !isConnected) {
                     isConnected = true;
@@ -395,15 +396,16 @@ function periodicallyCheckConnection() {
                     updateButtonAccessibility(isConnected);
                     updateSendingStatus(); // Update the sending button UI
                 }
-            }
 
-            // Regardless of connection status or disconnecting state, you might want to update
-            // certain UI elements to reflect the latest state or simply log the current state.
-            // This could be a good place to handle any cleanup or UI resets needed after a disconnection.
-        };
-        xhr.send();
+                // Here, re-enable the connection button if not in a disconnecting state.
+                // This is redundant with the else statement above but is kept for clarity.
+                connectionButton.disabled = isDisconnecting;
+            };
+            xhr.send();
+        }
     }, 1000); // Check every 1000 milliseconds (1 second)
 }
+
 
 window.onload = function () {
     // Fetch and set the initial state of is_sending
