@@ -109,6 +109,10 @@ function proceedWithConnectionAttempt(url, output_id) {
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
+        // Debug message to log the server's response
+        console.log('Server response: ', xhr.responseText);
+
+        // Existing code to handle the server's response
         console.log('Command sent: ' + url);
         var response = JSON.parse(xhr.responseText);
         // Assuming the server responds with a JSON object that includes a 'success' field
@@ -133,6 +137,8 @@ function proceedWithConnectionAttempt(url, output_id) {
         // Network error or server did not respond
         isAttemptingConnection = false; // Reset attempt flag
         handleFailedConnection(); // Handle the failed connection case
+        // Debug message for network error or no response
+        console.error('Network error or no response from server');
     };
     xhr.send();
 }
