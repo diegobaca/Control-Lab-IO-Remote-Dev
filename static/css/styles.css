@@ -193,9 +193,9 @@ body {
     .outputs-row {
         display: flex;
         flex-wrap: wrap;
-        margin-left: -15px;
+        margin-left: -10px;
         /* Adjust as necessary */
-        margin-right: -15px;
+        margin-right: -10px;
         /* Adjust as necessary */
     }
 
