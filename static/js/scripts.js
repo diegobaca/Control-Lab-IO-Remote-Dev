@@ -4,31 +4,36 @@ var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
-    // Enhanced to check for connection attempts only when trying to connect
     if (url === '/toggle_connection' && !isConnected) {
         checkConnectionAttemptStatus(function(isAttempting) {
             if (isAttempting) {
                 alert('Another connection attempt is already in progress.');
-                // Prevent further execution if another attempt is underway
             } else {
-                // Proceed with connection attempt if no other attempt is in progress
+                // Immediate UI feedback for attempting to connect
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse', 'disable-pointer');
+                connectionButton.classList.remove('red', 'green');
+                connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
+                isAttemptingConnection = true; // Assuming you track connection attempt status
+
+                // Proceed with the actual connection attempt
                 proceedWithConnectionAttempt(url, output_id);
             }
         });
     } else {
-        // For disconnection and all other commands, proceed as originally designed
+        // For disconnection and all other commands, proceed as before
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onload = function() {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
-                // Your original logic for handling disconnection and connection status updates
                 if (url === '/toggle_connection' && isConnected) {
                     // Your original disconnection logic...
-                    handleDisconnection();
+                    handleDisconnection(); // Make sure this function is defined as per your original logic
                 } else {
-                    updateConnectionStatus();
+                    updateConnectionStatus(); // Update the connection status accordingly
                 }
             } else {
                 // Handling for other commands remains unchanged
@@ -100,29 +105,20 @@ function checkConnectionAttemptStatus(callback) {
 }
 
 function proceedWithConnectionAttempt(url, output_id) {
+    // This function should be defined as you provided, handling the connection attempt
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
         console.log('Command sent: ' + url);
-        // Additional logic for connection attempts
+        // Your logic for after attempting to connect goes here
         if (url === '/toggle_connection') {
-            if (!isConnected) {
-                // Apply UI changes for "Is Connecting" state
-                var connectionButton = document.getElementById('connection-btn');
-                var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Add missing classes
-                connectionButton.classList.remove('red', 'green'); // Remove any conflicting classes
-                connectionIcon.textContent = 'link'; // Adjust icon as needed for connecting state
-            }
-            isAttemptingConnection = !isAttemptingConnection; // Toggle the attempt flag as appropriate
-            updateConnectionStatus(); // Reflect the change in UI based on the new state
+            isAttemptingConnection = false; // Reset this flag once the attempt is complete
+            updateConnectionStatus(); // Reflect the new connection status in the UI
         }
-        // Implement the rest of your original logic here, especially for handling the response
         if (output_id === 0) {
-            // This section should include your disconnection logic if needed
+            // Additional logic if needed
         } else {
-            // Handle updates for other types of commands
             updateButtonStates(output_id);
             updateDirectionLabels();
             updateOnOffLabels();
