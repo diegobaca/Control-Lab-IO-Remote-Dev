@@ -5,20 +5,29 @@ var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
     if (url === '/toggle_connection' && !isConnected) {
-        checkConnectionAttemptStatus(function(isAttempting) {
-            if (isAttempting) {
-                alert('Another connection attempt is already in progress.');
+        // First, check if the system is currently disconnecting globally
+        checkDisconnectingStatus(function(isDisconnecting) {
+            if (isDisconnecting) {
+                alert('The system is currently disconnecting. Please try again later.');
+                moveToErrorState(); // Move to the error state if disconnecting
             } else {
-                // Immediate UI feedback for attempting to connect
-                var connectionButton = document.getElementById('connection-btn');
-                var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('black', 'pulse', 'disable-pointer');
-                connectionButton.classList.remove('red', 'green');
-                connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
-                isAttemptingConnection = true; // Assuming you track connection attempt status
+                // If not disconnecting, proceed to check for ongoing connection attempts
+                checkConnectionAttemptStatus(function(isAttempting) {
+                    if (isAttempting) {
+                        alert('Another connection attempt is already in progress.');
+                    } else {
+                        // Immediate UI feedback for attempting to connect
+                        var connectionButton = document.getElementById('connection-btn');
+                        var connectionIcon = document.getElementById('connection-icon');
+                        connectionButton.classList.add('black', 'pulse', 'disable-pointer');
+                        connectionButton.classList.remove('red', 'green');
+                        connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
+                        isAttemptingConnection = true; // Update global flag to indicate connection attempt
 
-                // Proceed with the actual connection attempt
-                proceedWithConnectionAttempt(url, output_id);
+                        // Proceed with the actual connection attempt
+                        proceedWithConnectionAttempt(url, output_id);
+                    }
+                });
             }
         });
     } else {
@@ -30,10 +39,11 @@ function sendCommand(url, output_id) {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
                 if (url === '/toggle_connection' && isConnected) {
-                    // Your original disconnection logic...
-                    handleDisconnection(); // Make sure this function is defined as per your original logic
+                    // Invoke disconnection logic
+                    handleDisconnection(); // Ensure this function handles the disconnection process
                 } else {
-                    updateConnectionStatus(); // Update the connection status accordingly
+                    // Update the connection status accordingly
+                    updateConnectionStatus();
                 }
             } else {
                 // Handling for other commands remains unchanged
@@ -125,6 +135,24 @@ function proceedWithConnectionAttempt(url, output_id) {
         }
     };
     xhr.send();
+}
+
+function checkDisconnectingStatus(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/get_disconnecting_status", true);
+    xhr.onload = function() {
+        var status = JSON.parse(xhr.responseText);
+        callback(status.is_disconnecting);
+    };
+    xhr.send();
+}
+
+function moveToErrorState() {
+    var connectionButton = document.getElementById('connection-btn');
+    var connectionIcon = document.getElementById('connection-icon');
+    connectionButton.classList.add('red');
+    connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
+    connectionIcon.textContent = 'refresh'; // Indicate an error state
 }
 
 function updateButtonStates() {
