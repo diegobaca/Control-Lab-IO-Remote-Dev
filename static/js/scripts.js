@@ -109,26 +109,23 @@ function proceedWithConnectionAttempt(url, output_id) {
     xhr.open("POST", url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function () {
-        console.log('Command sent: ' + url);
-        var response = JSON.parse(xhr.responseText);
-        // Adjust this based on your server response
-        if (response.success) {
-            // Connection attempt was successful
-            isAttemptingConnection = false; // Reset this flag once the attempt is complete
-            isConnected = true; // Explicitly set isConnected to true only on success
-            updateConnectionStatus(); // Reflect the new connection status in the UI
+        if (xhr.status === 200) { // Check HTTP status code
+            console.log('Response received: ', xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                // Handle successful connection
+            } else {
+                // Handle failed connection
+                handleFailedConnection();
+            }
         } else {
-            // Connection attempt failed
-            isAttemptingConnection = false; // Reset attempt flag
-            isConnected = false; // Ensure isConnected is false on failure
-            handleFailedConnection(); // Handle the failed connection case
+            console.error('Server responded with status: ', xhr.status);
+            handleFailedConnection(); // Consider handling HTTP errors differently
         }
     };
     xhr.onerror = function() {
-        // Network error or server did not respond
-        isAttemptingConnection = false; // Reset attempt flag
-        isConnected = false; // Ensure isConnected is false on network error
-        handleFailedConnection(); // Handle the failed connection case
+        console.error('Request failed due to network error.');
+        handleFailedConnection();
     };
     xhr.send();
 }
