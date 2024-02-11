@@ -211,6 +211,10 @@ function updateConnectionStatus() {
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
+            // "Default / Disconnected" state
+            connectionButton.classList.add('black');
+            connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
+            connectionIcon.textContent = 'link';
             isConnected = false;
         }
 
