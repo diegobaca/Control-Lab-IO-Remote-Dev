@@ -12,7 +12,6 @@ is_connected = False
 is_sending = False
 was_sending = False
 is_attempting_connection = False
-is_disconnecting = False
 
 # Output states
 Dir = [True] * 8   # Initialize direction to Right
@@ -139,7 +138,7 @@ def index():
 
 @app.route('/toggle_connection', methods=['POST'])
 def toggle_connection():
-    global serial_connection, is_connected, is_sending, is_attempting_connection, is_disconnecting
+    global serial_connection, is_connected, is_sending, is_attempting_connection
     if not is_connected and not is_attempting_connection:
         is_attempting_connection = True
         try:
@@ -158,14 +157,12 @@ def toggle_connection():
         finally:
             is_attempting_connection = False
     elif is_connected:
-        is_disconnecting = True  # Set disconnecting state
         stop_all_motors()
         if serial_connection:
             serial_connection.close()
             serial_connection = None
         is_connected = False
         is_sending = False
-        is_disconnecting = False  # Reset disconnecting state after process is complete
         print("Disconnected from the serial port.")
     return jsonify(is_connected=is_connected, is_sending=is_sending)
 
@@ -270,11 +267,6 @@ def check_connection():
 def get_connection_attempt_status():
     global is_attempting_connection
     return jsonify(is_attempting_connection=is_attempting_connection)
-
-@app.route('/get_disconnection_status')
-def get_disconnection_status():
-    global is_disconnecting
-    return jsonify(is_disconnecting=is_disconnecting)
 
 def stop_all_motors():
     global serial_connection
