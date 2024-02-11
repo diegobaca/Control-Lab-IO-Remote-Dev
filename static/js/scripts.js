@@ -4,27 +4,25 @@ var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
-    if (url === '/toggle_connection') {
-        if (!isConnected) {
-            checkConnectionAttemptStatus(function(isAttempting) {
-                if (isAttempting) {
-                    alert('Another connection attempt is already in progress.');
-                } else {
-                    // Immediate UI feedback for attempting to connect
-                    var connectionButton = document.getElementById('connection-btn');
-                    var connectionIcon = document.getElementById('connection-icon');
-                    connectionButton.classList.add('black', 'pulse', 'disable-pointer'); // Added 'disable-pointer' for UI feedback
-                    connectionButton.classList.remove('red', 'green');
-                    connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
-                    isAttemptingConnection = true; // Assuming you track connection attempt status
+    if (url === '/toggle_connection' && !isConnected) {
+        checkConnectionAttemptStatus(function(isAttempting) {
+            if (isAttempting) {
+                alert('Another connection attempt is already in progress.');
+            } else {
+                // Immediate UI feedback for attempting to connect
+                var connectionButton = document.getElementById('connection-btn');
+                var connectionIcon = document.getElementById('connection-icon');
+                connectionButton.classList.add('black', 'pulse', 'disable-pointer');
+                connectionButton.classList.remove('red', 'green');
+                connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
+                isAttemptingConnection = true; // Assuming you track connection attempt status
 
-                    // Proceed with the actual connection attempt
-                    proceedWithConnectionAttempt(url, output_id);
-                }
-            });
-        }
+                // Proceed with the actual connection attempt
+                proceedWithConnectionAttempt(url, output_id);
+            }
+        });
     } else {
-        // Logic for disconnection and all other commands
+        // For disconnection and all other commands, proceed as before
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -32,11 +30,10 @@ function sendCommand(url, output_id) {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
                 if (url === '/toggle_connection' && isConnected) {
-                    // Disconnection logic
-                    handleDisconnection(); // Ensure this function is defined as per your original logic
+                    // Your original disconnection logic...
+                    handleDisconnection(); // Make sure this function is defined as per your original logic
                 } else {
-                    // Update connection status accordingly
-                    updateConnectionStatus();
+                    updateConnectionStatus(); // Update the connection status accordingly
                 }
             } else {
                 // Handling for other commands remains unchanged
