@@ -4,6 +4,12 @@ var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
+    // Check if a disconnection is currently in progress
+    if (isDisconnecting) {
+        alert('Please wait until the current disconnection process completes.');
+        return; // Exit the function to prevent proceeding with the command
+    }
+
     if (url === '/toggle_connection' && !isConnected) {
         checkConnectionAttemptStatus(function(isAttempting) {
             if (isAttempting) {
@@ -15,7 +21,7 @@ function sendCommand(url, output_id) {
                 connectionButton.classList.add('black', 'pulse', 'disable-pointer');
                 connectionButton.classList.remove('red', 'green');
                 connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
-                isAttemptingConnection = true; // Assuming you track connection attempt status
+                isAttemptingConnection = true;
 
                 // Proceed with the actual connection attempt
                 proceedWithConnectionAttempt(url, output_id);
@@ -30,8 +36,7 @@ function sendCommand(url, output_id) {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
                 if (url === '/toggle_connection' && isConnected) {
-                    // Your original disconnection logic...
-                    handleDisconnection(); // Make sure this function is defined as per your original logic
+                    handleDisconnection(); // Your original disconnection logic
                 } else {
                     updateConnectionStatus(); // Update the connection status accordingly
                 }
