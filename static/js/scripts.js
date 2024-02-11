@@ -55,6 +55,7 @@ function handleDisconnection() {
     connectionButton.classList.remove('green', 'red');
     connectionIcon.textContent = 'link_off';
     connectionButton.disabled = true; // Disable the button immediately to prevent further clicks
+    isAttemptingConnection = true; // Assuming you track connection attempt status
 
     updateButtonAccessibility(false); // Disable all other buttons immediately
 
@@ -211,10 +212,24 @@ function updateConnectionStatus() {
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
-            // "Default / Disconnected" state
-            connectionButton.classList.add('black');
-            connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
-            connectionIcon.textContent = 'link';
+            if (isDisconnecting) {
+                // "Is Disconnecting" state
+                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.remove('green', 'red');
+                connectionIcon.textContent = 'link_off';
+            } else if (isAttemptingConnection) {
+                // Here, you check if the attempt to connect has failed
+                // "No connection found" state should be handled here
+                connectionButton.classList.add('red');
+                connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
+                connectionIcon.textContent = 'refresh'; // Indicate no connection found
+                // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
+            } else {
+                // "Default / Disconnected" state
+                connectionButton.classList.add('black');
+                connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
+                connectionIcon.textContent = 'link';
+
             isConnected = false;
         }
 
