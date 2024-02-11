@@ -207,22 +207,21 @@ function updateConnectionStatus() {
         if (data.is_connected) {
             // "Connected" state
             connectionButton.classList.add('green');
-            connectionButton.classList.remove('black', 'red', 'pulse', 'disable-pointer'); // Also re-enable pointer events
+            connectionButton.classList.remove('black', 'red', 'pulse', 'disable-pointer');
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
+            // If not connected, check the specific state
             if (isDisconnecting) {
                 // "Is Disconnecting" state
                 connectionButton.classList.add('black', 'pulse');
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
             } else if (isAttemptingConnection) {
-                // Here, you check if the attempt to connect has failed
-                // "No connection found" state should be handled here
+                // "Failed Connection Attempt" or "No Connection Found" state
                 connectionButton.classList.add('red');
                 connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
-                connectionIcon.textContent = 'refresh'; // Indicate no connection found
-                // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
+                connectionIcon.textContent = 'refresh'; // Indicate a failed connection attempt or no connection found
             } else {
                 // "Default / Disconnected" state
                 connectionButton.classList.add('black');
@@ -232,20 +231,8 @@ function updateConnectionStatus() {
             isConnected = false;
         }
 
-        isAttemptingConnection = false;
-        // Do not reset isDisconnecting here; let the setTimeout handle it to respect the 6-second duration
-
-        // Only re-enable the button if not in the process of disconnecting
-        if (!isDisconnecting) {
-            connectionButton.disabled = false;
-        }
-
-        updateButtonAccessibility(data.is_connected);
-        updateButtonStates();
-
-        // Now also handle sending status
-        is_sending = data.is_sending;  // Update is_sending based on the server response
-        updateSendingStatus();  // Update the sending button UI
+        isAttemptingConnection = false; // Reset the attempting connection flag
+        // Other UI updates as per your logic
     };
     xhr.send();
 }
