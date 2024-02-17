@@ -16,6 +16,41 @@
     --disconnected-color-dark: #111111; /* Disconnected color for dark theme */
 }
 
+/* Disconnected state styles */
+.disconnected-label, .disconnected-icon {
+    color: var(--disconnected-color-light); /* Default to light theme */
+}
+
+/* Override for dark theme */
+.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
+    color: var(--disconnected-color-dark);
+}
+
+.btn-black-theme {
+    background-color: var(--button-color) !important;
+}
+
+/* Disabled styles for light theme */
+.btn-floating:disabled {
+    background-color: var(--disabled-button-bg-light) !important;
+    color: var(--disabled-button-text-light) !important;
+}
+
+.btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text-light) !important;
+}
+
+/* Disabled styles for dark theme */
+.dark-theme .btn-floating:disabled {
+    background-color: var(--disabled-button-bg-dark) !important;
+    color: var(--disabled-button-text-dark) !important;
+}
+
+.dark-theme .btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text-dark) !important;
+}
+
+/* Page background color */
 body {
     background-color: #F4F4F4;
     -webkit-user-select: none; /* Chrome, Safari, and Opera */
@@ -30,12 +65,19 @@ body {
     color: #CCCCCC; /* Light text */
 }
 
-img {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
-    pointer-events: none; /* This makes it not clickable and not draggable */
+.dark-theme .output-container,
+.dark-theme .title-container {
+    background-color: #000; /* Darker shade for containers */
+    color: #CCCCCC; /* Light text for readability */
+}
+
+.dark-theme .connection-container,
+.dark-theme .footer-container {
+    background-color: #171717; /* Dark background */
+}
+
+.dark-theme .output-container {
+    border: 1px solid #141414;
 }
 
 .container {
@@ -43,35 +85,80 @@ img {
     max-width: 900px;
 }
 
+img {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    pointer-events: none; /* This makes it not clickable and not draggable */
+  }
+
+/* Output container with light grey border and white background */
+.output-container {
+    border: 1px solid #e0e0e0;
+    /* Light grey border */
+    padding: 15px 0;
+    margin-bottom: 10px;
+    /* Spacing between each output container */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    /* White background for the output container */
+    max-width: 550px;
+}
+
+/* Style for On/Off buttons */
+.on-off-btn {
+    background-color: black;
+    /* Set background color to black */
+    color: white;
+    /* Set text color to white */
+}
+
 .connection-container {
     display: flex;
+    /* Use flexbox layout */
     justify-content: space-between;
+    /* Space between child elements */
     align-items: center;
+    /* Center items vertically */
     padding: 15px;
+    /* Add some padding */
     background-color: #F4F4F4;
+    /* Match the page background */
     border: none;
+    /* No border */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+    /* Spacing between this container and whatever comes next */
     position: sticky;
+    /* Make the container sticky */
     top: 0;
+    /* Stick to the top of the viewport */
     z-index: 1000;
+    /* Ensure it's above other content */
 }
 
 .connection-container .flex-grow {
     flex-grow: 1;
+    /* Allow this element to grow and take up available space */
     display: flex;
+    /* Use flexbox layout */
     justify-content: center;
+    /* Center the button horizontally */
 }
 
+/* Custom style for the title container */
 .title-container {
     background-color: #000;
     color: white;
     padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensures space between logo-title group and toggle button */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -80,7 +167,7 @@ img {
 
 .logo-title-group {
     display: flex;
-    align-items: center;
+    align-items: center; /* Ensures logo and title are aligned */
 }
 
 .logo-image {
@@ -91,13 +178,25 @@ img {
 
 .title-text {
     margin: 0;
+    /* Remove margin to align title properly */
+}
+
+.power-level-display .material-symbols-outlined {
+    font-size: 48px;
+    /* Increased size */
+    vertical-align: middle;
+    /* Align with text if necessary */
 }
 
 .row {
     display: flex;
+    /* Use flexbox layout */
     align-items: center;
+    /* Vertically center items in the container */
     justify-content: space-between;
+    /* Distribute space between items */
     width: 100%;
+    /* Ensure the row takes full width of its parent */
     margin-bottom: 0px;
     height: 60px;
 }
@@ -105,113 +204,94 @@ img {
 .col.s1,
 .col.s11 {
     display: flex;
+    /* Use flexbox layout */
     align-items: center;
+    /* Align items vertically in the center */
     justify-content: center;
+    /* Center items horizontally */
 }
 
 .col.s1 {
     flex: 1;
+    /* Take 1 portion of the space */
     padding-bottom: 7px;
 }
 
 .col.s11 {
     flex: 11;
+    /* Take 11 portions of the space */
     justify-content: space-evenly;
-}
-
-@media screen and (min-width: 850px) {
-    .outputs-row {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: -10px;
-        margin-right: -10px;
-    }
-
-    .column {
-        width: 50%;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }
-
-    .output-container {
-        margin-bottom: 20px;
-    }
-}
-
-.btn-black-theme {
-    background-color: var(--button-color) !important;
-}
-
-.btn-floating {
-    cursor: pointer !important;
+    /* Distribute space evenly between the buttons */
 }
 
 .on-off-btn {
-    background-color: black;
-    color: white;
     margin-left: 10px;
+    /* Left padding */
     margin-right: 10px;
-}
-
-.btn-floating:disabled {
-    background-color: var(--disabled-button-bg-light) !important;
-    color: var(--disabled-button-text-light) !important;
-}
-
-.dark-theme .btn-floating:disabled {
-    background-color: var(--disabled-button-bg-dark) !important;
-    color: var(--disabled-button-text-dark) !important;
-}
-
-.btn-floating.on-off-btn:disabled {
-    cursor: not-allowed !important;
-}
-
-.disable-pointer {
-    pointer-events: none;
-}
-
-.output-container {
-    border: 1px solid #e0e0e0;
-    padding: 15px 0;
-    margin-bottom: 10px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #FFFFFF;
-    max-width: 550px;
-}
-
-.dark-theme .output-container,
-.dark-theme .title-container {
-    background-color: #000;
-    color: #CCCCCC;
-}
-
-.dark-theme .output-container {
-    border: 1px solid #1C1C1C;
+    /* Right padding */
 }
 
 .footer-container {
     background-color: #F4F4F4;
+    /* Match the page background */
     color: #B0B0B0;
+    /* Light gray color for the text */
     padding: 10px 0 30px 0;
+    /* Some padding */
     width: 100%;
     text-align: center;
+    /* Align text to the center */
+    border: none;
+    /* No border */
     margin-left: auto;
     margin-right: auto;
 }
 
 .footer-container small {
     font-size: smaller;
+    /* Small font size for the text */
 }
 
-.disconnected-label, .disconnected-icon {
-    color: var(--disconnected-color-light);
+/* Style for disabled On/Off buttons */
+.btn-floating.on-off-btn:disabled {
+    /* color: white !important;
+    /* Set text color to white, use !important to override */
+    cursor: not-allowed !important;
+    /* Optional: Change cursor to indicate the button is not clickable, use !important to override */
 }
 
-.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
-    color: var(--disconnected-color-dark);
+.disable-pointer {
+    pointer-events: none;
+    /* opacity: 0.5; Optional: reduces the opacity to give a visual cue that the button is disabled */
+}
+
+.btn-floating {
+    cursor: pointer !important;
+}
+
+/* Style for outputs in two columns when the viewport is at least 800px wide */
+@media screen and (min-width: 850px) {
+    .outputs-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -10px;
+        /* Adjust as necessary */
+        margin-right: -10px;
+        /* Adjust as necessary */
+    }
+
+    .column {
+        width: 50%;
+        /* Set the width for each column */
+        padding: 0 10px;
+        /* Space between the columns */
+        box-sizing: border-box;
+    }
+
+    .output-container {
+        margin-bottom: 20px;
+        /* Space between each output container */
+    }
 }
 
 html {
