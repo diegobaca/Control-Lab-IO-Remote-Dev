@@ -281,6 +281,15 @@ img {
     transform: scale(0.9);
 }
 
+.btn-floating.focused, .btn-large.focused {
+    opacity: 0.6; /* Adjust as needed */
+}
+
+.btn-floating.active, .btn-large.active {
+    /* Temporary visual feedback style */
+    opacity: 1; /* Full opacity or another style for active state */
+}
+
 /* Style for outputs in two columns when the viewport is at least 800px wide */
 @media screen and (min-width: 850px) {
     .outputs-row {
