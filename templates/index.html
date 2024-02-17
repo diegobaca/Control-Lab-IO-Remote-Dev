@@ -117,6 +117,9 @@
                                 tabindex="{{ ((output_id - 1) * 4) + 3 + 5 }}">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
+                            <span id="power-level-{{ output_id }}" class="power-level-display">
+                                <span class="material-symbols-outlined">circle</span>
+                            </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large btn-black-theme" title="Increase speed"
@@ -156,6 +159,9 @@
                                 tabindex="{{ ((output_id - 1) * 4) + 3 + 5 }}">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
+                            <span id="power-level-{{ output_id }}" class="power-level-display">
+                                <span class="material-symbols-outlined">circle</span>
+                            </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
                                 class="btn-floating btn-large btn-black-theme" title="Increase speed"
