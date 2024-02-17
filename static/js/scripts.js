@@ -468,33 +468,30 @@ document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large');
 
     buttons.forEach(function(button) {
+        // Apply lighter opacity on focus
         button.addEventListener('focus', function() {
-            this.style.opacity = '0.6'; // Lighten on focus
+            this.classList.add('focused');
         });
 
+        // Remove lighter opacity when not focused
         button.addEventListener('blur', function() {
-            this.style.opacity = ''; // Reset on blur
+            this.classList.remove('focused');
         });
 
-        button.addEventListener('mousedown', function(event) {
-            this.style.opacity = ''; // Temporarily reset opacity on mouse down
-        });
-
+        // Handle keydown for Space and Enter to show visual feedback without losing focus
         button.addEventListener('keydown', function(event) {
-            // Temporarily reset opacity on space or enter keydown
             if (event.key === ' ' || event.key === 'Enter') {
-                this.style.opacity = '';
+                // Prevent the default action to avoid triggering the click event immediately
+                event.preventDefault();
+                this.classList.add('active');
             }
         });
 
-        button.addEventListener('mouseup', function(event) {
-            this.blur(); // Optional: force blur on mouse up to remove focus style
-        });
-
+        // Remove the visual feedback when the key is released and simulate a click for accessibility
         button.addEventListener('keyup', function(event) {
-            // Optional: force blur on keyup for space or enter to remove focus style
             if (event.key === ' ' || event.key === 'Enter') {
-                this.blur();
+                this.classList.remove('active');
+                this.click(); // Simulate click for Space and Enter keyup to trigger any bound click events
             }
         });
     });
