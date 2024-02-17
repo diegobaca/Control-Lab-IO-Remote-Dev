@@ -3,20 +3,27 @@
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
     --button-color: var(--button-color-light);
-    --disabled-button-bg-light: #DFDFDF; /* Disabled button background for light theme */
-    --disabled-button-text-light: #FFFFFF; /* Disabled button text color for light theme */
+    --disabled-button-bg-light: #DFDFDF;
+    --disabled-button-text-light: #FFFFFF;
+    --disconnected-color-light: #DFDFDF; /* Disconnected color for light theme */
 }
 
 .dark-theme {
     --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
-    --disabled-button-bg-dark: #111111; /* Disabled button background for dark theme */
-    --disabled-button-text-dark: #000; /* Disabled button text color for dark theme */
+    --disabled-button-bg-dark: #111111;
+    --disabled-button-text-dark: #000;
+    --disconnected-color-dark: #000; /* Disconnected color for dark theme */
 }
 
 /* Disconnected state styles */
 .disconnected-label, .disconnected-icon {
-    color: var(--disabled-button-text-light) !important;
+    color: var(--disconnected-color-light); /* Default to light theme */
+}
+
+/* Override for dark theme */
+.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
+    color: var(--disconnected-color-dark);
 }
 
 .btn-black-theme {
