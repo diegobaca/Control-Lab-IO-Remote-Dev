@@ -281,6 +281,11 @@ img {
     transform: scale(0.9);
 }
 
+.btn-floating:focus {
+    outline: none;
+    border: 1px solid #FFF; /* Customize this color as needed */
+}
+
 /* Style for outputs in two columns when the viewport is at least 800px wide */
 @media screen and (min-width: 850px) {
     .outputs-row {
