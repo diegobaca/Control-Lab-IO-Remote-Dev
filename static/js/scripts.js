@@ -469,13 +469,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large'); // Adjust the selector as needed
     buttons.forEach(function(button) {
         button.addEventListener('focus', function() {
-            // Set opacity to a desired value on focus
-            this.style.opacity = '0.7'; // Example: 70% opacity, adjust as needed
+            // Adjust opacity on focus. Set it to any value between 0 (transparent) and 1 (opaque).
+            this.style.opacity = '0.6'; // Example opacity
+            // Add z-depth-5 class on focus for depth
+            this.classList.add('z-depth-5');
         });
 
         button.addEventListener('blur', function() {
             // Reset opacity when the button loses focus
-            this.style.opacity = ''; // Resets to default
+            this.style.opacity = ''; // Reset to default or specify another value
+            // Remove z-depth-5 class on blur to remove depth
+            this.classList.remove('z-depth-5');
         });
     });
 });
