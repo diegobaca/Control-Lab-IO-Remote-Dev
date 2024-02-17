@@ -19,6 +19,11 @@ body {
     color: #E0E0E0; /* Light text for readability */
 }
 
+.dark-theme .connection-container,
+.dark-theme .footer-container {
+    background-color: #121212; /* Dark background */
+}
+
 .dark-theme .output-container {
     border: #2B2B2B;
 }
