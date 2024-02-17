@@ -32,6 +32,10 @@ body {
     color: #CCCCCC;
 }
 
+.dark-theme .output-label {
+    color: #CCCCCC;
+}
+
 .container {
     width: 100%;
     max-width: 900px;
@@ -139,6 +143,10 @@ img {
     /* Increased size */
     vertical-align: middle;
     /* Align with text if necessary */
+}
+
+.output-label {
+    color: #000;
 }
 
 .row {
