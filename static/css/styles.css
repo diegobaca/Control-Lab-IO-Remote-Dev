@@ -249,20 +249,15 @@ img {
 
 .footer-container small {
     font-size: smaller;
-    /* Small font size for the text */
 }
 
 /* Style for disabled On/Off buttons */
 .btn-floating.on-off-btn:disabled {
-    /* color: white !important;
-    /* Set text color to white, use !important to override */
     cursor: not-allowed !important;
-    /* Optional: Change cursor to indicate the button is not clickable, use !important to override */
 }
 
 .disable-pointer {
     pointer-events: none;
-    /* opacity: 0.5; Optional: reduces the opacity to give a visual cue that the button is disabled */
 }
 
 .btn-floating {
