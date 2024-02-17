@@ -2,84 +2,116 @@
     --output-label-color: black;
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
-    --disabled-button-bg: #DFDFDF;
-    --disabled-button-text: #FFFFFF;
-    --disconnected-color: #DFDFDF;
+    --button-color: var(--button-color-light);
+    --disabled-button-bg-light: #DFDFDF;
+    --disabled-button-text-light: #FFFFFF;
+    --disconnected-color-light: #DFDFDF; /* Disconnected color for light theme */
 }
 
 .dark-theme {
     --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
-    --disabled-button-bg: #111111;
-    --disabled-button-text: #000;
-    --disconnected-color: #111111;
+    --disabled-button-bg-dark: #111111;
+    --disabled-button-text-dark: #000;
+    --disconnected-color-dark: #111111; /* Disconnected color for dark theme */
 }
 
-body, .connection-container, .footer-container {
+body {
     background-color: #F4F4F4;
-    color: #000; /* Default text color */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: default;
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
+    cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
 }
 
 .dark-theme {
-    background-color: #171717;
-    color: #CCCCCC;
+    background-color: #171717; /* Dark background */
+    color: #CCCCCC; /* Light text */
 }
 
-.dark-theme .output-container,
-.dark-theme .title-container,
-.dark-theme .connection-container,
-.dark-theme .footer-container {
-    background-color: #000;
+img {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    pointer-events: none; /* This makes it not clickable and not draggable */
 }
 
-.output-container, .connection-container, .title-container, .footer-container {
+.container {
+    width: 100%;
+    max-width: 900px;
+}
+
+.connection-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #F4F4F4;
+    border: none;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-img, .output-container, .connection-container, .title-container, .footer-container {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
+.connection-container .flex-grow {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
 }
 
-.disconnected-label, .disconnected-icon {
-    color: var(--disconnected-color);
-}
-
-.btn-black-theme, .on-off-btn {
-    background-color: var(--button-color);
+.title-container {
+    background-color: #000;
     color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
 
-.btn-floating:disabled, .btn-floating.on-off-btn:disabled {
-    background-color: var(--disabled-button-bg);
-    color: var(--disabled-button-text);
-    cursor: not-allowed;
-}
-
-.btn-floating:disabled .material-symbols-outlined {
-    color: var(--disabled-button-text);
-}
-
-.container, .row, .col.s1, .col.s11, .logo-title-group, .power-level-display .material-symbols-outlined, .disable-pointer, .btn-floating {
+.logo-title-group {
     display: flex;
     align-items: center;
 }
 
-.row, .col.s1, .col.s11 {
+.logo-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.title-text {
+    margin: 0;
+}
+
+.row {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0px;
+    height: 60px;
+}
+
+.col.s1,
+.col.s11 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .col.s1 {
     flex: 1;
+    padding-bottom: 7px;
 }
 
 .col.s11 {
@@ -106,9 +138,88 @@ img, .output-container, .connection-container, .title-container, .footer-contain
     }
 }
 
-html, .no-transition * {
+.btn-black-theme {
+    background-color: var(--button-color) !important;
+}
+
+.btn-floating {
+    cursor: pointer !important;
+}
+
+.on-off-btn {
+    background-color: black;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.btn-floating:disabled {
+    background-color: var(--disabled-button-bg-light) !important;
+    color: var(--disabled-button-text-light) !important;
+}
+
+.dark-theme .btn-floating:disabled {
+    background-color: var(--disabled-button-bg-dark) !important;
+    color: var(--disabled-button-text-dark) !important;
+}
+
+.btn-floating.on-off-btn:disabled {
+    cursor: not-allowed !important;
+}
+
+.disable-pointer {
+    pointer-events: none;
+}
+
+.output-container {
+    border: 1px solid #e0e0e0;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+    max-width: 550px;
+}
+
+.dark-theme .output-container,
+.dark-theme .title-container {
+    background-color: #000;
+    color: #CCCCCC;
+}
+
+.dark-theme .output-container {
+    border: 1px solid #1C1C1C;
+}
+
+.footer-container {
+    background-color: #F4F4F4;
+    color: #B0B0B0;
+    padding: 10px 0 30px 0;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-container small {
+    font-size: smaller;
+}
+
+.disconnected-label, .disconnected-icon {
+    color: var(--disconnected-color-light);
+}
+
+.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
+    color: var(--disconnected-color-dark);
+}
+
+html {
     visibility: visible;
     opacity: 1;
-    transition: none;
-    animation: none;
+}
+
+.no-transition * {
+    transition: none !important;
+    animation: none !important;
 }
