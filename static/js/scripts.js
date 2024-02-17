@@ -470,7 +470,6 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.forEach(function(button) {
         // Apply lighter opacity on focus
         button.addEventListener('focus', function() {
-            // Only add 'focused' class if focus wasn't triggered by mouse click
             if (!button.classList.contains('mouse-focused')) {
                 this.classList.add('focused');
             }
@@ -478,40 +477,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Remove lighter opacity when not focused
         button.addEventListener('blur', function() {
-            this.classList.remove('focused', 'mouse-focused');
+            this.classList.remove('focused');
         });
 
-        // Detect mousedown to manage focus style
+        // On mouse down, add 'mouse-focused' to prevent focus style
         button.addEventListener('mousedown', function(event) {
-            // Temporarily mark the button as focused via mouse to adjust styling
             this.classList.add('mouse-focused');
-            // Optionally, prevent default to keep the button from receiving focus on click
-            // event.preventDefault();
         });
 
-        // Reset the mouse-focused state after mouseup to re-enable focused styling if needed
+        // On mouse up, remove 'mouse-focused' and blur the button
         button.addEventListener('mouseup', function() {
             this.classList.remove('mouse-focused');
-            // Re-apply 'focused' class if the button is still the active element
-            if (document.activeElement === this) {
-                this.classList.add('focused');
-            }
+            // Blur the button to remove focus and the 'focused' class
+            this.blur();
         });
 
         // Handle keydown for Space and Enter to show visual feedback without losing focus
         button.addEventListener('keydown', function(event) {
             if (event.key === ' ' || event.key === 'Enter') {
-                // Prevent the default action to keep the focus
                 event.preventDefault();
                 this.classList.add('active');
             }
         });
 
-        // Remove the visual feedback when the key is released and simulate a click for accessibility
+        // Remove the visual feedback when the key is released and simulate a click
         button.addEventListener('keyup', function(event) {
             if (event.key === ' ' || event.key === 'Enter') {
                 this.classList.remove('active');
-                this.click(); // Simulate click for Space and Enter keyup
+                this.click();
             }
         });
     });
