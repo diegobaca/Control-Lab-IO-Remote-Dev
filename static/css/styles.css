@@ -262,16 +262,19 @@ img {
 
 .btn-floating {
     cursor: pointer !important;
-    transition: transform 0.1s ease; /* Smooth transition for scaling */
-}
-
-.btn-floating:hover {
-    transform: scale(1.05); /* Scale up to 105% of its size */
+    transition: transform 0.2s ease; /* Smooth transition for scaling */
 }
   
-/* Scale down the button when pressed */
+/* Hover effects for devices that support hover */
+@media (hover: hover) {
+    .btn-floating:hover {
+        transform: scale(1.05);
+    }
+}
+  
+/* Active state for all devices */
 .btn-floating:active {
-    transform: scale(0.9); /* Scale down to 90% of its size */
+    transform: scale(0.9);
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
