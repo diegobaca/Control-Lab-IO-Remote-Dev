@@ -1,13 +1,17 @@
 :root {
-    --output-label-color: black; /* Default color for light theme */
+    --output-label-color: black;
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
-    --button-color: var(--button-color-light); /* Default to light theme */
+    --button-color: var(--button-color-light);
+    --disabled-button-bg-light: #DFDFDF; /* Disabled button background for light theme */
+    --disabled-button-text-light: #DFDFDF; /* Disabled button text color for light theme */
 }
 
 .dark-theme {
-    --output-label-color: #CCCCCC; /* Override for dark theme */
+    --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
+    --disabled-button-bg-dark: #111111; /* Disabled button background for dark theme */
+    --disabled-button-text-dark: #000; /* Disabled button text color for dark theme */
 }
 
 /* Disconnected state styles */
@@ -17,6 +21,18 @@
 
 .btn-black-theme {
     background-color: var(--button-color) !important;
+}
+
+/* Disabled styles for light theme */
+.btn-floating:disabled {
+    background-color: var(--disabled-button-bg-light) !important;
+    color: var(--disabled-button-text-light) !important;
+}
+
+/* Disabled styles for dark theme */
+.dark-theme .btn-floating:disabled {
+    background-color: var(--disabled-button-bg-dark) !important;
+    color: var(--disabled-button-text-dark) !important;
 }
 
 /* Ensure theme colors are respected */
