@@ -1,15 +1,14 @@
 :root {
-    --output-label-color-light: black;
-    --output-label-color-dark: #CCCCCC;
+    --output-label-color: black; /* Default color for light theme */
 }
 
 .dark-theme {
-    --output-label-color: var(--output-label-color-dark);
+    --output-label-color: #CCCCCC; /* Override for dark theme */
 }
 
-/* Default light theme */
-:root {
-    --output-label-color: var(--output-label-color-light);
+/* Apply the variable for color */
+.output-label, .power-level-display {
+    color: var(--output-label-color);
 }
 
 /* Page background color */
@@ -45,10 +44,6 @@ body {
 .container {
     width: 100%;
     max-width: 900px;
-}
-
-.output-label, .power-level-display {
-    color: var(--output-label-color);
 }
 
 img {
