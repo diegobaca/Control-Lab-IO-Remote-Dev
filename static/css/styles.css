@@ -265,7 +265,9 @@ img {
     transition: transform 0.1s ease; /* Smooth transition for scaling */
 }
 
-
+.btn-floating:hover {
+    transform: scale(1.05); /* Scale up to 105% of its size */
+}
   
 /* Scale down the button when pressed */
 .btn-floating:active {
