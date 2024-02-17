@@ -16,7 +16,7 @@
 
 /* Disconnected state styles */
 .disconnected-label, .disconnected-icon {
-    color: #DFDFDF; /* Grey color indicating disconnected state */
+    color: var(--disabled-button-text-light) !important;
 }
 
 .btn-black-theme {
