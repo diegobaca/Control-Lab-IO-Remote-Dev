@@ -465,22 +465,37 @@ window.addEventListener('load', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Adding focus and blur event listeners to buttons
-    var buttons = document.querySelectorAll('.btn-floating, .btn-large'); // Adjust the selector as needed
+    var buttons = document.querySelectorAll('.btn-floating, .btn-large');
+
     buttons.forEach(function(button) {
         button.addEventListener('focus', function() {
-            // Adjust opacity on focus. Set it to any value between 0 (transparent) and 1 (opaque).
-            this.style.opacity = '0.6'; // Example opacity, adjust as needed
+            this.style.opacity = '0.6'; // Lighten on focus
         });
 
         button.addEventListener('blur', function() {
-            // Reset opacity when the button loses focus
-            this.style.opacity = ''; // Reset to default
+            this.style.opacity = ''; // Reset on blur
         });
 
-        button.addEventListener('click', function() {
-            // Temporarily remove focus from the button after click to prevent sticky opacity
-            this.blur(); // This removes the focus state from the button
+        button.addEventListener('mousedown', function(event) {
+            this.style.opacity = ''; // Temporarily reset opacity on mouse down
+        });
+
+        button.addEventListener('keydown', function(event) {
+            // Temporarily reset opacity on space or enter keydown
+            if (event.key === ' ' || event.key === 'Enter') {
+                this.style.opacity = '';
+            }
+        });
+
+        button.addEventListener('mouseup', function(event) {
+            this.blur(); // Optional: force blur on mouse up to remove focus style
+        });
+
+        button.addEventListener('keyup', function(event) {
+            // Optional: force blur on keyup for space or enter to remove focus style
+            if (event.key === ' ' || event.key === 'Enter') {
+                this.blur();
+            }
         });
     });
 });
