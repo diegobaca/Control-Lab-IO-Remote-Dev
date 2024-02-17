@@ -69,7 +69,7 @@
         <div class="connection-container">
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
-                class="btn-floating btn-large waves-effect waves-light">
+                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                 <i class="material-symbols-outlined" id="connection-icon">link</i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
@@ -80,10 +80,10 @@
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
             <div>
-                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large waves-effect waves-light">
+                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                     <i class="material-symbols-outlined">save</i> <!-- Save icon -->
                 </button>
-                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large waves-effect waves-light">
+                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                     <i class="material-symbols-outlined">folder</i> <!-- Folder icon -->
                 </button>
             </div>
@@ -107,13 +107,13 @@
                                 class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
@@ -121,7 +121,7 @@
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
@@ -146,13 +146,13 @@
                                 class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
@@ -160,7 +160,7 @@
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large waves-effect waves-light">
+                                class="btn-floating btn-large btn-black-theme waves-effect waves-light">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
