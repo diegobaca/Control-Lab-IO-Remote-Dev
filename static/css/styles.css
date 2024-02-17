@@ -13,7 +13,7 @@
     --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
     --disabled-button-text-dark: #000;
-    --disconnected-color-dark: #000; /* Disconnected color for dark theme */
+    --disconnected-color-dark: #111111; /* Disconnected color for dark theme */
 }
 
 /* Disconnected state styles */
@@ -48,11 +48,6 @@
 
 .dark-theme .btn-floating:disabled .material-symbols-outlined {
     color: var(--disabled-button-text-dark) !important;
-}
-
-/* Ensure theme colors are respected */
-.dark-theme .output-label, .dark-theme .power-level-display {
-    color: var(--output-label-color); /* This will override the disconnected styles when not disconnected */
 }
 
 /* Page background color */
