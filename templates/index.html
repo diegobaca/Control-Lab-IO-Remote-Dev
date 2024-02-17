@@ -52,11 +52,15 @@
     <div class="container">
         <!-- Custom container for Title with Image -->
         <div class="title-container">
-            <img src="/static/assets/logo.png" alt="Logo" class="logo-image">
-            <h5 class="title-text">Control Lab IO</h5>
+            <!-- Logo and Title Group -->
+            <div class="logo-title-group">
+                <img src="/static/assets/logo.png" alt="Logo" class="logo-image">
+                <h5 class="title-text">Control Lab IO</h5>
+            </div>
+            <!-- Theme Toggle Button -->
             <div class="theme-toggle-button">
                 <button id="theme-toggle-btn" onclick="toggleTheme()" class="btn-floating btn-large waves-effect waves-light">
-                    <i class="material-symbols-outlined" id="theme-icon">dark_mode</i>
+                    <i class="material-symbols-outlined" id="theme-icon">dark_mode</i> <!-- Default icon -->
                 </button>
             </div>
         </div>

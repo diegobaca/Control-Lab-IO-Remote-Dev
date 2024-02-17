@@ -33,13 +33,6 @@ body {
     color: black; /* Dark text for contrast */
 }
 
-.theme-toggle-button {
-    position: absolute; /* Or use 'fixed' depending on your layout */
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
-    z-index: 1001; /* Ensure it's above other content */
-}
-
 .container {
     width: 100%;
     max-width: 900px;
@@ -116,13 +109,18 @@ img {
     background-color: #212529;
     color: white;
     padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures space between logo-title group and toggle button */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+}
+
+.logo-title-group {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Ensures elements are spread out */
+    align-items: center; /* Ensures logo and title are aligned */
 }
 
 .logo-image {
