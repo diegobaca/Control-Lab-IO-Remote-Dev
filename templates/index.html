@@ -103,24 +103,24 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn" title="Toggle motor on/off" tabindex="6"></button>
+                                class="btn-floating btn-large on-off-btn" title="Toggle motor on/off"
+                                tabindex="{{ ((output_id - 1) * 4) + 1 + 5 }}"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Toggle motor dirrection" tabindex="7">
+                                class="btn-floating btn-large btn-black-theme" title="Toggle motor direction"
+                                tabindex="{{ ((output_id - 1) * 4) + 2 + 5 }}">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
-                                <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Decrease speed" tabindex="8">
+                                class="btn-floating btn-large btn-black-theme" title="Decrease speed"
+                                tabindex="{{ ((output_id - 1) * 4) + 3 + 5 }}">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
-                            <span id="power-level-{{ output_id }}" class="power-level-display">
-                                <span class="material-symbols-outlined">circle</span>
-                            </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Increase speed" tabindex="9">
+                                class="btn-floating btn-large btn-black-theme" title="Increase speed"
+                                tabindex="{{ ((output_id - 1) * 4) + 4 + 5 }}">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
@@ -142,24 +142,24 @@
                         <div class="col s11">
                             <button id="on-off-{{ output_id }}"
                                 onclick="sendCommand('/toggle_on/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large on-off-btn" title="Toggle motor on/off" tabindex="10"></button>
+                                class="btn-floating btn-large on-off-btn" title="Toggle motor on/off"
+                                tabindex="{{ ((output_id - 1) * 4) + 1 + 5 }}"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Toggle motor dirrection" tabindex="11">
+                                class="btn-floating btn-large btn-black-theme" title="Toggle motor direction"
+                                tabindex="{{ ((output_id - 1) * 4) + 2 + 5 }}">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
-                                <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Decrease speed" tabindex="12">
+                                class="btn-floating btn-large btn-black-theme" title="Decrease speed"
+                                tabindex="{{ ((output_id - 1) * 4) + 3 + 5 }}">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
-                            <span id="power-level-{{ output_id }}" class="power-level-display">
-                                <span class="material-symbols-outlined">circle</span>
-                            </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large btn-black-theme" title="Increase speed" tabindex="13">
+                                class="btn-floating btn-large btn-black-theme" title="Increase speed"
+                                tabindex="{{ ((output_id - 1) * 4) + 4 + 5 }}">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
