@@ -1,3 +1,17 @@
+:root {
+    --output-label-color-light: black;
+    --output-label-color-dark: #CCCCCC;
+}
+
+.dark-theme {
+    --output-label-color: var(--output-label-color-dark);
+}
+
+/* Default light theme */
+:root {
+    --output-label-color: var(--output-label-color-light);
+}
+
 /* Page background color */
 body {
     background-color: #F4F4F4;
@@ -31,6 +45,10 @@ body {
 .container {
     width: 100%;
     max-width: 900px;
+}
+
+.output-label, .power-level-display {
+    color: var(--output-label-color);
 }
 
 img {

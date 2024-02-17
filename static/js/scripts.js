@@ -3,10 +3,6 @@ var isAttemptingConnection = false; // Global flag to track connection attempts
 var isDisconnecting = false; // Global flag to track disconnection attempts
 var is_sending = false; // Initialize the is_sending variable if needed
 
-function isDarkThemeActive() {
-    return document.body.classList.contains('dark-theme');
-}
-
 function sendCommand(url, output_id) {
     if (url === '/toggle_connection' && !isConnected) {
         checkConnectionAttemptStatus(function(isAttempting) {
@@ -380,28 +376,25 @@ function loadOutputValues() {
 }
 
 function updateButtonAccessibility(isConnected) {
-    var buttons = document.querySelectorAll('.btn-floating');
-    var outputLabels = document.querySelectorAll('.output-label');
-    var powerIcons = document.querySelectorAll('.power-level-display');
-
-    // Determine the colors based on the theme
-    var connectedColor = isDarkThemeActive() ? 'white' : 'black'; // Use 'white' for dark theme, 'black' for light theme
-    var disconnectedColor = '#DFDFDF';
+    var buttons = document.querySelectorAll('.btn-floating'); // Select all floating buttons
+    var outputLabels = document.querySelectorAll('.output-label'); // Select all output labels
+    var powerIcons = document.querySelectorAll('.power-level-display'); // Select all power level display icons
 
     buttons.forEach(function (button) {
-        if (button.id !== 'connection-btn') {
+        // Exclude the theme toggle button from being disabled
+        if (button.id !== 'connection-btn' && button.id !== 'theme-toggle-btn') {
             button.disabled = !isConnected;
         }
     });
 
+    // Change color of output labels and power icons based on connection status
     outputLabels.forEach(function (label) {
-        label.style.color = isConnected ? connectedColor : disconnectedColor;
+        label.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
 
     powerIcons.forEach(function (icon) {
-        icon.style.color = isConnected ? connectedColor : disconnectedColor;
+        icon.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
     });
-    console.log("Function called. isConnected:", isConnected, "Color:", isConnected ? connectedColor : disconnectedColor);
 }
 
 // Function to check the connection status periodically
