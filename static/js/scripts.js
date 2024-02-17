@@ -463,3 +463,19 @@ window.addEventListener('load', () => {
         document.body.classList.remove('no-transition');
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Adding focus and blur event listeners to buttons
+    var buttons = document.querySelectorAll('.btn-floating, .btn-large'); // Adjust the selector as needed
+    buttons.forEach(function(button) {
+        button.addEventListener('focus', function() {
+            // Add the lighten class on focus. Choose the right one based on your color scheme.
+            this.classList.add('lighten-2'); // Example: lighten-2, adjust as needed
+        });
+
+        button.addEventListener('blur', function() {
+            // Remove the lighten class when the button loses focus
+            this.classList.remove('lighten-2'); // Ensure this matches the class added on focus
+        });
+    });
+});
