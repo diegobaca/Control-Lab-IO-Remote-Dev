@@ -244,7 +244,7 @@ img {
 
 /* Style for disabled On/Off buttons */
 .btn-floating.on-off-btn:disabled {
-    color: white !important;
+    /* color: white !important;
     /* Set text color to white, use !important to override */
     cursor: not-allowed !important;
     /* Optional: Change cursor to indicate the button is not clickable, use !important to override */
