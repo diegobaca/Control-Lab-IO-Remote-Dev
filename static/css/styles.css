@@ -181,6 +181,10 @@ img {
     /* Remove margin to align title properly */
 }
 
+.save-btn-margin {
+    margin-right: 5px;
+}
+
 .power-level-display .material-symbols-outlined {
     font-size: 48px;
     /* Increased size */
