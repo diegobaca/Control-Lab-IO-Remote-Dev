@@ -12,7 +12,7 @@ function sendCommand(url, output_id) {
                 // Immediate UI feedback for attempting to connect
                 var connectionButton = document.getElementById('connection-btn');
                 var connectionIcon = document.getElementById('connection-icon');
-                connectionButton.classList.add('black', 'pulse', 'disable-pointer');
+                connectionButton.classList.add('btn-black-theme', 'pulse', 'disable-pointer');
                 connectionButton.classList.remove('red', 'green');
                 connectionIcon.textContent = 'link'; // Assuming 'link' is the icon for attempting to connect
                 isAttemptingConnection = true; // Assuming you track connection attempt status
@@ -50,7 +50,7 @@ function handleDisconnection() {
     isDisconnecting = true;
     var connectionButton = document.getElementById('connection-btn');
     var connectionIcon = document.getElementById('connection-icon');
-    connectionButton.classList.add('black', 'pulse');
+    connectionButton.classList.add('btn-black-theme', 'pulse');
     connectionButton.classList.remove('green', 'red');
     connectionIcon.textContent = 'link_off';
     connectionButton.disabled = true;
@@ -155,7 +155,7 @@ function handleFailedConnection() {
     var connectionIcon = document.getElementById('connection-icon');
     
     connectionButton.classList.add('red');
-    connectionButton.classList.remove('black', 'pulse', 'disable-pointer', 'green');
+    connectionButton.classList.remove('btn-black-theme', 'pulse', 'disable-pointer', 'green');
     connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
 
     alert('It looks like Control Lab IO is having trouble connecting to the LEGO Interface B right now. Please try again.'); // Optionally, show an alert message
@@ -241,25 +241,25 @@ function updateConnectionStatus() {
         if (data.is_connected) {
             // "Connected" state
             connectionButton.classList.add('green');
-            connectionButton.classList.remove('black', 'red', 'pulse', 'disable-pointer'); // Also re-enable pointer events
+            connectionButton.classList.remove('btn-black-theme', 'red', 'pulse', 'disable-pointer'); // Also re-enable pointer events
             connectionIcon.textContent = 'power_settings_new';
             isConnected = true;
         } else {
             if (isDisconnecting) {
                 // "Is Disconnecting" state
-                connectionButton.classList.add('black', 'pulse');
+                connectionButton.classList.add('btn-black-theme', 'pulse');
                 connectionButton.classList.remove('green', 'red');
                 connectionIcon.textContent = 'link_off';
             } else if (isAttemptingConnection) {
                 // Here, you check if the attempt to connect has failed
                 // "No connection found" state should be handled here
                 connectionButton.classList.add('red');
-                connectionButton.classList.remove('black', 'green', 'pulse', 'disable-pointer');
+                connectionButton.classList.remove('btn-black-theme', 'green', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'refresh'; // Indicate no connection found
                 // Optionally, you can add a delay or a mechanism to revert the icon back to 'link' after some time
             } else {
                 // "Default / Disconnected" state
-                connectionButton.classList.add('black');
+                connectionButton.classList.add('btn-black-theme');
                 connectionButton.classList.remove('green', 'red', 'pulse', 'disable-pointer');
                 connectionIcon.textContent = 'link';
             }
@@ -307,7 +307,7 @@ function updateSendingStatus() {
         // Update button classes and icon based on sending status
         if (is_sending) {
             sendingButton.classList.add('green', 'pulse'); // Add green color and pulse effect
-            sendingButton.classList.remove('black', 'orange'); // Remove black and orange color
+            sendingButton.classList.remove('btn-black-theme', 'orange'); // Remove btn-black-theme and orange color
             sendingIcon.textContent = 'play_arrow'; // Use the play_arrow icon
 
             // Change any orange on/off buttons to green and add pulse
@@ -320,7 +320,7 @@ function updateSendingStatus() {
             }
         } else {
             sendingButton.classList.add('orange'); // Add orange color
-            sendingButton.classList.remove('green', 'black', 'pulse'); // Remove green color, black color, and pulse effect
+            sendingButton.classList.remove('green', 'btn-black-theme', 'pulse'); // Remove green color, btn-black-theme color, and pulse effect
             sendingIcon.textContent = 'pause'; // Use the pause icon
 
             // Change any green on/off buttons to orange and remove pulse

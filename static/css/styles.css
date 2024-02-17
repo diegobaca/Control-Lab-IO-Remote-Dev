@@ -1,14 +1,22 @@
 :root {
     --output-label-color: black; /* Default color for light theme */
+    --button-color-light: black;
+    --button-color-dark: #2B2B2B;
+    --button-color: var(--button-color-light); /* Default to light theme */
 }
 
 .dark-theme {
     --output-label-color: #CCCCCC; /* Override for dark theme */
+    --button-color: var(--button-color-dark);
 }
 
 /* Disconnected state styles */
 .disconnected-label, .disconnected-icon {
     color: #DFDFDF; /* Grey color indicating disconnected state */
+}
+
+.btn-black-theme {
+    background-color: var(--button-color);
 }
 
 /* Ensure theme colors are respected */
