@@ -10,7 +10,7 @@
     --btn-text-color: #CCCCCC; /* Dark theme button text color */
 }
 
-.btn-floating .btn-black-theme {
+.btn-black-theme {
     background-color: var(--btn-bg-color);
     color: var(--btn-text-color);
 }
