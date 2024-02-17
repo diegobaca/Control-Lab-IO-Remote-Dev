@@ -28,9 +28,8 @@ body {
     border: 1px solid #2B2B2B;
 }
 
-.dark-theme .on-off-btn {
-    background-color: white; /* Light background for buttons */
-    color: black; /* Dark text for contrast */
+.dark-theme .power-level-display .material-symbols-outlined {
+    color: #CCCCCC;
 }
 
 .container {
@@ -135,6 +134,7 @@ img {
 }
 
 .power-level-display .material-symbols-outlined {
+    color: #000;
     font-size: 48px;
     /* Increased size */
     vertical-align: middle;
