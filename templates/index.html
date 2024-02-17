@@ -69,21 +69,21 @@
         <div class="connection-container">
             <!-- Connection Button (Left aligned) -->
             <button id="connection-btn" onclick="sendCommand('/toggle_connection', 0)"
-                class="btn-floating btn-large black waves-effect waves-light">
+                class="btn-floating btn-large waves-effect waves-light">
                 <i class="material-symbols-outlined" id="connection-icon">link</i> <!-- Default icon -->
             </button>
             <!-- Sending Button (Centered) -->
             <div class="flex-grow">
-                <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large black waves-effect waves-light">
+                <button id="sending-btn" onclick="toggleSending()" class="btn-floating btn-large waves-effect waves-light">
                     <i class="material-symbols-outlined" id="sending-icon">pause</i> <!-- Default icon -->
                 </button>
             </div>
             <!-- Save and Load Buttons (Right aligned) -->
             <div>
-                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large black waves-effect waves-light">
+                <button id="save-btn" onclick="saveOutputValues()" class="btn-floating btn-large waves-effect waves-light">
                     <i class="material-symbols-outlined">save</i> <!-- Save icon -->
                 </button>
-                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large black waves-effect waves-light">
+                <button id="load-btn" onclick="loadOutputValues()" class="btn-floating btn-large waves-effect waves-light">
                     <i class="material-symbols-outlined">folder</i> <!-- Folder icon -->
                 </button>
             </div>
@@ -107,13 +107,13 @@
                                 class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
@@ -121,7 +121,7 @@
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
@@ -146,13 +146,13 @@
                                 class="btn-floating btn-large on-off-btn waves-effect waves-light"></button>
                             <button id="direction-{{ output_id }}"
                                 onclick="sendCommand('/toggle_dir/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined" id="direction-icon-{{ output_id }}">rotate_right</i>
                                 <!-- Default icon -->
                             </button>
                             <button id="decrease-{{ output_id }}"
                                 onclick="sendCommand('/decrease_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined">remove_circle</i>
                             </button>
                             <span id="power-level-{{ output_id }}" class="power-level-display">
@@ -160,7 +160,7 @@
                             </span>
                             <button id="increase-{{ output_id }}"
                                 onclick="sendCommand('/increase_power/{{ output_id }}', {{ output_id }})"
-                                class="btn-floating btn-large black waves-effect waves-light">
+                                class="btn-floating btn-large waves-effect waves-light">
                                 <i class="material-symbols-outlined">add_circle</i>
                             </button>
                         </div>
@@ -185,13 +185,26 @@
         function toggleTheme() {
             var body = document.body;
             var themeIcon = document.getElementById('theme-icon');
-            body.classList.toggle('dark-theme'); // Toggle the dark theme class
+            body.classList.toggle('dark-theme');
             if (body.classList.contains('dark-theme')) {
-                themeIcon.innerText = 'light_mode'; // Change icon to light mode
+                themeIcon.innerText = 'light_mode';
+                localStorage.setItem('theme', 'dark');
             } else {
-                themeIcon.innerText = 'dark_mode'; // Change icon to dark mode
+                themeIcon.innerText = 'dark_mode';
+                localStorage.setItem('theme', 'light');
             }
         }
+
+        // New script block to set theme on page load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-theme');
+                document.getElementById('theme-icon').innerText = 'light_mode';
+            } else {
+                document.body.classList.remove('dark-theme');
+                document.getElementById('theme-icon').innerText = 'dark_mode';
+            }
+        });
     </script>
 
 </body>
