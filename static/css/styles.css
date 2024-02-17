@@ -6,9 +6,14 @@
     --output-label-color: #CCCCCC; /* Override for dark theme */
 }
 
-/* Apply the variable for color */
-.output-label, .power-level-display {
-    color: var(--output-label-color);
+/* Disconnected state styles */
+.disconnected-label, .disconnected-icon {
+    color: #DFDFDF; /* Grey color indicating disconnected state */
+}
+
+/* Ensure theme colors are respected */
+.dark-theme .output-label, .dark-theme .power-level-display {
+    color: var(--output-label-color); /* This will override the disconnected styles when not disconnected */
 }
 
 /* Page background color */

@@ -387,13 +387,21 @@ function updateButtonAccessibility(isConnected) {
         }
     });
 
-    // Change color of output labels and power icons based on connection status
+    // Use CSS classes for color change based on connection status
     outputLabels.forEach(function (label) {
-        label.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
+        if (!isConnected) {
+            label.classList.add('disconnected-label');
+        } else {
+            label.classList.remove('disconnected-label');
+        }
     });
 
     powerIcons.forEach(function (icon) {
-        icon.style.color = isConnected ? 'black' : '#DFDFDF'; // Default color when connected, grey when disconnected
+        if (!isConnected) {
+            icon.classList.add('disconnected-icon');
+        } else {
+            icon.classList.remove('disconnected-icon');
+        }
     });
 }
 
