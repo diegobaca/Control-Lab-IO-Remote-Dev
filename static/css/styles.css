@@ -28,14 +28,6 @@ body {
     border: 1px solid #2B2B2B;
 }
 
-.dark-theme .power-level-display .material-symbols-outlined {
-    color: #CCCCCC;
-}
-
-.dark-theme .output-label {
-    color: #CCCCCC;
-}
-
 .container {
     width: 100%;
     max-width: 900px;
@@ -138,15 +130,10 @@ img {
 }
 
 .power-level-display .material-symbols-outlined {
-    color: #000;
     font-size: 48px;
     /* Increased size */
     vertical-align: middle;
     /* Align with text if necessary */
-}
-
-.output-label {
-    color: #000;
 }
 
 .row {
