@@ -114,19 +114,15 @@ img {
 /* Custom style for the title container */
 .title-container {
     background-color: #212529;
-    /* Dark background */
     color: white;
-    /* White text */
     padding: 20px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    /* Spacing between title container and connection container */
     display: flex;
-    /* Align items horizontally */
     align-items: center;
-    /* Align items vertically */
+    justify-content: space-between; /* Ensures elements are spread out */
 }
 
 .logo-image {
