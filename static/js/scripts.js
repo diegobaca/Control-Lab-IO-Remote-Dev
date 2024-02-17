@@ -469,13 +469,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large'); // Adjust the selector as needed
     buttons.forEach(function(button) {
         button.addEventListener('focus', function() {
-            // Add the lighten class on focus. Choose the right one based on your color scheme.
-            this.classList.add('lighten-2'); // Example: lighten-2, adjust as needed
+            // Set opacity to a desired value on focus
+            this.style.opacity = '0.7'; // Example: 70% opacity, adjust as needed
         });
 
         button.addEventListener('blur', function() {
-            // Remove the lighten class when the button loses focus
-            this.classList.remove('lighten-2'); // Ensure this matches the class added on focus
+            // Reset opacity when the button loses focus
+            this.style.opacity = ''; // Resets to default
         });
     });
 });
