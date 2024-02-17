@@ -470,16 +470,17 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.forEach(function(button) {
         button.addEventListener('focus', function() {
             // Adjust opacity on focus. Set it to any value between 0 (transparent) and 1 (opaque).
-            this.style.opacity = '0.6'; // Example opacity
-            // Add z-depth-5 class on focus for depth
-            this.classList.add('z-depth-5');
+            this.style.opacity = '0.6'; // Example opacity, adjust as needed
         });
 
         button.addEventListener('blur', function() {
             // Reset opacity when the button loses focus
-            this.style.opacity = ''; // Reset to default or specify another value
-            // Remove z-depth-5 class on blur to remove depth
-            this.classList.remove('z-depth-5');
+            this.style.opacity = ''; // Reset to default
+        });
+
+        button.addEventListener('click', function() {
+            // Temporarily remove focus from the button after click to prevent sticky opacity
+            this.blur(); // This removes the focus state from the button
         });
     });
 });
