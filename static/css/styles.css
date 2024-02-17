@@ -61,7 +61,7 @@ body {
 }
 
 .dark-theme {
-    background-color: #171717; /* Dark background */
+    background-color: #191919; /* Dark background */
     color: #CCCCCC; /* Light text */
 }
 
@@ -73,11 +73,11 @@ body {
 
 .dark-theme .connection-container,
 .dark-theme .footer-container {
-    background-color: #171717; /* Dark background */
+    background-color: #191919; /* Dark background */
 }
 
 .dark-theme .output-container {
-    border: 1px solid #141414;
+    border: 1px solid #202020;
 }
 
 .container {
