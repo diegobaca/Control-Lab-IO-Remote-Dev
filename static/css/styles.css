@@ -262,6 +262,14 @@ img {
 
 .btn-floating {
     cursor: pointer !important;
+    transition: transform 0.1s ease; /* Smooth transition for scaling */
+}
+
+
+  
+/* Scale down the button when pressed */
+.btn-floating:active {
+    transform: scale(0.9); /* Scale down to 90% of its size */
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
