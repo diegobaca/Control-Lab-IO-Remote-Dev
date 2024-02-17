@@ -401,6 +401,7 @@ function updateButtonAccessibility(isConnected) {
     powerIcons.forEach(function (icon) {
         icon.style.color = isConnected ? connectedColor : disconnectedColor;
     });
+    console.log("Function called. isConnected:", isConnected, "Color:", isConnected ? connectedColor : disconnectedColor);
 }
 
 // Function to check the connection status periodically
