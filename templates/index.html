@@ -185,7 +185,7 @@
         function toggleTheme() {
             var body = document.body;
             var themeIcon = document.getElementById('theme-icon');
-            var buttons = document.querySelectorAll('.btn'); // Assuming your buttons have a common class 'btn'
+            var buttons = document.querySelectorAll('.btn-floating'); // Assuming your buttons have a common class 'btn'
             body.classList.toggle('dark-theme');
 
             if (body.classList.contains('dark-theme')) {
@@ -205,7 +205,7 @@
 
         // New script block to set theme on page load
         document.addEventListener('DOMContentLoaded', (event) => {
-            var buttons = document.querySelectorAll('.btn'); // Ensure this matches the class of your buttons
+            var buttons = document.querySelectorAll('.btn-floating'); // Ensure this matches the class of your buttons
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-theme');
                 document.getElementById('theme-icon').innerText = 'light_mode';
