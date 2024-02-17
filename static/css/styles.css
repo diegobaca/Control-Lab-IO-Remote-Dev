@@ -14,11 +14,13 @@ body {
 }
 
 .dark-theme .output-container,
-.dark-theme .connection-container,
-.dark-theme .footer-container,
 .dark-theme .title-container {
     background-color: #1E1E1E; /* Darker shade for containers */
     color: #E0E0E0; /* Light text for readability */
+}
+
+.dark-theme .output-container {
+    border: #2B2B2B;
 }
 
 .dark-theme .on-off-btn {
