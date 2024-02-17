@@ -10,12 +10,12 @@ body {
 
 .dark-theme {
     background-color: #121212; /* Dark background */
-    color: #E0E0E0; /* Light text */
+    color: #CCCCCC; /* Light text */
 }
 
 .dark-theme .output-container,
 .dark-theme .title-container {
-    background-color: #1E1E1E; /* Darker shade for containers */
+    background-color: #000; /* Darker shade for containers */
     color: #CCCCCC; /* Light text for readability */
 }
 
@@ -106,7 +106,7 @@ img {
 
 /* Custom style for the title container */
 .title-container {
-    background-color: #212529;
+    background-color: #000;
     color: white;
     padding: 20px;
     display: flex;
