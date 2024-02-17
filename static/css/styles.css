@@ -8,6 +8,31 @@ body {
     cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
 }
 
+.dark-theme {
+    background-color: #121212; /* Dark background */
+    color: #E0E0E0; /* Light text */
+}
+
+.dark-theme .output-container,
+.dark-theme .connection-container,
+.dark-theme .footer-container,
+.dark-theme .title-container {
+    background-color: #1E1E1E; /* Darker shade for containers */
+    color: #E0E0E0; /* Light text for readability */
+}
+
+.dark-theme .on-off-btn {
+    background-color: white; /* Light background for buttons */
+    color: black; /* Dark text for contrast */
+}
+
+.theme-toggle-button {
+    position: absolute; /* Or use 'fixed' depending on your layout */
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    z-index: 1001; /* Ensure it's above other content */
+}
+
 .container {
     width: 100%;
     max-width: 900px;

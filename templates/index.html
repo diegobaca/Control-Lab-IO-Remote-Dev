@@ -54,6 +54,11 @@
         <div class="title-container">
             <img src="/static/assets/logo.png" alt="Logo" class="logo-image">
             <h5 class="title-text">Control Lab IO</h5>
+            <div class="theme-toggle-button">
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="btn-floating btn-large waves-effect waves-light">
+                    <i class="material-symbols-outlined" id="theme-icon">dark_mode</i> <!-- Default icon -->
+                </button>
+            </div>
         </div>
 
         <!-- Custom container for Connection, Sending, Save, and Load Buttons -->
@@ -171,6 +176,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
     <!-- Local JavaScript File, deferred to not block HTML parsing -->
     <script src="/static/js/scripts.js" defer></script>
+
+    <script>
+        function toggleTheme() {
+            var body = document.body;
+            var themeIcon = document.getElementById('theme-icon');
+            body.classList.toggle('dark-theme'); // Toggle the dark theme class
+            if (body.classList.contains('dark-theme')) {
+                themeIcon.innerText = 'light_mode'; // Change icon to light mode
+            } else {
+                themeIcon.innerText = 'dark_mode'; // Change icon to dark mode
+            }
+        }
+    </script>
+
 </body>
 
 </html>
