@@ -185,39 +185,24 @@
         function toggleTheme() {
             var body = document.body;
             var themeIcon = document.getElementById('theme-icon');
-            var buttons = document.querySelectorAll('.btn-floating'); // Assuming your buttons have a common class 'btn'
             body.classList.toggle('dark-theme');
 
             if (body.classList.contains('dark-theme')) {
                 themeIcon.innerText = 'light_mode';
                 localStorage.setItem('theme', 'dark');
-                buttons.forEach(function(button) {
-                    button.classList.add('btn-black-theme');
-                });
             } else {
                 themeIcon.innerText = 'dark_mode';
                 localStorage.setItem('theme', 'light');
-                buttons.forEach(function(button) {
-                    button.classList.remove('btn-black-theme');
-                });
             }
         }
 
-        // New script block to set theme on page load
         document.addEventListener('DOMContentLoaded', (event) => {
-            var buttons = document.querySelectorAll('.btn-floating'); // Ensure this matches the class of your buttons
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-theme');
                 document.getElementById('theme-icon').innerText = 'light_mode';
-                buttons.forEach(function(button) {
-                    button.classList.add('btn-black-theme');
-                });
             } else {
                 document.body.classList.remove('dark-theme');
                 document.getElementById('theme-icon').innerText = 'dark_mode';
-                buttons.forEach(function(button) {
-                    button.classList.remove('btn-black-theme');
-                });
             }
         });
     </script>
