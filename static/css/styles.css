@@ -3,7 +3,6 @@
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
     --button-color: var(--button-color-light);
-    --button-text-color: #FFF; /* Text color for light theme */
     --disabled-button-bg-light: #DFDFDF;
     --disabled-button-text-light: #FFFFFF;
     --disconnected-color-light: #DFDFDF; /* Disconnected color for light theme */
@@ -12,7 +11,6 @@
 .dark-theme {
     --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
-    --button-text-color: #CCC; /* Text color for dark theme */
     --disabled-button-bg-dark: #111111;
     --disabled-button-text-dark: #000;
     --disconnected-color-dark: #111111; /* Disconnected color for dark theme */
@@ -30,7 +28,6 @@
 
 .btn-black-theme {
     background-color: var(--button-color) !important;
-    color: var(--button-text-color) !important; /* Use the text color variable */
 }
 
 /* Disabled styles for light theme */
