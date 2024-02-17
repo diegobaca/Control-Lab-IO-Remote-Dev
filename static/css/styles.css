@@ -16,7 +16,7 @@ body {
 .dark-theme .output-container,
 .dark-theme .title-container {
     background-color: #1E1E1E; /* Darker shade for containers */
-    color: #E0E0E0; /* Light text for readability */
+    color: #CCCCCC; /* Light text for readability */
 }
 
 .dark-theme .connection-container,
