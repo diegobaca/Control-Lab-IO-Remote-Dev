@@ -29,9 +29,17 @@
     color: var(--disabled-button-text-light) !important;
 }
 
+.btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text-light) !important;
+}
+
 /* Disabled styles for dark theme */
 .dark-theme .btn-floating:disabled {
     background-color: var(--disabled-button-bg-dark) !important;
+    color: var(--disabled-button-text-dark) !important;
+}
+
+.dark-theme .btn-floating:disabled .material-symbols-outlined {
     color: var(--disabled-button-text-dark) !important;
 }
 
