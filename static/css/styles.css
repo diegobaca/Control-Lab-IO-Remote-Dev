@@ -16,7 +16,7 @@
 }
 
 .btn-black-theme {
-    background-color: var(--button-color);
+    background-color: var(--button-color) !important;
 }
 
 /* Ensure theme colors are respected */
