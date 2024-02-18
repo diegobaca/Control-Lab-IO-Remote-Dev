@@ -8,6 +8,7 @@ function sendCommand(url, output_id) {
         checkConnectionAttemptStatus(function(isAttempting) {
             if (isAttempting) {
                 alert('Control Lab IO is currently in the process of establishing a connection with the LEGO Interface B.');
+                document.getElementById('focus-target').focus();
             } else {
                 // Immediate UI feedback for attempting to connect
                 var connectionButton = document.getElementById('connection-btn');
