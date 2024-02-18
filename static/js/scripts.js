@@ -158,7 +158,7 @@ function handleFailedConnection() {
     connectionButton.classList.remove('btn-black-theme', 'pulse', 'disable-pointer', 'green');
     connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
 
-    alert('It looks like Control Lab IO is having trouble connecting to the LEGO Interface B right now. Please try again.'); // Optionally, show an alert message
+    alert('It looks like Control Lab IO is having trouble connecting to the LEGO Interface B right now. Please try again.');
 }
 
 function updateButtonStates() {
