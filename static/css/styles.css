@@ -141,6 +141,7 @@ img {
     flex-grow: 1;
     display: flex;
     justify-content: center;
+    margin-left: 65px;
 }
 
 .title-container {
