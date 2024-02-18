@@ -84,6 +84,7 @@ body {
 .dark-theme .connection-container,
 .dark-theme .footer-container {
     background-color: #191919; /* Dark background */
+    color: #303030;
 }
 
 .dark-theme .output-container {
