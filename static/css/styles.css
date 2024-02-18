@@ -141,7 +141,6 @@ img {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    margin-left: 65px;
 }
 
 .title-container {
@@ -286,6 +285,10 @@ img {
 
     .connection-container {
         padding: 15px 20px;
+    }
+
+    .connection-container .flex-grow {
+        margin-left: 65px;
     }
 
     .output-container {
