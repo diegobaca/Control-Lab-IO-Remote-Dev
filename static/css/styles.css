@@ -93,7 +93,12 @@ body {
     color: #CCCCCC;
 }
 
-.dark-theme .connection-container,
+.dark-theme .connection-container{
+    border-bottom: 1px solid #191919;
+    background-color: #191919;
+    color: #303030;
+}
+
 .dark-theme .footer-container {
     background-color: #191919;
     color: #303030;
@@ -141,7 +146,7 @@ img {
     align-items: center;
     padding: 15px;
     background-color: #F4F4F4;
-    border: none;
+    border-bottom: 1px solid #F4F4F4;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
