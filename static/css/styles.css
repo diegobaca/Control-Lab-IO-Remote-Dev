@@ -77,6 +77,7 @@ body {
 
 .dark-theme .output-container,
 .dark-theme .title-container {
+    background-color: #000; /* Darker shade for containers */
     color: #CCCCCC; /* Light text for readability */
 }
 
