@@ -118,13 +118,11 @@ img {
     max-width: 550px;
 }
 
-/* Style for On/Off buttons */
+/* Style for On/Off buttons
 .on-off-btn {
     background-color: black;
-    /* Set background color to black */
     color: white;
-    /* Set text color to white */
-}
+} */
 
 .connection-container {
     display: flex;
