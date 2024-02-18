@@ -164,6 +164,7 @@ img {
 /* Custom style for the title container */
 .title-container {
     background-color: #000;
+    color: #FFFFFF;
     padding: 20px;
     display: flex;
     align-items: center;
