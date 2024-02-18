@@ -6,7 +6,7 @@
     --button-color: var(--button-color-light);
     --disabled-button-bg-light: #DFDFDF;
     --disabled-button-text-light: #FFFFFF;
-    --disconnected-color-light: #DFDFDF; /* Disconnected color for light theme */
+    --disconnected-color-light: #DFDFDF;
 }
 
 .dark-theme {
@@ -15,15 +15,14 @@
     --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
     --disabled-button-text-dark: #000;
-    --disconnected-color-dark: #111111; /* Disconnected color for dark theme */
+    --disconnected-color-dark: #111111;
 }
 
 /* Disconnected state styles */
 .disconnected-label, .disconnected-icon {
-    color: var(--disconnected-color-light); /* Default to light theme */
+    color: var(--disconnected-color-light);
 }
 
-/* Override for dark theme */
 .dark-theme .disconnected-label, .dark-theme .disconnected-icon {
     color: var(--disconnected-color-dark);
 }
@@ -60,7 +59,6 @@
     color: var(--disabled-button-text-dark) !important;
 }
 
-/* Page background color */
 body {
     background-color: #F4F4F4;
     -webkit-user-select: none; /* Chrome, Safari, and Opera */
@@ -71,19 +69,19 @@ body {
 }
 
 .dark-theme {
-    background-color: #191919; /* Dark background */
-    color: #CCCCCC; /* Light text */
+    background-color: #191919;
+    color: #CCCCCC;
 }
 
 .dark-theme .output-container,
 .dark-theme .title-container {
-    background-color: #000; /* Darker shade for containers */
-    color: #CCCCCC; /* Light text for readability */
+    background-color: #000;
+    color: #CCCCCC;
 }
 
 .dark-theme .connection-container,
 .dark-theme .footer-container {
-    background-color: #191919; /* Dark background */
+    background-color: #191919;
     color: #303030;
 }
 
@@ -112,64 +110,46 @@ img {
     pointer-events: none; /* This makes it not clickable and not draggable */
   }
 
-/* Output container with light grey border and white background */
 .output-container {
     border: 1px solid #e0e0e0;
-    /* Light grey border */
     padding: 15px 0;
     margin-bottom: 10px;
-    /* Spacing between each output container */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     background-color: #FFFFFF;
-    /* White background for the output container */
     max-width: 550px;
 }
 
 .connection-container {
     display: flex;
-    /* Use flexbox layout */
     justify-content: space-between;
-    /* Space between child elements */
     align-items: center;
-    /* Center items vertically */
     padding: 15px;
-    /* Add some padding */
     background-color: #F4F4F4;
-    /* Match the page background */
     border: none;
-    /* No border */
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    /* Spacing between this container and whatever comes next */
     position: sticky;
-    /* Make the container sticky */
     top: 0;
-    /* Stick to the top of the viewport */
     z-index: 1000;
-    /* Ensure it's above other content */
 }
 
 .connection-container .flex-grow {
     flex-grow: 1;
-    /* Allow this element to grow and take up available space */
     display: flex;
-    /* Use flexbox layout */
     justify-content: center;
-    /* Center the button horizontally */
 }
 
-/* Custom style for the title container */
 .title-container {
     background-color: #000;
     color: #FFFFFF;
     padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Ensures space between logo-title group and toggle button */
+    justify-content: space-between;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -178,7 +158,7 @@ img {
 
 .logo-title-group {
     display: flex;
-    align-items: center; /* Ensures logo and title are aligned */
+    align-items: center;
 }
 
 .logo-image {
@@ -189,7 +169,6 @@ img {
 
 .title-text {
     margin: 0;
-    /* Remove margin to align title properly */
 }
 
 .save-btn-margin {
@@ -198,9 +177,7 @@ img {
 
 .power-level-display .material-symbols-outlined {
     font-size: 48px;
-    /* Increased size */
     vertical-align: middle;
-    /* Align with text if necessary */
 }
 
 .row {
@@ -261,7 +238,6 @@ img {
     font-size: smaller;
 }
 
-/* Style for disabled On/Off buttons */
 .btn-floating.on-off-btn:disabled {
     cursor: not-allowed !important;
 }
@@ -272,7 +248,7 @@ img {
 
 .btn-floating {
     cursor: pointer !important;
-    transition: transform 0.2s ease; /* Smooth transition for scaling */
+    transition: transform 0.2s ease;
 }
   
 /* Hover effects for devices that support hover */
@@ -283,11 +259,11 @@ img {
 }
 
 .btn-floating.focused, .btn-large.focused {
-    opacity: 0.6; /* Adjust as needed */
+    opacity: 0.6;
 }
 
 .btn-floating:active, .btn-floating.active {
-    transform: scale(0.9); /* Applies the scale effect when active */
+    transform: scale(0.9);
 }
 
 /* Style for outputs in two columns when the viewport is at least 800px wide */
@@ -296,9 +272,7 @@ img {
         display: flex;
         flex-wrap: wrap;
         margin-left: -10px;
-        /* Adjust as necessary */
         margin-right: -10px;
-        /* Adjust as necessary */
     }
 
     .column {
