@@ -468,44 +468,42 @@ document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large');
 
     buttons.forEach(function(button) {
+        // Apply lighter opacity on focus
         button.addEventListener('focus', function() {
-            // Apply lighter opacity on focus
-            this.classList.add('focused');
+            if (!button.classList.contains('mouse-focused')) {
+                this.classList.add('focused');
+            }
         });
 
+        // Remove lighter opacity when not focused
         button.addEventListener('blur', function() {
-            // Remove lighter opacity when not focused
             this.classList.remove('focused');
         });
 
+        // On mouse down, add 'mouse-focused' to prevent focus style
         button.addEventListener('mousedown', function(event) {
-            // On mouse down, add 'mouse-focused' to prevent focus style
             this.classList.add('mouse-focused');
         });
 
+        // On mouse up, remove 'mouse-focused' and optionally blur the button
         button.addEventListener('mouseup', function() {
-            // On mouse up, remove 'mouse-focused' and optionally blur the button
             this.classList.remove('mouse-focused');
             // If you decide to keep the focus on the button after click, comment out the next line
             // this.blur(); // Blurring might affect accessibility, consider your use case
         });
 
+        // Handle keydown for Space and Enter to show visual feedback without losing focus
         button.addEventListener('keydown', function(event) {
-            // Handle keydown for Space and Enter to show visual feedback without losing focus
             if (event.key === ' ' || event.key === 'Enter') {
                 event.preventDefault(); // Prevent default action, like page scrolling for Space key
                 this.classList.add('active'); // Add 'active' for the scale effect
             }
         });
 
+        // Remove the visual feedback when the key is released and simulate a click
         button.addEventListener('keyup', function(event) {
-            // Remove the visual feedback when the key is released and simulate a click
             if (event.key === ' ' || event.key === 'Enter') {
                 this.classList.remove('active'); // Remove 'active' to revert the scale effect
-                
-                alert('Button clicked!'); // Show the alert
-                document.body.focus(); // Manually shift focus to a neutral element like the body
-                
                 this.click(); // Simulate click for Space and Enter keyup
             }
         });
