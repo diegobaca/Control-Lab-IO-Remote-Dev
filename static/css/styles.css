@@ -281,11 +281,6 @@ img {
         transform: scale(1.05);
     }
 }
-  
-/* Active state for all devices */
-.btn-floating:active {
-    transform: scale(0.9);
-}
 
 .btn-floating.focused, .btn-large.focused {
     opacity: 0.6; /* Adjust as needed */
