@@ -1,298 +1,134 @@
 :root {
-    --icon-text-color: #FFFFFF;
+    --icon-text-color-light: #FFFFFF;
+    --icon-text-color-dark: #CCCCCC;
     --output-label-color: black;
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
-    --button-color: var(--button-color-light);
     --disabled-button-bg-light: #DFDFDF;
     --disabled-button-text-light: #FFFFFF;
     --disconnected-color-light: #DFDFDF;
-}
-
-.dark-theme {
-    --icon-text-color: #CCCCCC;
-    --output-label-color: #CCCCCC;
-    --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
     --disabled-button-text-dark: #000;
     --disconnected-color-dark: #111111;
+    --background-color-light: #F4F4F4;
+    --background-color-dark: #191919;
+    --text-color-dark: #CCCCCC;
+    --border-color-light: #e0e0e0;
+    --border-color-dark: #202020;
 }
 
-/* Disconnected state styles */
-.disconnected-label, .disconnected-icon {
-    color: var(--disconnected-color-light);
-}
-
-.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
-    color: var(--disconnected-color-dark);
-}
-
-.btn-black-theme {
-    background-color: var(--button-color) !important;
-}
-
-.btn-floating .material-symbols-outlined {
-    color: var(--icon-text-color) !important;
-}
-
-.dark-theme .btn-floating .material-symbols-outlined {
-    color: var(--icon-text-color) !important;
-}
-
-/* Disabled styles for light theme */
-.btn-floating:disabled {
-    background-color: var(--disabled-button-bg-light) !important;
-    color: var(--disabled-button-text-light) !important;
-}
-
-.btn-floating:disabled .material-symbols-outlined {
-    color: var(--disabled-button-text-light) !important;
-}
-
-/* Disabled styles for dark theme */
-.dark-theme .btn-floating:disabled {
-    background-color: var(--disabled-button-bg-dark) !important;
-    color: var(--disabled-button-text-dark) !important;
-}
-
-.dark-theme .btn-floating:disabled .material-symbols-outlined {
-    color: var(--disabled-button-text-dark) !important;
-}
-
-body {
-    background-color: #F4F4F4;
-    -webkit-user-select: none; /* Chrome, Safari, and Opera */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
-    cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
-}
-
-.dark-theme {
-    background-color: #191919;
-    color: #CCCCCC;
-}
-
-.dark-theme .output-container,
-.dark-theme .title-container {
-    background-color: #000;
-    color: #CCCCCC;
-}
-
-.dark-theme .connection-container,
-.dark-theme .footer-container {
-    background-color: #191919;
-    color: #303030;
-}
-
-.dark-theme .output-container {
-    border: 1px solid #202020;
-}
-
-.on-off-btn {
-    color: var(--icon-text-color) !important;
-}
-
-.dark-theme .on-off-btn {
-    color: var(--icon-text-color) !important;
-}
-
-.container {
-    width: 100%;
-    max-width: 900px;
+body, img {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
 }
 
 img {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
-    pointer-events: none; /* This makes it not clickable and not draggable */
-  }
-
-.output-container {
-    border: 1px solid #e0e0e0;
-    padding: 15px 0;
-    margin-bottom: 10px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #FFFFFF;
-    max-width: 550px;
+    pointer-events: none;
 }
 
-.connection-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #F4F4F4;
-    border: none;
+.container, .connection-container, .title-container, .footer-container, .output-container {
     width: 100%;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
+}
+
+.connection-container, .footer-container {
+    padding: 15px;
+    background-color: var(--background-color-light);
+    border: none;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.connection-container .flex-grow {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-}
-
 .title-container {
     background-color: #000;
-    color: #FFFFFF;
+    color: var(--icon-text-color-light);
     padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
 }
 
-.logo-title-group {
-    display: flex;
-    align-items: center;
+.output-container {
+    border: 1px solid var(--border-color-light);
+    padding: 15px 0;
+    background-color: #FFFFFF;
 }
 
-.logo-image {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+.dark-theme {
+    --icon-text-color: var(--icon-text-color-dark);
+    --button-color: var(--button-color-dark);
+    --disabled-button-bg: var(--disabled-button-bg-dark);
+    --disabled-button-text: var(--disabled-button-text-dark);
+    --disconnected-color: var(--disconnected-color-dark);
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
 }
 
-.title-text {
-    margin: 0;
+.disconnected-label, .disconnected-icon, .btn-floating .material-symbols-outlined, .on-off-btn {
+    color: var(--icon-text-color);
 }
 
-.save-btn-margin {
-    margin-right: 5px;
+.btn-black-theme, .btn-floating:disabled {
+    background-color: var(--button-color) !important;
+    color: var(--disabled-button-text) !important;
 }
 
-.power-level-display .material-symbols-outlined {
-    font-size: 48px;
-    vertical-align: middle;
+.btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text) !important;
 }
 
 .row {
     display: flex;
-    /* Use flexbox layout */
     align-items: center;
-    /* Vertically center items in the container */
     justify-content: space-between;
-    /* Distribute space between items */
-    width: 100%;
-    /* Ensure the row takes full width of its parent */
-    margin-bottom: 0px;
     height: 60px;
 }
 
-.col.s1,
-.col.s11 {
+.col.s1, .col.s11 {
     display: flex;
-    /* Use flexbox layout */
     align-items: center;
-    /* Align items vertically in the center */
     justify-content: center;
-    /* Center items horizontally */
 }
 
-.col.s1 {
-    flex: 1;
-    /* Take 1 portion of the space */
-    padding-bottom: 7px;
-}
-
-.col.s11 {
-    flex: 11;
-    /* Take 11 portions of the space */
-    justify-content: space-evenly;
-    /* Distribute space evenly between the buttons */
-}
-
-.on-off-btn {
-    margin-left: 10px;
-    /* Left padding */
-    margin-right: 10px;
-    /* Right padding */
-}
-
-.footer-container {
-    background-color: #F4F4F4;
-    color: #CCCCCC;
-    padding: 10px 0 30px 0;
-    width: 100%;
-    text-align: center;
-    border: none;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.footer-container small {
-    font-size: smaller;
-}
-
-.btn-floating.on-off-btn:disabled {
-    cursor: not-allowed !important;
-}
-
-.disable-pointer {
-    pointer-events: none;
-}
+.col.s1 { flex: 1; }
+.col.s11 { flex: 11; justify-content: space-evenly; }
 
 .btn-floating {
     cursor: pointer !important;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s;
 }
-  
-/* Hover effects for devices that support hover */
+
 @media (hover: hover) {
     .btn-floating:hover {
         transform: scale(1.05);
     }
 }
 
-.btn-floating.focused, .btn-large.focused {
-    opacity: 0.6;
-}
-
 .btn-floating:active, .btn-floating.active {
     transform: scale(0.9);
 }
 
-/* Style for outputs in two columns when the viewport is at least 800px wide */
 @media screen and (min-width: 850px) {
     .outputs-row {
         display: flex;
         flex-wrap: wrap;
-        margin-left: -10px;
-        margin-right: -10px;
+        margin: 0 -10px;
     }
 
     .column {
         width: 50%;
-        /* Set the width for each column */
         padding: 0 10px;
-        /* Space between the columns */
         box-sizing: border-box;
     }
 
-    .output-container {
-        margin-bottom: 20px;
-        /* Space between each output container */
-    }
+    .output-container { margin-bottom: 20px; }
 }
 
-html {
-    visibility: visible;
-    opacity: 1;
-}
+html { visibility: visible; opacity: 1; }
 
 .no-transition * {
     transition: none !important;
