@@ -286,11 +286,6 @@ img {
     opacity: 0.6; /* Adjust as needed */
 }
 
-.btn-floating.active, .btn-large.active {
-    /* Temporary visual feedback style */
-    opacity: 1; /* Full opacity or another style for active state */
-}
-
 .btn-floating:active, .btn-floating.active {
     transform: scale(0.9); /* Applies the scale effect when active */
 }
