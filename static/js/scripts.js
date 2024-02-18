@@ -466,13 +466,16 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large');
+    var alertShown = false; // Flag to track alert state
 
     buttons.forEach(function(button) {
         // Apply lighter opacity on focus
         button.addEventListener('focus', function() {
-            if (!button.classList.contains('mouse-focused')) {
-                this.classList.add('focused');
+            if (alertShown || button.classList.contains('mouse-focused')) {
+                // If an alert was just shown or it's a mouse focus, skip applying focus styles
+                return;
             }
+            this.classList.add('focused');
         });
 
         // Remove lighter opacity when not focused
@@ -504,6 +507,13 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('keyup', function(event) {
             if (event.key === ' ' || event.key === 'Enter') {
                 this.classList.remove('active'); // Remove 'active' to revert the scale effect
+                
+                // Before showing an alert, set the flag to true
+                alertShown = true;
+                alert('Button clicked!'); // Example alert
+                // Reset the flag immediately after the alert
+                alertShown = false;
+                
                 this.click(); // Simulate click for Space and Enter keyup
             }
         });
