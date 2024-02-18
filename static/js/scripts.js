@@ -513,3 +513,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+window.addEventListener('scroll', function() {
+    var connectionContainer = document.querySelector('.connection-container');
+    var stickyTrigger = connectionContainer.offsetTop; // Adjust this value based on your needs
+
+    if (window.pageYOffset > stickyTrigger) {
+        connectionContainer.classList.add('sticky-shadow');
+    } else {
+        connectionContainer.classList.remove('sticky-shadow');
+    }
+});

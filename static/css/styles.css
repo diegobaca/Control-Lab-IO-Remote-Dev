@@ -68,6 +68,10 @@ body {
     cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
 }
 
+.sticky-shadow {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Adjust shadow size and color as needed */
+}
+
 .dark-theme {
     background-color: #191919;
     color: #CCCCCC;
