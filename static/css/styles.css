@@ -97,14 +97,6 @@ body {
     color: var(--icon-text-color) !important;
 }
 
-.footer-container {
-    color: var(--icon-text-color) !important;
-}
-
-.dark-theme .footer-container {
-    color: var(--icon-text-color) !important;
-}
-
 .container {
     width: 100%;
     max-width: 900px;
