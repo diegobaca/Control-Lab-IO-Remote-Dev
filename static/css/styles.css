@@ -1,4 +1,5 @@
 :root {
+    --icon-color: #FFFFFF;
     --output-label-color: black;
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
@@ -9,6 +10,7 @@
 }
 
 .dark-theme {
+    --icon-color: #CCCCCC;
     --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
@@ -28,6 +30,14 @@
 
 .btn-black-theme {
     background-color: var(--button-color) !important;
+}
+
+.btn-floating .material-symbols-outlined {
+    color: var(--icon-color) !important;
+}
+
+.dark-theme .btn-floating .material-symbols-outlined {
+    color: var(--icon-color) !important;
 }
 
 /* Disabled styles for light theme */
