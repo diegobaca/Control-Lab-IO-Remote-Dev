@@ -512,6 +512,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Listen for visibility change
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            // When the page becomes visible, set focus to the specific element
+            document.getElementById('focus-target').focus();
+        }
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
