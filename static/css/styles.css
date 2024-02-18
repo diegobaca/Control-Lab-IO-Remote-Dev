@@ -68,7 +68,13 @@ body {
     cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
 }
 
-.shadow-effect {
+#sticky-sentinel {
+    height: 1px;
+    width: 100%;
+    background-color: transparent;
+}
+
+.connection-container.has-shadow {
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
 }
 

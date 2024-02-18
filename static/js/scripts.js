@@ -514,12 +514,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('scroll', function() {
-    var container = document.querySelector('.connection-container');
-    var sticky = container.offsetTop; // Get the offset position of the navbar
-    if (window.pageYOffset > sticky) {
-        container.classList.add("shadow-effect");
-    } else {
-        container.classList.remove("shadow-effect");
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const sentinel = document.getElementById('sticky-sentinel');
+    const container = document.querySelector('.connection-container');
+
+    let observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                container.classList.add('has-shadow');
+            } else {
+                container.classList.remove('has-shadow');
+            }
+        });
+    }, {
+        threshold: [1.0] // 1.0 means when 100% of the sentinel is out of view
+    });
+
+    observer.observe(sentinel);
 });
