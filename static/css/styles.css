@@ -1,3 +1,4 @@
+/* Root variables for easy theming and color management */
 :root {
     --icon-text-color-light: #FFFFFF;
     --icon-text-color-dark: #CCCCCC;
@@ -17,6 +18,7 @@
     --border-color-dark: #202020;
 }
 
+/* General styles to prevent text selection and standardize cursor */
 body, img {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -25,10 +27,12 @@ body, img {
     cursor: default;
 }
 
+/* Prevent images from being draggable for better UX */
 img {
     pointer-events: none;
 }
 
+/* Base container styles */
 .container, .connection-container, .title-container, .footer-container, .output-container {
     width: 100%;
     max-width: 900px;
@@ -37,6 +41,7 @@ img {
     margin-bottom: 10px;
 }
 
+/* Connection and footer container styling */
 .connection-container, .footer-container {
     padding: 15px;
     background-color: var(--background-color-light);
@@ -46,18 +51,21 @@ img {
     z-index: 1000;
 }
 
+/* Title container styling */
 .title-container {
     background-color: #000;
     color: var(--icon-text-color-light);
     padding: 20px;
 }
 
+/* Output container styling */
 .output-container {
     border: 1px solid var(--border-color-light);
     padding: 15px 0;
     background-color: #FFFFFF;
 }
 
+/* Dark theme adjustments */
 .dark-theme {
     --icon-text-color: var(--icon-text-color-dark);
     --button-color: var(--button-color-dark);
@@ -68,10 +76,12 @@ img {
     color: var(--text-color-dark);
 }
 
+/* Styling for disconnected label and icons */
 .disconnected-label, .disconnected-icon, .btn-floating .material-symbols-outlined, .on-off-btn {
     color: var(--icon-text-color);
 }
 
+/* Button and floating button styles */
 .btn-black-theme, .btn-floating:disabled {
     background-color: var(--button-color) !important;
     color: var(--disabled-button-text) !important;
@@ -81,6 +91,7 @@ img {
     color: var(--disabled-button-text) !important;
 }
 
+/* Row and column layout adjustments */
 .row {
     display: flex;
     align-items: center;
@@ -97,6 +108,7 @@ img {
 .col.s1 { flex: 1; }
 .col.s11 { flex: 11; justify-content: space-evenly; }
 
+/* Enhance button interaction with hover and active states */
 .btn-floating {
     cursor: pointer !important;
     transition: transform 0.2s;
@@ -112,6 +124,7 @@ img {
     transform: scale(0.9);
 }
 
+/* Responsive design adjustments for outputs */
 @media screen and (min-width: 850px) {
     .outputs-row {
         display: flex;
@@ -128,8 +141,10 @@ img {
     .output-container { margin-bottom: 20px; }
 }
 
+/* Ensure full page is visible and transitions are smooth */
 html { visibility: visible; opacity: 1; }
 
+/* Disable transitions for elements with no-transition class */
 .no-transition * {
     transition: none !important;
     animation: none !important;
