@@ -283,6 +283,10 @@ img {
         box-sizing: border-box;
     }
 
+    .connection-container {
+        padding: 15px;
+    }
+
     .output-container {
         margin-bottom: 20px;
         /* Space between each output container */
