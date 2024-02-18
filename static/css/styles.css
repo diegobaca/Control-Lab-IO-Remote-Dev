@@ -1,5 +1,5 @@
 :root {
-    --icon-color: #FFFFFF;
+    --icon-text-color: #FFFFFF;
     --output-label-color: black;
     --button-color-light: black;
     --button-color-dark: #2B2B2B;
@@ -10,7 +10,7 @@
 }
 
 .dark-theme {
-    --icon-color: #CCCCCC;
+    --icon-text-color: #CCCCCC;
     --output-label-color: #CCCCCC;
     --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
@@ -33,11 +33,11 @@
 }
 
 .btn-floating .material-symbols-outlined {
-    color: var(--icon-color) !important;
+    color: var(--icon-text-color) !important;
 }
 
 .dark-theme .btn-floating .material-symbols-outlined {
-    color: var(--icon-color) !important;
+    color: var(--icon-text-color) !important;
 }
 
 /* Disabled styles for light theme */
@@ -90,6 +90,14 @@ body {
     border: 1px solid #202020;
 }
 
+.on-off-btn {
+    color: var(--icon-text-color) !important;
+}
+
+.dark-theme .on-off-btn {
+    color: var(--icon-text-color) !important;
+}
+
 .container {
     width: 100%;
     max-width: 900px;
@@ -117,12 +125,6 @@ img {
     /* White background for the output container */
     max-width: 550px;
 }
-
-/* Style for On/Off buttons
-.on-off-btn {
-    background-color: black;
-    color: white;
-} */
 
 .connection-container {
     display: flex;
