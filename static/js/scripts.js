@@ -150,7 +150,6 @@ function proceedWithConnectionAttempt(url, output_id) {
 }
 
 function handleFailedConnection() {
-    // Function to handle UI changes for failed connection attempt
     var connectionButton = document.getElementById('connection-btn');
     var connectionIcon = document.getElementById('connection-icon');
     
@@ -159,7 +158,11 @@ function handleFailedConnection() {
     connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
 
     alert('It looks like Control Lab IO is having trouble connecting to the LEGO Interface B right now. Please try again.');
-    connectionButton.classList.remove('focused');
+
+    // Use setTimeout to delay focus shift
+    setTimeout(() => {
+        document.body.focus();
+    }, 100); // Adjust delay as needed
 }
 
 function updateButtonStates() {
