@@ -1,65 +1,124 @@
 :root {
     --icon-text-color: #FFFFFF;
     --output-label-color: black;
-    --button-color: black; /* Use generic variable, set default to light theme */
-    --disabled-button-bg: #DFDFDF; /* Default to light theme */
-    --disabled-button-text: #FFFFFF; /* Default to light theme */
-    --disconnected-color: #DFDFDF; /* Default to light theme */
-    --background-color: #F4F4F4; /* Default background color for light theme */
-    --text-color: black; /* Default text color for light theme */
-    --border-color: #e0e0e0; /* Default border color for light and dark theme */
+    --button-color-light: black;
+    --button-color-dark: #2B2B2B;
+    --button-color: var(--button-color-light);
+    --disabled-button-bg-light: #DFDFDF;
+    --disabled-button-text-light: #FFFFFF;
+    --disconnected-color-light: #DFDFDF;
 }
 
 .dark-theme {
     --icon-text-color: #CCCCCC;
     --output-label-color: #CCCCCC;
-    --button-color: #2B2B2B;
-    --disabled-button-bg: #111111;
-    --disabled-button-text: #000;
-    --disconnected-color: #111111;
-    --background-color: #191919; /* Background color for dark theme */
-    --text-color: #CCCCCC; /* Text color for dark theme */
+    --button-color: var(--button-color-dark);
+    --disabled-button-bg-dark: #111111;
+    --disabled-button-text-dark: #000;
+    --disconnected-color-dark: #111111;
 }
 
-body, img {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: default;
+/* Disconnected state styles */
+.disconnected-label, .disconnected-icon {
+    color: var(--disconnected-color-light);
+}
+
+.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
+    color: var(--disconnected-color-dark);
+}
+
+.btn-black-theme {
+    background-color: var(--button-color) !important;
+}
+
+.btn-floating .material-symbols-outlined {
+    color: var(--icon-text-color) !important;
+}
+
+.dark-theme .btn-floating .material-symbols-outlined {
+    color: var(--icon-text-color) !important;
+}
+
+/* Disabled styles for light theme */
+.btn-floating:disabled {
+    background-color: var(--disabled-button-bg-light) !important;
+    color: var(--disabled-button-text-light) !important;
+}
+
+.btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text-light) !important;
+}
+
+/* Disabled styles for dark theme */
+.dark-theme .btn-floating:disabled {
+    background-color: var(--disabled-button-bg-dark) !important;
+    color: var(--disabled-button-text-dark) !important;
+}
+
+.dark-theme .btn-floating:disabled .material-symbols-outlined {
+    color: var(--disabled-button-text-dark) !important;
+}
+
+body {
+    background-color: #F4F4F4;
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
+    cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
+}
+
+.dark-theme {
+    background-color: #191919;
+    color: #CCCCCC;
+}
+
+.dark-theme .output-container,
+.dark-theme .title-container {
+    background-color: #000;
+    color: #CCCCCC;
+}
+
+.dark-theme .connection-container,
+.dark-theme .footer-container {
+    background-color: #191919;
+    color: #303030;
+}
+
+.dark-theme .output-container {
+    border: 1px solid #202020;
+}
+
+.on-off-btn {
+    color: var(--icon-text-color) !important;
+}
+
+.dark-theme .on-off-btn {
+    color: var(--icon-text-color) !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
 }
 
 img {
-    pointer-events: none;
-}
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    pointer-events: none; /* This makes it not clickable and not draggable */
+  }
 
-.btn-black-theme, .btn-floating:disabled, .btn-floating .material-symbols-outlined, .on-off-btn {
-    color: var(--disabled-button-text) !important; /* Consolidated color for disabled and icons */
-}
-
-/* Combine disconnected state styles */
-.disconnected-label, .disconnected-icon, .dark-theme .disconnected-label, .dark-theme .disconnected-icon {
-    color: var(--disconnected-color);
-}
-
-/* Combine disabled styles */
-.btn-floating:disabled, .dark-theme .btn-floating:disabled, .btn-floating:disabled .material-symbols-outlined, .dark-theme .btn-floating:disabled .material-symbols-outlined {
-    background-color: var(--disabled-button-bg) !important;
-    color: var(--disabled-button-text) !important;
-}
-
-/* General styles applied to multiple containers */
-.container, .output-container, .connection-container, .title-container, .footer-container {
+.output-container {
+    border: 1px solid #e0e0e0;
+    padding: 15px 0;
+    margin-bottom: 10px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
-
-.output-container, .title-container {
-    border: 1px solid var(--border-color);
+    background-color: #FFFFFF;
+    max-width: 550px;
 }
 
 .connection-container {
@@ -67,33 +126,147 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    background-color: #F4F4F4;
     border: none;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.title-container {
-    background-color: #000;
-    padding: 20px;
+.connection-container .flex-grow {
+    flex-grow: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-.row, .col.s1, .col.s11 {
+.title-container {
+    background-color: #000;
+    color: #FFFFFF;
+    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
 
-.col.s1, .col.s11 {
-    flex: 1; /* Adjusted for simplicity, consider specific needs */
+.logo-title-group {
+    display: flex;
+    align-items: center;
 }
 
-.btn-floating:hover, .btn-floating:active, .btn-floating.active {
-    transform: scale(1.05); /* Combine hover and active state transformations */
+.logo-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
 }
 
+.title-text {
+    margin: 0;
+}
+
+.save-btn-margin {
+    margin-right: 5px;
+}
+
+.power-level-display .material-symbols-outlined {
+    font-size: 48px;
+    vertical-align: middle;
+}
+
+.row {
+    display: flex;
+    /* Use flexbox layout */
+    align-items: center;
+    /* Vertically center items in the container */
+    justify-content: space-between;
+    /* Distribute space between items */
+    width: 100%;
+    /* Ensure the row takes full width of its parent */
+    margin-bottom: 0px;
+    height: 60px;
+}
+
+.col.s1,
+.col.s11 {
+    display: flex;
+    /* Use flexbox layout */
+    align-items: center;
+    /* Align items vertically in the center */
+    justify-content: center;
+    /* Center items horizontally */
+}
+
+.col.s1 {
+    flex: 1;
+    /* Take 1 portion of the space */
+    padding-bottom: 7px;
+}
+
+.col.s11 {
+    flex: 11;
+    /* Take 11 portions of the space */
+    justify-content: space-evenly;
+    /* Distribute space evenly between the buttons */
+}
+
+.on-off-btn {
+    margin-left: 10px;
+    /* Left padding */
+    margin-right: 10px;
+    /* Right padding */
+}
+
+.footer-container {
+    background-color: #F4F4F4;
+    color: #CCCCCC;
+    padding: 10px 0 30px 0;
+    width: 100%;
+    text-align: center;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-container small {
+    font-size: smaller;
+}
+
+.btn-floating.on-off-btn:disabled {
+    cursor: not-allowed !important;
+}
+
+.disable-pointer {
+    pointer-events: none;
+}
+
+.btn-floating {
+    cursor: pointer !important;
+    transition: transform 0.2s ease;
+}
+  
+/* Hover effects for devices that support hover */
+@media (hover: hover) {
+    .btn-floating:hover {
+        transform: scale(1.05);
+    }
+}
+
+.btn-floating.focused, .btn-large.focused {
+    opacity: 0.6;
+}
+
+.btn-floating:active, .btn-floating.active {
+    transform: scale(0.9);
+}
+
+/* Style for outputs in two columns when the viewport is at least 800px wide */
 @media screen and (min-width: 850px) {
     .outputs-row {
         display: flex;
@@ -104,11 +277,15 @@ img {
 
     .column {
         width: 50%;
+        /* Set the width for each column */
         padding: 0 10px;
+        /* Space between the columns */
+        box-sizing: border-box;
     }
 
     .output-container {
         margin-bottom: 20px;
+        /* Space between each output container */
     }
 }
 
