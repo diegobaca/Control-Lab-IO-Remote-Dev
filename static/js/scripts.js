@@ -485,26 +485,26 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('mouse-focused');
         });
 
-        // On mouse up, remove 'mouse-focused' and blur the button
+        // On mouse up, remove 'mouse-focused' and optionally blur the button
         button.addEventListener('mouseup', function() {
             this.classList.remove('mouse-focused');
-            // Blur the button to remove focus and the 'focused' class
-            this.blur();
+            // If you decide to keep the focus on the button after click, comment out the next line
+            // this.blur(); // Blurring might affect accessibility, consider your use case
         });
 
         // Handle keydown for Space and Enter to show visual feedback without losing focus
         button.addEventListener('keydown', function(event) {
             if (event.key === ' ' || event.key === 'Enter') {
-                event.preventDefault();
-                this.classList.add('active');
+                event.preventDefault(); // Prevent default action, like page scrolling for Space key
+                this.classList.add('active'); // Add 'active' for the scale effect
             }
         });
 
         // Remove the visual feedback when the key is released and simulate a click
         button.addEventListener('keyup', function(event) {
             if (event.key === ' ' || event.key === 'Enter') {
-                this.classList.remove('active');
-                this.click();
+                this.classList.remove('active'); // Remove 'active' to revert the scale effect
+                this.click(); // Simulate click for Space and Enter keyup
             }
         });
     });

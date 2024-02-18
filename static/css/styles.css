@@ -296,6 +296,10 @@ img {
     opacity: 1; /* Full opacity or another style for active state */
 }
 
+.btn-floating:active, .btn-floating.active {
+    transform: scale(0.9); /* Applies the scale effect when active */
+}
+
 /* Style for outputs in two columns when the viewport is at least 800px wide */
 @media screen and (min-width: 850px) {
     .outputs-row {
