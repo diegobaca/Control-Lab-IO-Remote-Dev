@@ -146,13 +146,12 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 25px 15px;
     background-color: #F4F4F4;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -174,7 +173,7 @@ img {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
+    top: 0;
 }
 
 .logo-title-group {
@@ -305,7 +304,7 @@ img {
     }
 
     .connection-container {
-        padding: 15px 20px;
+        padding: 25px 20px;
     }
 
     .connection-container .flex-grow {
