@@ -152,7 +152,6 @@ img {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    top: 0;
 }
 
 .connection-container {
@@ -165,9 +164,12 @@ img {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    z-index: 1000;
+}
+
+.sticky-top {
     position: sticky;
     top: 0;
-    z-index: 1000;
 }
 
 .connection-container .flex-grow {

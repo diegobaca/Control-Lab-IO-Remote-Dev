@@ -541,3 +541,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     observer.observe(sentinel);
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const connectionContainer = document.querySelector('.connection-container');
+    const stickyClass = 'sticky-top';
+
+    const toggleStickyPositioning = () => {
+        if (window.scrollY > 100) {
+            connectionContainer.classList.add(stickyClass);
+        } else {
+            connectionContainer.classList.remove(stickyClass);
+        }
+    };
+
+    // Listen for scroll events to toggle sticky positioning
+    window.addEventListener('scroll', toggleStickyPositioning);
+
+    // Optional: Call the function on load in case the page is loaded with a scroll position already beyond the threshold
+    toggleStickyPositioning();
+});
