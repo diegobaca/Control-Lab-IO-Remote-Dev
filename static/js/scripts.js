@@ -543,8 +543,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 window.addEventListener('load', () => {
-    setTimeout(() => {
-      // Instant scroll to top
-      window.scrollTo(0, 0);
-    }, 500); // Delay to ensure page is fully loaded; adjust timing as needed
-  });
+    // Instantly scroll to the top of the page
+    window.scrollTo(0, 0);
+  });  
