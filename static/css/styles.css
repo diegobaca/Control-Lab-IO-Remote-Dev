@@ -109,12 +109,12 @@ body {
 }
 
 .on-off-btn {
-    background-color: var(--button-color) !important;
+    background-color: var(--button-color);
     color: var(--icon-text-color) !important;
 }
 
 .dark-theme .on-off-btn {
-    background-color: var(--button-color) !important;
+    background-color: var(--button-color);
     color: var(--icon-text-color) !important;
 }
 
