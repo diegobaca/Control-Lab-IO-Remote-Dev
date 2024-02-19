@@ -541,3 +541,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     observer.observe(sentinel);
 });
+
+window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+  });
+  
+  window.addEventListener('load', () => {
+    if (sessionStorage.getItem('scrollPosition')) {
+      window.scrollTo(0, parseInt(sessionStorage.getItem('scrollPosition'), 10));
+    }
+  });
