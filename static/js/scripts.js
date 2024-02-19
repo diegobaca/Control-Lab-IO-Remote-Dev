@@ -542,7 +542,6 @@ document.addEventListener('DOMContentLoaded', function() {
     observer.observe(sentinel);
 });
 
-window.addEventListener('load', () => {
-    // Instantly scroll to the top of the page
+document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
-  });  
+  });
