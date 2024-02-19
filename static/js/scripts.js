@@ -544,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 window.addEventListener('load', () => {
     setTimeout(() => {
-      // Smooth scroll to top
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      // Instant scroll to top
+      window.scrollTo(0, 0);
     }, 500); // Delay to ensure page is fully loaded; adjust timing as needed
   });
