@@ -516,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for visibility change
     document.addEventListener('visibilitychange', function() {
         if (document.visibilityState === 'visible') {
+            window.scrollTo(0, 0); // Scrolls to the top of the page
             // When the page becomes visible, set focus to the specific element
             document.getElementById('focus-target').focus();
         }
