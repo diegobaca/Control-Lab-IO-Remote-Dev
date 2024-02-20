@@ -61,7 +61,7 @@
             <!-- Theme Toggle Button -->
             <div class="theme-toggle-button">
                 <button id="theme-toggle-btn" onclick="toggleTheme()" class="btn-floating light-blue" title="Toggle theme" tabindex="1">
-                    <i class="material-symbols-outlined" id="theme-icon">dark_mode</i> <!-- Default icon -->
+                    <i class="material-symbols-outlined" id="theme-icon">light_mode</i> <!-- Default icon -->
                 </button>
             </div>
         </div>
@@ -194,23 +194,23 @@
             var body = document.body;
             var themeIcon = document.getElementById('theme-icon');
             body.classList.toggle('dark-theme');
-
+    
             if (body.classList.contains('dark-theme')) {
-                themeIcon.innerText = 'light_mode';
+                themeIcon.innerText = 'dark_mode';
                 localStorage.setItem('theme', 'dark');
             } else {
-                themeIcon.innerText = 'dark_mode';
+                themeIcon.innerText = 'light_mode';
                 localStorage.setItem('theme', 'light');
             }
         }
-
+    
         document.addEventListener('DOMContentLoaded', (event) => {
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-theme');
-                document.getElementById('theme-icon').innerText = 'light_mode';
+                document.getElementById('theme-icon').innerText = 'dark_mode';
             } else {
                 document.body.classList.remove('dark-theme');
-                document.getElementById('theme-icon').innerText = 'dark_mode';
+                document.getElementById('theme-icon').innerText = 'light_mode';
             }
         });
     </script>
