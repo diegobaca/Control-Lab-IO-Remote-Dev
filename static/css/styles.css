@@ -237,6 +237,7 @@ img {
 
 .on-off-btn {
     margin-right: 10px;
+    margin-left: -10px;
 }
 
 .footer-container {
