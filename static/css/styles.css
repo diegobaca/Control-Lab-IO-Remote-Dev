@@ -229,7 +229,7 @@ img {
 .col.s1 {
     flex: 1;
     /* Take 1 portion of the space */
-    padding-bottom: 22px;
+    padding-bottom: 20px;
 }
 
 .col.s11 {
