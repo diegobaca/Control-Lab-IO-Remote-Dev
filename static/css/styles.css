@@ -133,7 +133,7 @@ img {
 
 .output-container {
     border: 1px solid #e0e0e0;
-    padding: 15px 0;
+    padding: 15px 5px;
     margin-bottom: 10px;
     width: 100%;
     margin-left: auto;
@@ -158,7 +158,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 20px;
     background-color: #F4F4F4;
     border-bottom: 1px solid #F4F4F4;
     width: 100%;
@@ -236,10 +236,7 @@ img {
 }
 
 .on-off-btn {
-    margin-left: 10px;
-    /* Left padding */
-    margin-right: 10px;
-    /* Right padding */
+    margin-right: 15px;
 }
 
 .footer-container {
@@ -300,10 +297,6 @@ img {
         padding: 0 10px;
         /* Space between the columns */
         box-sizing: border-box;
-    }
-
-    .connection-container {
-        padding: 15px 20px;
     }
 
     .connection-container .flex-grow {
