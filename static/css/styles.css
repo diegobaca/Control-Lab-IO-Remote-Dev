@@ -129,7 +129,7 @@ img {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
     pointer-events: none; /* This makes it not clickable and not draggable */
-  }
+}
 
 .output-container {
     border: 1px solid #e0e0e0;
@@ -216,6 +216,10 @@ img {
     padding: 15px 5px 15px 10px;
 }
 
+h5 {
+    margin: 0;
+}
+
 .col.s1,
 .col.s11 {
     display: flex;
@@ -229,7 +233,6 @@ img {
 .col.s1 {
     flex: 1;
     /* Take 1 portion of the space */
-    padding-bottom: 23px;
 }
 
 .col.s11 {
