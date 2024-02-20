@@ -212,6 +212,10 @@ img {
     height: 60px;
 }
 
+.row .col {
+    padding: 15px;
+}
+
 .col.s1,
 .col.s11 {
     display: flex;
