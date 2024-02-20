@@ -305,6 +305,7 @@ img {
 
     .output-container {
         margin-bottom: 20px;
+        padding: 15px 0px;
         /* Space between each output container */
     }
 }
