@@ -118,6 +118,16 @@ body {
     color: var(--icon-text-color) !important;
 }
 
+.btn-floating {
+    background-color: var(--button-color);
+    color: var(--icon-text-color) !important;
+}
+
+.dark-theme .btn-floating {
+    background-color: var(--button-color);
+    color: var(--icon-text-color) !important;
+}
+
 .container {
     width: 100%;
     max-width: 900px;
