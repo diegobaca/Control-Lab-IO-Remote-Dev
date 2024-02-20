@@ -10,8 +10,8 @@
 }
 
 .dark-theme {
-    --icon-text-color: #CCCCCC;
-    --output-label-color: #CCCCCC;
+    --icon-text-color: #CDCDCD;
+    --output-label-color: #CDCDCD;
     --button-color: var(--button-color-dark);
     --disabled-button-bg-dark: #111111;
     --disabled-button-text-dark: #000;
@@ -84,13 +84,13 @@ body {
 
 .dark-theme {
     background-color: #191919;
-    color: #CCCCCC;
+    color: #CDCDCD;
 }
 
 .dark-theme .output-container,
 .dark-theme .title-container {
     background-color: #000;
-    color: #CCCCCC;
+    color: #CDCDCD;
 }
 
 .dark-theme .connection-container{
@@ -244,7 +244,7 @@ img {
 
 .footer-container {
     background-color: #F4F4F4;
-    color: #CCCCCC;
+    color: #CDCDCD;
     padding: 10px 0 30px 0;
     width: 100%;
     text-align: center;
