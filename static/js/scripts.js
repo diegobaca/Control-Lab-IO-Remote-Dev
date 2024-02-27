@@ -5,7 +5,7 @@ var is_sending = false; // Initialize the is_sending variable if needed
 
 function sendCommand(url, output_id) {
     if (url === '/toggle_connection' && !isConnected) {
-        checkConnectionAttemptStatus(function(isAttempting) {
+        checkConnectionAttemptStatus(function (isAttempting) {
             if (isAttempting) {
                 alert('Control Lab IO is currently in the process of establishing a connection with the LEGO Interface B.');
                 document.getElementById('focus-target').focus();
@@ -27,7 +27,7 @@ function sendCommand(url, output_id) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
+        xhr.onload = function () {
             console.log('Command sent: ' + url);
             if (output_id === 0) {
                 if (url === '/toggle_connection' && isConnected) {
@@ -79,11 +79,11 @@ function handleDisconnection() {
     }
 
     // Wait for 6 seconds before resetting the disconnecting state and updating the UI
-    setTimeout(function() {
+    setTimeout(function () {
         // Send a request to the server to confirm if the connection has been successfully closed
         var checkConnectionXhr = new XMLHttpRequest();
         checkConnectionXhr.open("GET", "/get_connection_status", true);
-        checkConnectionXhr.onload = function() {
+        checkConnectionXhr.onload = function () {
             var statusData = JSON.parse(checkConnectionXhr.responseText);
             if (!statusData.is_connected) {
                 // Successfully disconnected
@@ -103,7 +103,7 @@ function handleDisconnection() {
 function checkConnectionAttemptStatus(callback) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/get_connection_attempt_status", true);
-    xhr.onload = function() {
+    xhr.onload = function () {
         var status = JSON.parse(xhr.responseText);
         callback(status.is_attempting_connection);
     };
@@ -140,7 +140,7 @@ function proceedWithConnectionAttempt(url, output_id) {
             handleFailedConnection(); // Handle the failed connection case
         }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
         // Network error or server did not respond
         isAttemptingConnection = false; // Reset attempt flag
         isConnected = false; // Reflect network error as not connected
@@ -154,7 +154,7 @@ function handleFailedConnection() {
     // Function to handle UI changes for failed connection attempt
     var connectionButton = document.getElementById('connection-btn');
     var connectionIcon = document.getElementById('connection-icon');
-    
+
     connectionButton.classList.add('red');
     connectionButton.classList.remove('btn-black-theme', 'pulse', 'disable-pointer', 'green');
     connectionIcon.textContent = 'refresh'; // Change icon to 'refresh' to indicate failure
@@ -424,8 +424,8 @@ function periodicallyCheckConnection() {
                 updateConnectionStatus(); // Update UI to reflect connection is back
                 updateButtonAccessibility(isConnected);
                 updateSendingStatus(); // Update the sending button UI
-            } 
-            
+            }
+
             // If the connection was there and now it's lost
             else if (!data.is_connected && isConnected) {
                 isConnected = false;
@@ -468,36 +468,36 @@ window.addEventListener('load', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var buttons = document.querySelectorAll('.btn-floating, .btn-large');
 
-    buttons.forEach(function(button) {
+    buttons.forEach(function (button) {
         // Apply lighter opacity on focus
-        button.addEventListener('focus', function() {
+        button.addEventListener('focus', function () {
             if (!button.classList.contains('mouse-focused')) {
                 this.classList.add('focused');
             }
         });
 
         // Remove lighter opacity when not focused
-        button.addEventListener('blur', function() {
+        button.addEventListener('blur', function () {
             this.classList.remove('focused');
         });
 
         // On mouse down, add 'mouse-focused' to prevent focus style
-        button.addEventListener('mousedown', function(event) {
+        button.addEventListener('mousedown', function (event) {
             this.classList.add('mouse-focused');
         });
 
         // On mouse up, remove 'mouse-focused' and optionally blur the button
-        button.addEventListener('mouseup', function() {
+        button.addEventListener('mouseup', function () {
             this.classList.remove('mouse-focused');
             // If you decide to keep the focus on the button after click, comment out the next line
             // this.blur(); // Blurring might affect accessibility, consider your use case
         });
 
         // Handle keydown for Space and Enter to show visual feedback without losing focus
-        button.addEventListener('keydown', function(event) {
+        button.addEventListener('keydown', function (event) {
             if (event.key === ' ' || event.key === 'Enter') {
                 event.preventDefault(); // Prevent default action, like page scrolling for Space key
                 this.classList.add('active'); // Add 'active' for the scale effect
@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Remove the visual feedback when the key is released and simulate a click
-        button.addEventListener('keyup', function(event) {
+        button.addEventListener('keyup', function (event) {
             if (event.key === ' ' || event.key === 'Enter') {
                 this.classList.remove('active'); // Remove 'active' to revert the scale effect
                 this.click(); // Simulate click for Space and Enter keyup
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Listen for visibility change
-    document.addEventListener('visibilitychange', function() {
+    document.addEventListener('visibilitychange', function () {
         if (document.visibilityState === 'visible') {
             window.scrollTo(0, 0); // Scrolls to the top of the page
             // When the page becomes visible, set focus to the specific element
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const sentinel = document.getElementById('sticky-sentinel');
     const container = document.querySelector('.connection-container');
 

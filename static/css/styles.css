@@ -19,11 +19,13 @@
 }
 
 /* Disconnected state styles */
-.disconnected-label, .disconnected-icon {
+.disconnected-label,
+.disconnected-icon {
     color: var(--disconnected-color-light);
 }
 
-.dark-theme .disconnected-label, .dark-theme .disconnected-icon {
+.dark-theme .disconnected-label,
+.dark-theme .disconnected-icon {
     color: var(--disconnected-color-dark);
 }
 
@@ -61,11 +63,16 @@
 
 body {
     background-color: #F4F4F4;
-    -webkit-user-select: none; /* Chrome, Safari, and Opera */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;         /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
-    cursor: default;           /* Override the cursor to use the default instead of text selection cursor */
+    -webkit-user-select: none;
+    /* Chrome, Safari, and Opera */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera, and Firefox */
+    cursor: default;
+    /* Override the cursor to use the default instead of text selection cursor */
 }
 
 #sticky-sentinel {
@@ -93,7 +100,7 @@ body {
     color: #CDCDCD;
 }
 
-.dark-theme .connection-container{
+.dark-theme .connection-container {
     border-bottom: 1px solid #191919;
     background-color: #191919;
     color: #303030;
@@ -134,11 +141,16 @@ body {
 }
 
 img {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
-    pointer-events: none; /* This makes it not clickable and not draggable */
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+    pointer-events: none;
+    /* This makes it not clickable and not draggable */
 }
 
 .output-container {
@@ -284,7 +296,7 @@ h5 {
     cursor: pointer !important;
     transition: transform 0.2s ease;
 }
-  
+
 /* Hover effects for devices that support hover */
 @media (hover: hover) {
     .btn-floating:hover {
@@ -292,11 +304,13 @@ h5 {
     }
 }
 
-.btn-floating.focused, .btn-large.focused {
+.btn-floating.focused,
+.btn-large.focused {
     opacity: 0.6;
 }
 
-.btn-floating:active, .btn-floating.active {
+.btn-floating:active,
+.btn-floating.active {
     transform: scale(0.85);
 }
 
