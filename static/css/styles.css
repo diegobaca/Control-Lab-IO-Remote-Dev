@@ -140,6 +140,11 @@ body {
     max-width: 900px;
 }
 
+.special-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 img {
     -webkit-user-select: none;
     /* Safari */
